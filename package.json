@@ -1,0 +1,37 @@
+{
+  "name": "ts-mean",
+  "version": "4.0.1",
+  "description": "Boilerplate for a TS-MEAN App",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^8.0.15",
+    "ts-node": "^3.2.1",
+    "typescript": "^2.4.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm run gitinit && ts-node install.ts",
+    "gitinit": "git submodule init && git submodule update"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tsmean/tsmean"
+  },
+  "keywords": [
+    "Boilerplate",
+    "Seed",
+    "MEAN",
+    "NodeJS",
+    "ExpressJS",
+    "Angular",
+    "MongoDB",
+    "Typescript",
+    "Starter Kit"
+  ],
+  "author": "Daniel Niederberger <bersling@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tsmean/tsmean/issues"
+  },
+  "homepage": "https://github.com/tsmean/tsmean#readme"
+}

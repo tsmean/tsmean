@@ -1,0 +1,18 @@
+<div style="max-width: 500px; margin: 0 auto">
+  <mat-card>
+    <mat-form-field class="full-width">
+      <input matInput type="text" [(ngModel)]="user.email" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput type="password" [(ngModel)]="user.password" placeholder="password">
+    </mat-form-field>
+    <div style="height: 20px"></div>
+    <div class="clearfix">
+      <div class="float-right">
+        <button color="primary" mat-raised-button (click)="doLogin()">
+          Login
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
