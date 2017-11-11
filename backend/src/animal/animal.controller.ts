@@ -8,8 +8,9 @@ import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import {Animal} from './animal.entity';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
+import {apiPath} from '../api';
 
-@Controller('animals')
+@Controller(apiPath(1, 'animals'))
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {

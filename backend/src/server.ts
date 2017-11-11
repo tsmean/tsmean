@@ -14,6 +14,14 @@ export function main() {
     app.use(bodyParser.json());
     app.useGlobalPipes(new ValidationPipe());
 
+    // Allow CORS since frontend is served completely independently
+    app.use(function(req, res, next) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE, PATCH');
+      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+      next();
+    });
+
     await app.listen(4242);
   }
   bootstrap();
