@@ -5,7 +5,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 @Injectable()
 export class AnimalDashboardListStore {
 
-  private dashboardList = new BehaviorSubject([]);
+  private dashboardList: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
   constructor() { }
 

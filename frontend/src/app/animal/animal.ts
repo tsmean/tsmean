@@ -1,4 +1,4 @@
-import {Resource} from '../../../../shared/src/models/resource.model';
+import {Resource} from '@tsmean/shared';
 export interface Animal extends Resource {
   name?: string;
   pic?: string;
