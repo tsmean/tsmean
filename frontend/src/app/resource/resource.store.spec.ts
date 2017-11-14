@@ -1,8 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ResourceService } from './resource.service';
 import {ResourceStoreService} from './resource.store';
-import {Resource} from './resource';
+import {Resource} from '@tsmean/shared';
 
 describe('Resource Store', () => {
 

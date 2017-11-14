@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/catch';
-import {Resource} from './resource';
+import {Resource} from '@tsmean/shared';
 
 import { WebUtils } from '@tsmean/utils';
 import {Observable} from 'rxjs/Observable';
@@ -27,8 +27,7 @@ export class ResourceService {
     return WebUtils.urlJoin(
       this.apiUrl,
       resourceName);
-  };
-
+  }
 
   getResources(resourceName: string): Observable<Resource[]> {
     const $data = this.http.get(this.resourcesUrl(resourceName))
