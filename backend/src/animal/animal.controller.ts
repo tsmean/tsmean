@@ -57,7 +57,7 @@ export class AnimalController {
 
   @Put()
   // TODO: Only animal can update himself or maybe admin
-  async fullUpdate(animal: Animal) {
+  async fullUpdate(@Body() animal: Animal) {
     return this.animalService.update(animal.id, animal);
   }
 
@@ -71,6 +71,5 @@ export class AnimalController {
   async remove(@Param('id', new ParseIntPipe()) id) {
     return this.animalService.remove(id);
   }
-
 
 }

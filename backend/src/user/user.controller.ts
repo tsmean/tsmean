@@ -67,7 +67,7 @@ export class UserController {
 
   @Put()
   // TODO: Only user can update himself or maybe admin
-  async fullUpdate(user: User) {
+  async fullUpdate(@Body() user: User) {
     return this.userService.update(user.id, user);
   }
 
