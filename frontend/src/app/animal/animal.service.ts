@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import { Animal } from './animal';
+import {Animal, AnimalWithoutId} from './animal.model';
 
 import {Http} from '@angular/http';
 import {AnimalStoreService} from './animal.store';
@@ -23,12 +23,12 @@ export class AnimalService {
     return this.resourceService.getResources(this.resourceName);
   }
 
-  createAnimal(animal: Animal): Observable<Animal> {
+  createAnimal(animal: AnimalWithoutId): Observable<Animal> {
     const animalObs = this.resourceService.createResource(animal, this.resourceName);
     return animalObs;
   }
 
-  deleteAnimal(animalId: string): Observable<Animal> {
+  deleteAnimal(animalId: string): Observable<void> {
     return this.resourceService.deleteResource(animalId, this.resourceName);
   }
 
@@ -38,7 +38,7 @@ export class AnimalService {
 
   // small extra: add a picture to the animal
   // works with observable to achieve best user experience
-  addAnimalPic (animalName, animalObs) {
+  addAnimalPic (animalName: string, animalObs: Observable<Animal>) {
     const animalImageObs = this.http.get(`http://animals.tsmean.com/find?q=${animalName.toLowerCase()}`);
     animalObs.subscribe(animalResp => {
       animalImageObs.subscribe(animal => {
@@ -48,6 +48,6 @@ export class AnimalService {
         });
       });
     });
-  };
+  }
 
 }

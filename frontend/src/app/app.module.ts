@@ -25,6 +25,8 @@ import {AnimalModule} from './animal/animal.module';
 import {environment} from '../environments/environment';
 import {ResourceModule} from './resource/resource.module';
 
+import {SpinnerModule} from 'spinner-angular';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,12 @@ import {ResourceModule} from './resource/resource.module';
     NotifyModule.forRoot(),
     ResourceModule.forRoot(environment.api),
     AnimalModule.forRoot(),
-    UserModule.forRoot(environment.api)
+    UserModule.forRoot(environment.api),
+    SpinnerModule.forRoot({
+      animation: 'spin 1s ease-in-out infinite',
+      primaryColor: '#3F51B5',
+      secondaryColor: '#FF4081'
+    })
   ],
   bootstrap: [AppComponent]
 })

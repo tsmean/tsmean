@@ -27,7 +27,7 @@ describe('Resource Store', () => {
           uid: '413',
           name: 'Wolverine'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().uid).toEqual('413');
+        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
         expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
       })
   );
@@ -39,13 +39,13 @@ describe('Resource Store', () => {
           uid: '413',
           name: 'Wolverine'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().uid).toEqual('413');
+        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
         expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
         resourceStoreService.addOrUpdate('heroes',  {
           uid: '413',
           name: 'Wonder Woman'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().uid).toEqual('413');
+        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
         expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wonder Woman');
       })
   );
@@ -63,9 +63,9 @@ describe('Resource Store', () => {
         }];
 
         resourceStoreService.addOrUpdateMany('heroes', heroes);
-        expect(resourceStoreService.get('heroes', '413').getValue().uid).toEqual('413');
+        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
         expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
-        expect(resourceStoreService.get('heroes', '414').getValue().uid).toEqual('414');
+        expect(resourceStoreService.get('heroes', '414').getValue().id).toEqual('414');
         expect(resourceStoreService.get('heroes', '414').getValue().name).toEqual('Wonder Woman');
       })
   );
@@ -78,7 +78,7 @@ describe('Resource Store', () => {
           uid: '413',
           name: 'Wolverine'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().uid).toEqual('413');
+        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
         expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
         resourceStoreService.remove('heroes', '413');
         // todo: a check for completedness

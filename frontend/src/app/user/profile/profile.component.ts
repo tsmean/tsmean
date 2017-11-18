@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UserService} from '../user.service';
 
 import {NotifyService} from 'notify-angular';
-import {User} from '../user';
+import {User, UserWithoutId} from '../user';
 import {UserStore} from '../user.store';
 
 @Component({
@@ -12,7 +12,7 @@ import {UserStore} from '../user.store';
 })
 export class ProfileComponent {
 
-  user: User = {};
+  user: User;
 
   constructor(
     private userService: UserService,

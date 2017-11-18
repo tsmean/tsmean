@@ -24,7 +24,7 @@ export class AnimalWrapperComponent implements OnInit {
     // get animals and initialize dashboard list
     this.animalService.getAnimals().subscribe(animals => {
       this.animalStore.addOrUpdateMany(animals);
-      this.dashboardList.set(animals.map(animal => animal.uid));
+      this.dashboardList.set(animals.map(animal => animal.id));
     }, errorResp => {
       console.error('something went wrong when getting animals:', errorResp);
     });

@@ -13,11 +13,17 @@ export class UserStore {
     private loginService: LoginService,
     private userService: UserService
   ) {
-    this._user = new BehaviorSubject({});
+    // TODO: better default user
+    this._user = new BehaviorSubject({
+      email: '',
+      firstName: '',
+      lastName: '',
+      id: '-1'
+    });
     if (this.loginService.loggedIn()) {
       this.userService.getUser().subscribe(user => {
         this.setUser(user);
-      })
+      });
     }
   }
 

@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 
 import 'rxjs/operator/catch';
 import {UserService} from '../user.service';
-import {User} from '../user';
+import {User, UserWithoutId} from '../user';
 import {UserStore} from '../user.store';
 
 @Component({
@@ -15,7 +15,11 @@ import {UserStore} from '../user.store';
 })
 export class SignUpComponent {
 
-  newUser: User = {};
+  newUser: UserWithoutId = {
+    email: '',
+    firstName: '',
+    lastName: ''
+  };
 
   password = '';
 

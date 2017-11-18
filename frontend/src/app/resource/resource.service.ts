@@ -5,7 +5,7 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/catch';
-import {Resource} from '@tsmean/shared';
+import {Resource, ResourceWithoutId} from '@tsmean/shared';
 
 import { WebUtils } from '@tsmean/utils';
 import {Observable} from 'rxjs/Observable';
@@ -42,7 +42,7 @@ export class ResourceService {
       .catch(this.handleError);
   }
 
-  createResource(newResource: Resource, resourceName: string): Observable<Resource> {
+  createResource(newResource: ResourceWithoutId, resourceName: string): Observable<Resource> {
     const $data = this.http.post(this.resourcesUrl(resourceName), newResource)
       .map(resp => resp.json().data).share();
     return $data.catch(this.handleError);
@@ -56,8 +56,8 @@ export class ResourceService {
       .catch(this.handleError);
   }
 
-  deleteResource(resourceId: string, resourceName: string): Observable<Resource> {
-
+  // TODO: what do you get back?
+  deleteResource(resourceId: string, resourceName: string): Observable<void> {
     const $data = this.http.delete(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
       .map(resp => resp.json().data).share();
     return $data

@@ -12,7 +12,6 @@ export class User {
   @Column({ length: 35 })
   lastName: string;
 
-
   @Column({
     length: 50,
     unique: true

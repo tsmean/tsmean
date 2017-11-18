@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Animal} from '../animal';
+import {Animal, AnimalWithoutId} from '../animal.model';
 import {AnimalService} from '../animal.service';
 import {NotifyService} from 'notify-angular';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
@@ -14,7 +14,7 @@ import {WebUtils} from '@tsmean/utils';
 })
 export class CreateAnimalComponent implements OnInit {
 
-  public newAnimal: Animal;
+  public newAnimal: AnimalWithoutId;
 
   constructor(
       private animalService: AnimalService,
@@ -33,7 +33,7 @@ export class CreateAnimalComponent implements OnInit {
     animalObs.subscribe(newAnimal => {
       this.animalStoreService.addOrUpdate(newAnimal);
       this.notifyService.success('Animal Created');
-      this.dashboardList.add(newAnimal.uid);
+      this.dashboardList.add(newAnimal.id);
     }, errorResp => {
       this.notifyService.error(errorResp.statusText);
     });

@@ -1,10 +1,11 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Animal} from '../animal';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Animal} from '../animal.model';
 import {AnimalSettings} from '../animal-settings';
 import {AnimalService} from '../animal.service';
 
-import { CoreUtils } from '@tsmean/utils';
+import {CoreUtils} from '@tsmean/utils';
 import {AnimalStoreService} from '../animal.store';
+import {ResourceStoreService} from '../../resource/resource.store';
 
 @Component({
   selector: 'animal-display',
@@ -25,6 +26,7 @@ export class DisplayAnimalComponent implements OnChanges {
   };
 
   constructor(
+    private resourceStore: ResourceStoreService,
       private animalService: AnimalService,
       private animalStore: AnimalStoreService
   ) { }
@@ -34,7 +36,7 @@ export class DisplayAnimalComponent implements OnChanges {
       this.animalStore.get(this.animalId).subscribe(animal => {
         this.animal = animal;
         this.resetCopy();
-      })
+      });
     }
   }
 

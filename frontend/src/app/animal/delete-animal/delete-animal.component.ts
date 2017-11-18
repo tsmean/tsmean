@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Animal} from '../animal';
+import {Animal} from '../animal.model';
 import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
@@ -24,9 +24,9 @@ export class DeleteAnimalComponent implements OnInit {
   }
 
   public deleteAnimal() {
-    this.animalService.deleteAnimal(this.animal.uid).subscribe(() => {
-      this.animalStore.remove(this.animal.uid);
-      this.dashboardList.removeById(this.animal.uid);
+    this.animalService.deleteAnimal(this.animal.id).subscribe(() => {
+      this.animalStore.remove(this.animal.id);
+      this.dashboardList.removeById(this.animal.id);
     });
   }
 

@@ -9,16 +9,17 @@
       !!! Work in progress, currently displaying fake user !!!
     </p>
     
-    <mat-form-field class="half-width">
-      <input matInput [(ngModel)]="user.firstName" placeholder="First Name">
-    </mat-form-field>
-    <mat-form-field class="half-width">
-      <input matInput [(ngModel)]="user.lastName" placeholder="Last Name">
-    </mat-form-field>
-    
-    <mat-form-field class="full-width">
-      <input matInput [(ngModel)]="user.email" autocomplete="false" placeholder="Email">
-    </mat-form-field>
+    <div *ngIf="user">
+      <mat-form-field class="half-width">
+        <input matInput [(ngModel)]="user.firstName" placeholder="First Name">
+      </mat-form-field>
+      <mat-form-field class="half-width">
+        <input matInput [(ngModel)]="user.lastName" placeholder="Last Name">
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput [(ngModel)]="user.email" autocomplete="false" placeholder="Email">
+      </mat-form-field>
+    </div>
     
     <div class="clearfix">
       <div class="float-right">

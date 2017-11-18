@@ -12,19 +12,19 @@ export class ResourceStoreService {
   private resourceStore: ResourceStore = {};
 
   /**
-   * Precondition: resource.uid needs to exist
+   * Precondition: resource.id needs to exist
    */
   addOrUpdate (resourceName: string, resource: Resource): void {
 
     // Initialization if not yet initialized already;
     this.resourceStore[resourceName] = this.resourceStore[resourceName] || {};
 
-    if (this.resourceStore[resourceName][resource.uid]) {
+    if (this.resourceStore[resourceName][resource.id]) {
       // push next if already initialized
-      this.resourceStore[resourceName][resource.uid].next(resource);
+      this.resourceStore[resourceName][resource.id].next(resource);
     } else {
       // more initialization logic
-      this.resourceStore[resourceName][resource.uid] = new BehaviorSubject(resource)
+      this.resourceStore[resourceName][resource.id] = new BehaviorSubject(resource);
     }
 
   }

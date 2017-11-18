@@ -1,1 +1,1 @@
-export {Resource} from './src/dto/resource';
+export {Resource, ResourceWithoutId} from './src/models/resource.model';

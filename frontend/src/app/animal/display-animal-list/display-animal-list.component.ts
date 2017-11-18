@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Animal} from '../animal';
+import {Animal} from '../animal.model';
 
 @Component({
   selector: 'animal-dashboard-list',

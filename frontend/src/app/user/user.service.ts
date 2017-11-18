@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {User} from './user';
+import {User, UserWithoutId} from './user';
 import {Observable} from 'rxjs/Observable';
 import {WebUtils} from '@tsmean/utils';
 import {Http} from '@angular/http';
@@ -21,7 +21,7 @@ export class UserService {
     private loginService: LoginService
   ) {}
 
-  createUser(user: User, password: string): Observable<User> {
+  createUser(user: UserWithoutId, password: string): Observable<User> {
     const $data = this.http.post(this.usersApi, {
       user: user,
       password: password
@@ -33,7 +33,7 @@ export class UserService {
     if (this.loginService.loggedIn()) {
 
       const fakeUser: User = {
-        uid: '1',
+        id: '1',
         email: 'hans@gmail.com',
         firstName: 'Hans',
         lastName: 'Mueller'
@@ -50,15 +50,15 @@ export class UserService {
   }
 
   getUserById(id: string): Observable<User> {
-    return this.resourceService.getResource(id, 'users');
+    return <Observable<User>>this.resourceService.getResource(id, 'users');
   }
 
-  removeUser(id: string): Observable<User> {
+  removeUser(id: string): Observable<void> {
     return this.resourceService.deleteResource(id, 'users');
   }
 
   updateUser(user: User): Observable<User> {
-    return this.resourceService.updateResource(user, 'users');
+    return <Observable<User>>this.resourceService.updateResource(user, 'users');
   }
 
 

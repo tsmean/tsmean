@@ -16,7 +16,10 @@ export class JumbotronComponent implements OnInit {
   }
 
   doStart() {
-    document.getElementById('animal-input').scrollIntoView(); 
+    const animalInput = document.getElementById('animal-input');
+    if (animalInput) {
+      animalInput.scrollIntoView();
+    }
   }
 
 }
