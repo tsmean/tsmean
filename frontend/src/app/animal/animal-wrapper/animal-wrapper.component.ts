@@ -10,7 +10,7 @@ import {AnimalStoreService} from '../animal.store';
 })
 export class AnimalWrapperComponent implements OnInit {
 
-  animalIds: string[] = [];
+  animalIds: number[] = [];
 
   constructor(
       private animalService: AnimalService,

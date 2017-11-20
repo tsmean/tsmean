@@ -24,11 +24,11 @@ describe('Resource Store', () => {
     inject([ResourceStoreService],
       (resourceStoreService: ResourceStoreService) => {
         resourceStoreService.addOrUpdate('heroes', {
-          uid: '413',
+          id: 413,
           name: 'Wolverine'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
-        expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
+        expect(resourceStoreService.get('heroes', 413).getValue().id).toEqual(413);
+        expect(resourceStoreService.get('heroes', 413).getValue().name).toEqual('Wolverine');
       })
   );
 
@@ -36,17 +36,17 @@ describe('Resource Store', () => {
     inject([ResourceStoreService],
       (resourceStoreService: ResourceStoreService) => {
         resourceStoreService.addOrUpdate('heroes', {
-          uid: '413',
+          id: 413,
           name: 'Wolverine'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
-        expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
+        expect(resourceStoreService.get('heroes', 413).getValue().id).toEqual(413);
+        expect(resourceStoreService.get('heroes', 413).getValue().name).toEqual('Wolverine');
         resourceStoreService.addOrUpdate('heroes',  {
-          uid: '413',
+          id: 413,
           name: 'Wonder Woman'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
-        expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wonder Woman');
+        expect(resourceStoreService.get('heroes', 413).getValue().id).toEqual(413);
+        expect(resourceStoreService.get('heroes', 413).getValue().name).toEqual('Wonder Woman');
       })
   );
 
@@ -55,18 +55,18 @@ describe('Resource Store', () => {
       (resourceStoreService: ResourceStoreService) => {
 
         const heroes: Resource[] = [{
-          uid: '413',
+          id: 413,
           name: 'Wolverine'
         }, {
-          uid: '414',
+          id: 414,
           name: 'Wonder Woman'
         }];
 
         resourceStoreService.addOrUpdateMany('heroes', heroes);
-        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
-        expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
-        expect(resourceStoreService.get('heroes', '414').getValue().id).toEqual('414');
-        expect(resourceStoreService.get('heroes', '414').getValue().name).toEqual('Wonder Woman');
+        expect(resourceStoreService.get('heroes', 413).getValue().id).toEqual(413);
+        expect(resourceStoreService.get('heroes', 413).getValue().name).toEqual('Wolverine');
+        expect(resourceStoreService.get('heroes', 414).getValue().id).toEqual(414);
+        expect(resourceStoreService.get('heroes', 414).getValue().name).toEqual('Wonder Woman');
       })
   );
 
@@ -75,12 +75,12 @@ describe('Resource Store', () => {
     inject([ResourceStoreService],
       (resourceStoreService: ResourceStoreService) => {
         resourceStoreService.addOrUpdate('heroes', {
-          uid: '413',
+          id: 413,
           name: 'Wolverine'
         });
-        expect(resourceStoreService.get('heroes', '413').getValue().id).toEqual('413');
-        expect(resourceStoreService.get('heroes', '413').getValue().name).toEqual('Wolverine');
-        resourceStoreService.remove('heroes', '413');
+        expect(resourceStoreService.get('heroes', 413).getValue().id).toEqual(413);
+        expect(resourceStoreService.get('heroes', 413).getValue().name).toEqual('Wolverine');
+        resourceStoreService.remove('heroes', 413);
         // todo: a check for completedness
       })
   );

@@ -33,11 +33,11 @@ export class ResourceStoreService {
     resources.forEach(resource => this.addOrUpdate(resourceName, resource));
   }
 
-  remove (resourceName: string, resourceId: string): void {
+  remove (resourceName: string, resourceId: number): void {
     this.resourceStore[resourceName][resourceId].complete();
   }
 
-  get (resourceName: string, resourceId: string): BehaviorSubject<Resource> {
+  get (resourceName: string, resourceId: number): BehaviorSubject<Resource> {
     return this.resourceStore[resourceName][resourceId];
   }
 

@@ -67,7 +67,7 @@ describe('ResourceService', () => {
           })));
         });
 
-        resourceService.getResource('0', 'heroes').subscribe(hero => {
+        resourceService.getResource(0, 'heroes').subscribe(hero => {
           expect(hero.id).toBe(0);
           expect(hero.name).toBe('Wolverine');
         });
@@ -114,7 +114,8 @@ describe('ResourceService', () => {
         });
 
         resourceService.updateResource({
-          name: 'Wolverine'
+          name: 'Stella',
+          id: 0
         }, 'heroes').subscribe(hero => {
           expect(hero.id).toBe(0);
           expect(hero.name).toBe('Stella');
@@ -137,8 +138,8 @@ describe('ResourceService', () => {
           })));
         });
 
-        resourceService.deleteResource('0', 'heroes').subscribe(hero => {
-          expect(hero.name).toBe('Wolverine');
+        resourceService.deleteResource(0, 'heroes').subscribe(() => {
+          // TODO: done(); statement
         });
 
       })

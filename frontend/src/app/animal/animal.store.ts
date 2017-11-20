@@ -23,11 +23,11 @@ export class AnimalStoreService {
     this.resourceStore.addOrUpdateMany(this.resourceName, animals);
   }
 
-  remove (resourceId: string): void {
+  remove (resourceId: number): void {
     this.resourceStore.remove(this.resourceName, resourceId);
   }
 
-  get (resourceId: string): BehaviorSubject<Animal> {
+  get (resourceId: number): BehaviorSubject<Animal> {
     return this.resourceStore.get(this.resourceName, resourceId);
   }
 

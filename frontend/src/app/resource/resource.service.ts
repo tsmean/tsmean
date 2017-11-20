@@ -35,7 +35,7 @@ export class ResourceService {
     return $data.catch(this.handleError);
   }
 
-  getResource(resourceId: string, resourceName: string): Observable<Resource> {
+  getResource(resourceId: number, resourceName: string): Observable<Resource> {
     const $data = this.http.get(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
       .map(resp => resp.json().data).share();
     return $data
@@ -57,7 +57,7 @@ export class ResourceService {
   }
 
   // TODO: what do you get back?
-  deleteResource(resourceId: string, resourceName: string): Observable<void> {
+  deleteResource(resourceId: number, resourceName: string): Observable<void> {
     const $data = this.http.delete(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
       .map(resp => resp.json().data).share();
     return $data

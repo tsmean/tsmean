@@ -33,7 +33,7 @@ export class UserService {
     if (this.loginService.loggedIn()) {
 
       const fakeUser: User = {
-        id: '1',
+        id: 1,
         email: 'hans@gmail.com',
         firstName: 'Hans',
         lastName: 'Mueller'
@@ -49,11 +49,11 @@ export class UserService {
     }
   }
 
-  getUserById(id: string): Observable<User> {
+  getUserById(id: number): Observable<User> {
     return <Observable<User>>this.resourceService.getResource(id, 'users');
   }
 
-  removeUser(id: string): Observable<void> {
+  removeUser(id: number): Observable<void> {
     return this.resourceService.deleteResource(id, 'users');
   }
 

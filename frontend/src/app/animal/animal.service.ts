@@ -28,7 +28,7 @@ export class AnimalService {
     return animalObs;
   }
 
-  deleteAnimal(animalId: string): Observable<void> {
+  deleteAnimal(animalId: number): Observable<void> {
     return this.resourceService.deleteResource(animalId, this.resourceName);
   }
 

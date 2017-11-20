@@ -57,8 +57,17 @@ export class AnimalController {
 
   @Put()
   // TODO: Only animal can update himself or maybe admin
-  async fullUpdate(@Body() animal: Animal) {
-    return this.animalService.update(animal.id, animal);
+  async fullUpdate(@Body() requestBody: Animal, @Res() res) {
+    this.animalService.update(requestBody.id, requestBody).then(data => {
+      res.status(200).send({
+        message: 'Success',
+        status: res.status,
+        data: data
+      });
+    }).catch(err => {
+      res.statusMessage = err.message;
+      res.status(500).send(err.message);
+      });
   }
 
   @Patch(':id')

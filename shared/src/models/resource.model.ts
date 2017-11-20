@@ -1,9 +1,9 @@
 export interface ResourceWithoutId {
-  id?: string;
+  id?: number;
   [x: string]: any;
 }
 
 export interface Resource {
-  id: string;
+  id: number;
   [x: string]: any;
 }

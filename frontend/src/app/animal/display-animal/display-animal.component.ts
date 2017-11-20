@@ -15,7 +15,7 @@ import {ResourceStoreService} from '../../resource/resource.store';
 export class DisplayAnimalComponent implements OnChanges {
 
   @Input()
-  animalId: string;
+  animalId: number;
 
   animal: Animal;
 

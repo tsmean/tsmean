@@ -18,7 +18,7 @@ export class UserStore {
       email: '',
       firstName: '',
       lastName: '',
-      id: '-1'
+      id: -1
     });
     if (this.loginService.loggedIn()) {
       this.userService.getUser().subscribe(user => {
