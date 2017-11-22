@@ -10,6 +10,7 @@ import {DatabaseModule} from '../database/database.module';
 import {PASSWORD_CRYPTOGRAPHER_TOKEN} from './constants';
 import {LoggerModule} from '../logger/logger.module';
 import {EmailValidatorModule} from '../validation/email/email-validator.module';
+import {apiPath} from '../api';
 
 @Module({
   controllers: [UserController],
@@ -32,6 +33,6 @@ export class UserModule implements NestModule {
   configure(consumer: MiddlewaresConsumer) {
     consumer
       .apply(passport.authenticate('local', { session: false }))
-      .forRoutes({ path: '/private', method: RequestMethod.ALL });
+      .forRoutes({ path: apiPath(1, 'login'), method: RequestMethod.ALL });
   }
 }

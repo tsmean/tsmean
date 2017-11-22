@@ -10,8 +10,9 @@ import {CreateUserDto} from '../../../shared/src/dto/user/create-user.dto';
 import {FindManyOptions} from 'typeorm';
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
+import {apiPath} from '../api';
 
-@Controller('users')
+@Controller(apiPath(1, 'users'))
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
