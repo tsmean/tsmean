@@ -7,23 +7,6 @@
 
 ![tsmean logo](https://s3.eu-central-1.amazonaws.com/bersling/images/tsmean-logo.png)
 
-# Pre-Alpha Release
-
-This is a **starter kit** for webapps **completely written in TypeScript**.
-
-The starter kit is using the following technologies:
-
-- **M**ongoDB or alternatively **M**ySQL
-- **E**xpressJS
-- **A**ngular4
-- **N**odeJs
-
-... and that's why it's called tsmean! All of those are modern
-technologies (as of mid 2017) and well suited for development
-with TypeScript. You get to use TypeScript now
-on the client **and** the server! This leads to efficiency
-through consistency. Read more about that here: www.tsmean.com.
-
 
 # Installation
 
