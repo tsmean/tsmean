@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
+import {Animal} from '../animal.model';
 
 @Component({
   selector: 'animal-wrapper',
