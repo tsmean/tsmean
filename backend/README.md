@@ -94,9 +94,7 @@ executing all unit tests reomtely.
 
 # See it in action
 
-You can test the interface at http://demo.tsmean.com:4242, e.g.
-http://demo.tsmean.com:4242/api/v1/heroes.
-
+You can test the interface at https://fir-tsmean.firebaseapp.com/
 
 
 # Database
