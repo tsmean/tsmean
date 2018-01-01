@@ -41,7 +41,7 @@ export class DisplayAnimalComponent implements OnChanges {
   }
 
   picUrl(picPath: string) {
-    return 'http://animals.tsmean.com/animals?path=' + picPath;
+    return 'https://animal-images.herokuapp.com/animals?path=' + picPath;
   }
 
 
