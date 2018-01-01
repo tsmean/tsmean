@@ -24,12 +24,12 @@ describe('Animal Dashboard List Store Service', () => {
   it('should be able to add items',
     inject([AnimalDashboardListStore],
       (dashboardListStore: AnimalDashboardListStore) => {
-        dashboardListStore.add('1');
-        dashboardListStore.add('2');
+        dashboardListStore.add(1);
+        dashboardListStore.add(2);
         dashboardListStore.get().subscribe(newList => {
           expect(newList.length).toEqual(2);
-          expect(newList[0]).toEqual('1');
-          expect(newList[1]).toEqual('2');
+          expect(newList[0]).toEqual(1);
+          expect(newList[1]).toEqual(2);
         });
       })
   );
@@ -37,9 +37,9 @@ describe('Animal Dashboard List Store Service', () => {
   it('should be able to add item at index',
     inject([AnimalDashboardListStore],
       (dashboardListStore: AnimalDashboardListStore) => {
-        dashboardListStore.add('1');
-        dashboardListStore.add('2', 0);
-        dashboardListStore.get().subscribe(newList => {
+        dashboardListStore.add(1);
+        dashboardListStore.add(2, 0);
+        dashboardListStore.get().subscribe((newList: number[]) => {
           expect(newList.length).toEqual(2);
           expect(newList[0]).toEqual('2');
           expect(newList[1]).toEqual('1');
@@ -50,9 +50,9 @@ describe('Animal Dashboard List Store Service', () => {
   it('should be update item by id',
     inject([AnimalDashboardListStore],
       (dashboardListStore: AnimalDashboardListStore) => {
-        dashboardListStore.add('1');
-        dashboardListStore.add('2');
-        dashboardListStore.updateById('1', '5');
+        dashboardListStore.add(1);
+        dashboardListStore.add(2);
+        dashboardListStore.updateById(1, 5);
         dashboardListStore.get().subscribe(newList => {
           expect(newList.length).toEqual(2);
           expect(newList[0]).toEqual('5');
@@ -64,13 +64,13 @@ describe('Animal Dashboard List Store Service', () => {
   it('should be update item by index',
     inject([AnimalDashboardListStore],
       (dashboardListStore: AnimalDashboardListStore) => {
-        dashboardListStore.add('1');
-        dashboardListStore.add('2');
-        dashboardListStore.updateByIndex(0, '5');
+        dashboardListStore.add(1);
+        dashboardListStore.add(2);
+        dashboardListStore.updateByIndex(0, 5);
         dashboardListStore.get().subscribe(newList => {
           expect(newList.length).toEqual(2);
-          expect(newList[0]).toEqual('5');
-          expect(newList[1]).toEqual('2');
+          expect(newList[0]).toEqual(5);
+          expect(newList[1]).toEqual(2);
         });
       })
   );
@@ -78,12 +78,12 @@ describe('Animal Dashboard List Store Service', () => {
   it('should be remove item by id',
     inject([AnimalDashboardListStore],
       (dashboardListStore: AnimalDashboardListStore) => {
-        dashboardListStore.add('1');
-        dashboardListStore.add('2');
-        dashboardListStore.removeById('1');
+        dashboardListStore.add(1);
+        dashboardListStore.add(2);
+        dashboardListStore.removeById(1);
         dashboardListStore.get().subscribe(newList => {
           expect(newList.length).toEqual(1);
-          expect(newList[0]).toEqual('2');
+          expect(newList[0]).toEqual(2);
         });
       })
   );
@@ -91,12 +91,12 @@ describe('Animal Dashboard List Store Service', () => {
   it('should be remove item by index',
     inject([AnimalDashboardListStore],
       (dashboardListStore: AnimalDashboardListStore) => {
-        dashboardListStore.add('1');
-        dashboardListStore.add('2');
+        dashboardListStore.add(1);
+        dashboardListStore.add(2);
         dashboardListStore.removeByIndex(0);
         dashboardListStore.get().subscribe(newList => {
           expect(newList.length).toEqual(1);
-          expect(newList[0]).toEqual('2');
+          expect(newList[0]).toEqual(2);
         });
       })
   );

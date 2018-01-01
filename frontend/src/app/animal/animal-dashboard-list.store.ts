@@ -13,7 +13,7 @@ export class AnimalDashboardListStore {
    * Adds a resourceId to the list. If no position is provided, appends it to the end.
    */
   add (resourceId: number, index?: number): void {
-    const currentValue = this.dashboardList.getValue(); // todo: check immutability
+    const currentValue: number[] = this.dashboardList.getValue(); // todo: check immutability
     if (index !== undefined) {
       if (index <= currentValue.length) {
         currentValue.splice(index, 0, resourceId);
@@ -56,7 +56,7 @@ export class AnimalDashboardListStore {
   /**
    * Get the list-observable
    */
-  get(): Observable<number[]> {
+  get(): BehaviorSubject<number[]> {
     return this.dashboardList;
   }
 

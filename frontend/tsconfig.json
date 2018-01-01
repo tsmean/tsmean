@@ -4,7 +4,7 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

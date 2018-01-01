@@ -10,7 +10,7 @@ describe('ResourceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: ApiUrl, useValue: 'http://demo.tsmean.com:4242/api/v1/' },
+        { provide: ApiUrl, useValue: 'https://demo-tsmean.herokuapp.com/api/v1/' },
         ResourceService,
         { provide: XHRBackend, useClass: MockBackend }
       ],
