@@ -6,7 +6,7 @@ import {ValidationPipe} from './common/pipes/validation.pipe';
 
 export function main() {
 
-  appConfig.setAppConfig(process.argv[2] || 'local');
+  appConfig.setAppConfig(process.env.PORT || process.argv[2] || 'local');
 
   async function bootstrap() {
     const app = await NestFactory.create(AppModule);
