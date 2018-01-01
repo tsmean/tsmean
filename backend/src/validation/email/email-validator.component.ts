@@ -1,4 +1,4 @@
-import {EmailValidator} from '../../../../shared/src/validation/email-validator/email-validator.service';
+import {EmailValidator} from '@tsmean/shared/src/validation/email-validator/email-validator.service';
 import {Component} from '@nestjs/common';
 
 @Component()

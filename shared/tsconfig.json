@@ -6,7 +6,7 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "noImplicitAny":true
+    "noImplicitAny": true
   },
   "include": [
     "src/**/*"
