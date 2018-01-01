@@ -5,3 +5,4 @@ export interface IUser extends ResourceWithoutId {
   firstName: string;
   lastName: string;
 }
+
