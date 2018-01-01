@@ -4,7 +4,7 @@ import {User} from './user.entity';
 import {HASHING_ALGORITHM, USER_PASSWORD_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN} from './constants';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {UserPassword} from './user-password.entity';
-import {IUser} from '@tsmean/shared/src/models/user.model';
+import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';
 
 @Component()

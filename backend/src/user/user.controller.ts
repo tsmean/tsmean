@@ -6,7 +6,7 @@ import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import {User} from './user.entity';
-import {CreateUserDto} from '@tsmean/shared/src/dto/user/create-user.dto';
+import {CreateUserDto} from '@tsmean/shared';
 import {FindManyOptions} from 'typeorm';
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
 import {DeepPartial} from 'typeorm/common/DeepPartial';

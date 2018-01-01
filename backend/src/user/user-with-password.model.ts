@@ -1,4 +1,4 @@
-import {IUser} from '@tsmean/shared/src/models/user.model';
+import {IUser} from '@tsmean/shared';
 
 export interface UserWithPassword extends IUser {
   password: UserPassword;

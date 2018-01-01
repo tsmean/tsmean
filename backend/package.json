@@ -4,7 +4,7 @@
   "description": "The full backend",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "./node_modules/.bin/tsc && node dist/server.js",
     "prestart:prod": "tsc",
     "start:prod": "node dist/server.js",
     "test": "jest --config=jest.json --coverage --runInBand --forceExit",
@@ -29,7 +29,7 @@
     "@nestjs/microservices": "^4.5.3",
     "@nestjs/testing": "^4.5.4",
     "@nestjs/websockets": "^4.5.3",
-    "@tsmean/shared": "0.0.1",
+    "@tsmean/shared": "0.0.9",
     "@types/bcrypt-nodejs": "^0.0.30",
     "@types/body-parser": "^1.16.8",
     "@types/bunyan": "^1.8.4",

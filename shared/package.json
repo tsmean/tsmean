@@ -1,10 +1,12 @@
 {
   "name": "@tsmean/shared",
-  "version": "0.0.1",
+  "version": "0.0.9",
   "description": "Code shared between backend and frontend of app",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": ""
+    "publish": "",
+    "build:lib": "tsc && cp .npmignore dist && cp package.json dist",
+    "pub": "npm version patch && npm run build:lib && cd dist && npm publish"
   },
   "author": "",
   "license": "MIT",

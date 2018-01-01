@@ -1,4 +1,4 @@
-import {PasswordValidator} from '@tsmean/shared/src/validation/password-validator/password-validator.service';
+import {PasswordValidator} from '@tsmean/shared';
 import {Component} from '@nestjs/common';
 
 @Component()
