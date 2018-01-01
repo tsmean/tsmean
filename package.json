@@ -11,6 +11,7 @@
     "typescript": "^2.4.2"
   },
   "scripts": {
+    "start": "node backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
