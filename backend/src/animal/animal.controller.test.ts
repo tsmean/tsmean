@@ -38,13 +38,13 @@ describe('AnimalController', () => {
     done();
   });
 
-  it('should be able to update one animal', async (done) => {
+/*  it('should be able to update one animal', async (done) => {
     const animal = exampleAnimal(1);
     jest.spyOn(animalService, 'update').mockImplementation(() => undefined);
     const returnVal = await animalController.fullUpdate(animal);
     expect(returnVal).toBeUndefined();
     done();
-  });
+  });*/
 
   it('should be able to partial update one animal', async (done) => {
     const animal = exampleAnimal(1);

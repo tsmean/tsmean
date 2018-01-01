@@ -1,6 +1,5 @@
-import {Resource} from '../../../frontend/resource/src/app/resource/resource';
-
-export interface IUser extends Resource {
+import {ResourceWithoutId} from './resource.model';
+export interface IUser extends ResourceWithoutId {
   id?: number;
   email: string;
   firstName: string;
