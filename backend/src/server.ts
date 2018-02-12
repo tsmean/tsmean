@@ -3,6 +3,7 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import * as bodyParser from 'body-parser';
 import {ValidationPipe} from './common/pipes/validation.pipe';
+import * as cors from "cors";
 
 export function main() {
 
@@ -15,17 +16,7 @@ export function main() {
     app.useGlobalPipes(new ValidationPipe());
 
     // Allow CORS since frontend is served completely independently
-    app.use(function (req, res, next) {
-      const allowedOrigins = ['http://localhost:4242', 'https://www.tsmean.com'];
-      const origin = req.headers.origin;
-      if (allowedOrigins.indexOf(origin) > -1) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-      }
-      res.header('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE, PATCH');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-      next();
-    });
+    app.use(cors());
 
     const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4242;
     await app.listen(port);
