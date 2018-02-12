@@ -1,0 +1,34 @@
+
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import './variables';
+
+.app-full-width {
+  width: 100%;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.app-page {
+  padding-top: 30px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.center {
+  text-align: center;
+}
+
+p.large {
+  font-size: 1.3rem;
+}
+
+ul.no-bullets {
+  list-style-type: none;
+}

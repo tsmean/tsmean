@@ -1,0 +1,22 @@
+{
+  "name": "@tsmean/shared",
+  "version": "0.0.9",
+  "description": "Code shared between backend and frontend of app",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "",
+    "build:lib": "tsc && cp .npmignore dist && cp package.json dist",
+    "pub": "npm version patch && npm run build:lib && cd dist && npm publish"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "class-validator": "^0.7.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.4",
+    "jest": "^21.2.1",
+    "ts-jest": "^21.1.3",
+    "typescript": "^2.5.3"
+  }
+}

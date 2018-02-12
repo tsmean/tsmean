@@ -1,0 +1,16 @@
+.section-type-one {
+    background: #f8f8f8;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.section-type-two {
+    padding: 20px 0;
+}
+
+.image-title-text-section {
+    padding: 30px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
