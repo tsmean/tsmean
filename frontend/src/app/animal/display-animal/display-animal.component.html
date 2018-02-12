@@ -1,0 +1,29 @@
+<mat-card>
+
+  <div style="display: flex; align-items: center">
+  
+    <img [src]="picUrl(animal.pic)" style="height: 50px;" *ngIf="animal.pic">
+  
+    <!-- Display or Edit Animal -->
+    <div style="padding: 5px; flex: 1">
+      <div *ngIf="!animalSettings.isBeingEdited">
+        {{animal.name}}
+      </div>
+      <mat-form-field *ngIf="animalSettings.isBeingEdited">
+        <input matInput placeholder="Animal's Name" [(ngModel)]="animalCopy.name"/>
+      </mat-form-field>
+      <button color="accent" mat-raised-button *ngIf="animalSettings.isBeingEdited" (click)="updateAnimal()">Update Animal</button>
+    </div>
+  
+    <div>
+      <button mat-button color="primary" (click)="resetCopy(); toggleEditable();">
+        <mat-icon *ngIf="!animalSettings.isBeingEdited">edit</mat-icon>
+        <mat-icon *ngIf="animalSettings.isBeingEdited">cancel</mat-icon>
+      </button>
+    </div>
+    
+    <animal-delete [animal]="animal"></animal-delete>
+    
+  </div>
+  
+</mat-card>

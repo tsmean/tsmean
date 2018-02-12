@@ -1,0 +1,29 @@
+<div style="max-width: 600px; margin: 0 auto;">
+  <mat-card class="bottom-padded-card">
+    
+    <h1>
+      Sign Up
+    </h1>
+  
+    <mat-form-field class="half-width">
+      <input matInput [(ngModel)]="newUser.firstName" placeholder="First Name">
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input matInput [(ngModel)]="newUser.lastName" placeholder="Last Name">
+    </mat-form-field>
+    
+    <mat-form-field class="full-width">
+      <input matInput [(ngModel)]="newUser.email" autocomplete="false" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput [(ngModel)]="password" autocomplete="new-password" type="password" placeholder="Password">
+    </mat-form-field>
+    
+    <div class="clearfix">
+      <div class="float-right">
+        <button (click)="doSignUp()" color="primary" mat-raised-button>Sign Up</button>
+      </div>
+    </div>
+    
+  </mat-card>
+</div>
