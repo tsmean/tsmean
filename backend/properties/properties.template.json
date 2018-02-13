@@ -1,0 +1,10 @@
+{
+  "db": {
+    "host": "yourdatabase.com",
+    "dbuser": "dbuser",
+    "dbpassword": "secretpassword",
+    "port": 12345,
+    "dbname": "yourDbName",
+    "testsMayDropDb": "true"
+  }
+}

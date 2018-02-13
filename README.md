@@ -54,8 +54,8 @@ First `cd backend`, then:
 # Frontend
 First `cd frontend`, then:
 
-- to start the app `cd main` and run `ng serve`. Check it out on http://localhost:4200
-- you can develop all modules independently. For example, `cd user` and run `ng serve`.
+- to start the Angular app `npm start`. Check it out on http://localhost:4200
+- you can develop all modules independently. For example, `cd src/app/user` and run `ng serve`.
 This launches a minimal app only displaying the user module (i.e. without login etc).
 You can test all modules using `ng test`.
 
