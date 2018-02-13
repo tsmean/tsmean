@@ -36,14 +36,14 @@ export class UserService {
   }
 
   // Read
-  async find(options?: FindManyOptions<User>): Promise<User[]> {
-    const defaultOptions = {
+  async find(findOptions?: FindManyOptions<User>): Promise<User[]> {
+    const options = {
       take: 100,
-      skip: 0
-    };
-    const resultingOptions = options || defaultOptions;
-    this.log.debug(`searching for max ${resultingOptions.take} users with an offset of ${resultingOptions.skip} ...`);
-    return await this.userRepository.find(resultingOptions);
+      skip: 0,
+      ...findOptions, // overwrite default ones
+    }
+    this.log.debug(`searching for max ${options.take} users with an offset of ${options.skip} ...`);
+    return await this.userRepository.find(options);
   }
 
   async findOneById(id: number): Promise<User> {

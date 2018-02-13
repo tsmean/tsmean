@@ -21,13 +21,13 @@ export class AnimalService {
   }
 
   // Read
-  async find(options?: FindManyOptions<Animal>): Promise<Animal[]> {
-    const defaultOptions = {
+  async find(findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
+    const options = {
       take: 100,
-      skip: 0
-    };
-    const resultingOptions = options || defaultOptions;
-    return await this.animalRepository.find(resultingOptions);
+      skip: 0,
+      ...findOptions, // overwrite default ones
+    }
+    return await this.animalRepository.find(options);
   }
 
   async findOneById(id: number): Promise<Animal> {

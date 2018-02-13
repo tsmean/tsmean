@@ -54,12 +54,13 @@ export class AnimalController {
   }
 
   @Get()
-  async find(options?: FindManyOptions<Animal>): Promise<Animal[]> {
-    const defaultOptions = {
+  async find(findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
+    const options = {
       take: 100,
-      skip: 0
-    };
-    return this.animalService.find(options || defaultOptions);
+      skip: 0,
+      ...findOptions, // overwrite default ones
+    }
+    return this.animalService.find(options);
   }
 
   @Get(':id')

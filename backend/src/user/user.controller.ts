@@ -56,12 +56,13 @@ export class UserController {
 
   @Get()
   // TODO: Only user can get info on himself or maybe admin
-  async find(options?: FindManyOptions<User>): Promise<User[]> {
-    const defaultOptions = {
+  async find(findOptions?: FindManyOptions<User>): Promise<User[]> {
+    const options = {
       take: 100,
-      skip: 0
-    };
-    return this.userService.find(options || defaultOptions);
+      skip: 0,
+      ...findOptions, // overwrite default ones
+    }
+    return this.userService.find(options);
   }
 
   /**
