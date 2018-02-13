@@ -14,8 +14,7 @@ describe('Test simple welcome Html Router', () => {
   });
 
   it('should return html containing the word welcome', async () => {
-    // TODO: How can I test this?
-    // expect(await welcomeRouter.welcome()).toContain('Welcome');
+    expect(await welcomeRouter.welcome()).toContain('Welcome');
   });
 
 });
