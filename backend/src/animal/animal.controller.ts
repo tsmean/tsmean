@@ -1,4 +1,20 @@
-import {Controller, Get, Post, Put, Delete, Patch, Body, UseGuards, UseInterceptors, Param, Res, Query, Inject} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Body,
+  UseGuards,
+  UseInterceptors,
+  Param,
+  Res,
+  Query,
+  Inject,
+  ForbiddenException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { AnimalService } from './animal.service';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -20,25 +36,21 @@ export class AnimalController {
 
   @Post()
   // @Roles('admin')
-  async create(@Body() requestBody: Animal, @Res() res) {
-
-    this.animalService.create(requestBody)
-      .then(data => {
-        res.status(200).send({
-          message: 'Success',
-          status: res.status,
-          data: data
-        });
-      })
-      .catch(err => {
-        if (err.message === 'Animal already exists') {
-          res.statusMessage = err.message;
-          res.status(403).send();
-        } else {
-          res.statusMessage = err.message;
-          res.status(500).send(err.message);
-        }
-      });
+  async create(@Body() requestBody: Animal) {
+    try {
+      const data = await this.animalService.create(requestBody);
+      return {
+        message: 'Success',
+        status: 200,
+        data: data
+      };
+    } catch (err) {
+      if (err.message === 'Animal already exists') {
+        throw new ForbiddenException(err.message);
+      } else {
+        throw new InternalServerErrorException(err.message);
+      }
+    }
   }
 
   @Get()
@@ -57,17 +69,13 @@ export class AnimalController {
 
   @Put()
   // TODO: Only animal can update himself or maybe admin
-  async fullUpdate(@Body() requestBody: Animal, @Res() res) {
-    this.animalService.update(requestBody.id, requestBody).then(data => {
-      res.status(200).send({
-        message: 'Success',
-        status: res.status,
-        data: data
-      });
-    }).catch(err => {
-      res.statusMessage = err.message;
-      res.status(500).send(err.message);
-      });
+  async fullUpdate(@Body() requestBody: Animal) {
+    const data = await this.animalService.update(requestBody.id, requestBody);
+    return {
+      message: 'Success',
+      status: 200,
+      data: data
+    };
   }
 
   @Patch(':id')

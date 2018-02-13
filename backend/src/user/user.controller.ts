@@ -1,4 +1,18 @@
-import {Controller, Get, Post, Body, UseGuards, UseInterceptors, Param, Res, Put, Delete, Patch} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  UseInterceptors,
+  Param,
+  Res,
+  Put,
+  Delete,
+  Patch,
+  InternalServerErrorException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -23,25 +37,21 @@ export class UserController {
 
   @Post()
   // @Roles('admin')
-  async create(@Body() requestBody: CreateUserDto, @Res() res) {
-
-    this.userService.create(requestBody.user, requestBody.password)
-      .then(data => {
-        res.status(200).send({
-          message: 'Success',
-          status: res.status,
-          data: data
-        });
-      })
-      .catch(err => {
-        if (err.message === 'User already exists') {
-          res.statusMessage = err.message;
-          res.status(403).send();
-        } else {
-          res.statusMessage = err.message;
-          res.status(500).send(err.message);
-        }
-      });
+  async create(@Body() requestBody: CreateUserDto) {
+    try {
+      const data = await this.userService.create(requestBody.user, requestBody.password);
+      return {
+        message: 'Success',
+        status: 200,
+        data: data,
+      };
+    } catch (err) {
+      if (err.message === 'User already exists') {
+        throw new ForbiddenException(err.message);
+      } else {
+        throw new InternalServerErrorException(err.message);
+      }
+    }
   }
 
   @Get()
