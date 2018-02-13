@@ -18,8 +18,6 @@ export class User {
   })
   email: string;
 
-  @OneToOne(type => UserPassword)
-  @JoinColumn()
+  @Column(type => UserPassword)
   password: UserPassword;
-
 }
