@@ -9,7 +9,7 @@ describe('User e2e', () => {
   const server = express();
   server.use(bodyParser.json());
 
-  const userService = { findAll: () => ['test'] };
+  const userService = { find: () => ['test'] };
 
   beforeAll(async () => {
     const module = await Test.createTestingModule({
@@ -24,12 +24,11 @@ describe('User e2e', () => {
     await app.init();
   });
 
-  it(`/GET users`, () => {
-    return request(server)
-      .get('/users')
-      .expect(200)
-      .expect({
-        data: userService.findAll(),
-      });
+  it(`/GET /api/v1/users`, async () => {
+    const response = await request(server)
+      .get('/api/v1/users');
+
+    expect(response.statusCode).toEqual(200);
+    expect(response.body.data).toEqual(userService.find());
   });
 });
