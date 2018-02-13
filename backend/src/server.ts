@@ -2,8 +2,8 @@ import {appConfig} from './config/app-config';
 import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import * as bodyParser from 'body-parser';
-import {ValidationPipe} from './common/pipes/validation.pipe';
-import * as cors from "cors";
+import * as cors from 'cors';
+import { ValidationPipe } from '@nestjs/common';
 
 export function main() {
 

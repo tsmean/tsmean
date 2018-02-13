@@ -14,13 +14,13 @@ import {
   Inject,
   ForbiddenException,
   InternalServerErrorException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AnimalService } from './animal.service';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
-import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import {Animal} from './animal.entity';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';

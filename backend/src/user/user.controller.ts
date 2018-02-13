@@ -12,13 +12,13 @@ import {
   Patch,
   InternalServerErrorException,
   ForbiddenException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
 import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
-import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import {User} from './user.entity';
 import {CreateUserDto} from '@tsmean/shared';
 import {FindManyOptions} from 'typeorm';
