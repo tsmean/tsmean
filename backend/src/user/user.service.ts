@@ -1,7 +1,7 @@
 import { Component, Inject } from '@nestjs/common';
 import {FindManyOptions, Repository} from 'typeorm';
 import {User} from './user.entity';
-import {HASHING_ALGORITHM, USER_PASSWORD_REPOSITORY_TOKEN, USER_REPOSITORY_TOKEN} from './constants';
+import {HASHING_ALGORITHM, USER_REPOSITORY_TOKEN} from './constants';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {UserPassword} from './user-password.entity';
 import {IUser} from '@tsmean/shared';
@@ -11,8 +11,7 @@ import {Log} from '../logger/logger';
 export class UserService {
   constructor(
     @Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: Repository<User>,
-    @Inject(USER_PASSWORD_REPOSITORY_TOKEN) private readonly userPasswordRepository: Repository<UserPassword>,
-    private log: Log
+    private readonly log: Log
   ) {}
 
   // Create
@@ -21,15 +20,12 @@ export class UserService {
 
     this.log.debug('trying to create user...');
 
-    const userPassword: UserPassword = new UserPassword();
-    userPassword.hash = password;
-    userPassword.algorithm = HASHING_ALGORITHM;
+    const user = this.userRepository.create(userDto);
+    user.password = {
+      hash: password, // TODO: hash password
+      algorithm: HASHING_ALGORITHM,
+    };
 
-    const user = new User();
-    Object.assign(user, userDto);
-    user.password = userPassword;
-
-    await this.userPasswordRepository.save(userPassword); // TODO: implement a catch
     const savedUser = await this.userRepository.save(user);
     this.log.debug(JSON.stringify(savedUser));
     return savedUser;
