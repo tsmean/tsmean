@@ -8,8 +8,7 @@
     "emitDecoratorMetadata": true
   },
   "include": [
-    "src/**/*",
-    "e2e/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
