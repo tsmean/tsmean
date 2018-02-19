@@ -9,7 +9,7 @@ import {User, UserWithoutId} from '../user';
 import {UserStore} from '../user.store';
 
 @Component({
-  selector: 'user-sign-up',
+  selector: 'app-user-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })

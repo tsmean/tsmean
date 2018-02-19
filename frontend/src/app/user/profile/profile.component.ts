@@ -6,7 +6,7 @@ import {User, UserWithoutId} from '../user';
 import {UserStore} from '../user.store';
 
 @Component({
-  selector: 'user-profile',
+  selector: 'app-user-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })

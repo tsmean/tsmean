@@ -8,7 +8,7 @@ import {AnimalStoreService} from '../animal.store';
 import {ResourceStoreService} from '../../resource/resource.store';
 
 @Component({
-  selector: 'animal-display',
+  selector: 'app-animal-display',
   templateUrl: './display-animal.component.html',
   styleUrls: ['./display-animal.component.css']
 })

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Animal} from '../animal.model';
 
 @Component({
-  selector: 'animal-dashboard-list',
+  selector: 'app-animal-dashboard-list',
   templateUrl: './display-animal-list.component.html',
   styleUrls: ['./display-animal-list.component.css']
 })

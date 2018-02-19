@@ -5,7 +5,7 @@ import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
 
 @Component({
-  selector: 'animal-delete',
+  selector: 'app-animal-delete',
   templateUrl: './delete-animal.component.html',
   styleUrls: ['./delete-animal.component.css']
 })

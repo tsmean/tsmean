@@ -5,7 +5,7 @@ import {AnimalStoreService} from '../animal.store';
 import {Animal} from '../animal.model';
 
 @Component({
-  selector: 'animal-wrapper',
+  selector: 'app-animal-wrapper',
   templateUrl: './animal-wrapper.component.html',
   styleUrls: ['./animal-wrapper.component.css']
 })

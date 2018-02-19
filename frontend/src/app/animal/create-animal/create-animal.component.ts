@@ -8,7 +8,7 @@ import {Http} from '@angular/http';
 import {WebUtils} from '@tsmean/utils';
 
 @Component({
-  selector: 'animal-create',
+  selector: 'app-animal-create',
   templateUrl: './create-animal.component.html',
   styleUrls: ['./create-animal.component.css']
 })
