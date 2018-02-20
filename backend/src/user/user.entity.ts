@@ -1,6 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from 'typeorm';
 
 import {UserPassword} from './user-password.entity';
+import {UserRole} from './user.role';
 
 @Entity()
 export class User {
@@ -21,4 +22,7 @@ export class User {
 
   @Column(type => UserPassword)
   password: UserPassword;
+
+  @Column({type: 'enum', enum: UserRole, default: UserRole.Regular})
+  role: UserRole;
 }
