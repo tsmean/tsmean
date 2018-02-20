@@ -48,7 +48,7 @@ export class AnimalController {
   }
 
   @Get()
-  async find(findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
+  async find(@Query() findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
     const options = {
       take: 100,
       skip: 0,

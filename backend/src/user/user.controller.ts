@@ -12,7 +12,8 @@ import {
   Patch,
   InternalServerErrorException,
   ForbiddenException,
-  ParseIntPipe
+  ParseIntPipe,
+  Query
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
@@ -54,7 +55,7 @@ export class UserController {
 
   @Get()
   // TODO: Only user can get info on himself or maybe admin
-  async find(findOptions?: FindManyOptions<User>): Promise<User[]> {
+  async find(@Query() findOptions?: FindManyOptions<User>): Promise<User[]> {
     const options = {
       take: 100,
       skip: 0,
