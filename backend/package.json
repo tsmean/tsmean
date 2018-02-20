@@ -7,6 +7,7 @@
     "start": "./node_modules/.bin/tsc && node dist/server.js",
     "prestart:prod": "tsc",
     "start:prod": "node dist/server.js",
+    "dev": "nodemon",
     "test": "jest --config=jest.json --coverage --runInBand --forceExit",
     "test:watch": "jest --watch --config=jest.json",
     "test:coverage": "jest --config=jest.json --coverage --coverageDirectory=coverage",
@@ -62,5 +63,7 @@
     "typescript": "^2.7.2",
     "winston": "^3.0.0-rc1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.15.1"
+  }
 }
