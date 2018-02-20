@@ -13,16 +13,15 @@ import {WebUtils} from '@tsmean/utils';
   styleUrls: ['./create-animal.component.css']
 })
 export class CreateAnimalComponent implements OnInit {
-
   public newAnimal: AnimalWithoutId;
 
   constructor(
-      private animalService: AnimalService,
-      private notifyService: NotifyService,
-      private dashboardList: AnimalDashboardListStore,
-      private animalStoreService: AnimalStoreService,
-      private http: Http
-  ) { }
+    private animalService: AnimalService,
+    private notifyService: NotifyService,
+    private dashboardList: AnimalDashboardListStore,
+    private animalStoreService: AnimalStoreService,
+    private http: Http
+  ) {}
 
   ngOnInit() {
     this.newAnimal = {};
@@ -30,13 +29,16 @@ export class CreateAnimalComponent implements OnInit {
 
   public createAnimal() {
     const animalObs = this.animalService.createAnimal(this.newAnimal);
-    animalObs.subscribe(newAnimal => {
-      this.animalStoreService.addOrUpdate(newAnimal);
-      this.notifyService.success('Animal Created');
-      this.dashboardList.add(newAnimal.id);
-    }, errorResp => {
-      this.notifyService.error(errorResp.statusText);
-    });
+    animalObs.subscribe(
+      newAnimal => {
+        this.animalStoreService.addOrUpdate(newAnimal);
+        this.notifyService.success('Animal Created');
+        this.dashboardList.add(newAnimal.id);
+      },
+      errorResp => {
+        this.notifyService.error(errorResp.statusText);
+      }
+    );
     if (this.newAnimal.name) {
       this.animalService.addAnimalPic(this.newAnimal.name, animalObs);
     }
@@ -47,5 +49,4 @@ export class CreateAnimalComponent implements OnInit {
       this.createAnimal();
     }
   }
-
 }

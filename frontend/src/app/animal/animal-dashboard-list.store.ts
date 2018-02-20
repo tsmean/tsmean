@@ -4,15 +4,14 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AnimalDashboardListStore {
-
   private dashboardList: BehaviorSubject<number[]> = new BehaviorSubject([]);
 
-  constructor() { }
+  constructor() {}
 
   /**
    * Adds a resourceId to the list. If no position is provided, appends it to the end.
    */
-  add (resourceId: number, index?: number): void {
+  add(resourceId: number, index?: number): void {
     const currentValue: number[] = this.dashboardList.getValue(); // todo: check immutability
     if (index !== undefined) {
       if (index <= currentValue.length) {
@@ -37,21 +36,19 @@ export class AnimalDashboardListStore {
   /**
    * Remove a single item from the list by its id
    */
-  removeById (resourceId: number): void {
+  removeById(resourceId: number): void {
     const currentValue = this.dashboardList.getValue();
     this.dashboardList.next(currentValue.filter(id => id !== resourceId));
   }
 
-
   /**
    * Remove a single item from the list by its position
    */
-  removeByIndex (index: number): void {
+  removeByIndex(index: number): void {
     const currentValue = this.dashboardList.getValue();
     currentValue.splice(index, 1);
     this.dashboardList.next(currentValue);
   }
-
 
   /**
    * Get the list-observable
@@ -60,11 +57,10 @@ export class AnimalDashboardListStore {
     return this.dashboardList;
   }
 
-
   /**
    * Update an item in the list by its index
    */
-  updateByIndex (index: number, newResourceId: number): void {
+  updateByIndex(index: number, newResourceId: number): void {
     const currentValue = this.dashboardList.getValue();
     if (index <= currentValue.length) {
       currentValue[index] = newResourceId;
@@ -77,11 +73,9 @@ export class AnimalDashboardListStore {
   /**
    * Update an item in the list by its id
    */
-  updateById (id: number, newResourceId: number): void {
+  updateById(id: number, newResourceId: number): void {
     const currentValue = this.dashboardList.getValue();
-    const newValue = currentValue.map(x => x === id ? newResourceId : x);
+    const newValue = currentValue.map(x => (x === id ? newResourceId : x));
     this.dashboardList.next(newValue);
   }
-
-
 }

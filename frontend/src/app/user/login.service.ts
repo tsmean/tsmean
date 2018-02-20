@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import { Http } from '@angular/http';
+import {Http} from '@angular/http';
 import {NotifyService} from 'notify-angular';
 import {Cookies} from '@tsmean/cookies';
 import {Router} from '@angular/router';
@@ -15,19 +15,12 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class LoginService {
-
   private user: User;
 
-  constructor(
-    @Inject(ApiUrl) private apiUrl: string,
-    private http: Http,
-    private notifyService: NotifyService,
-    private router: Router
-  ) { }
+  constructor(@Inject(ApiUrl) private apiUrl: string, private http: Http, private notifyService: NotifyService, private router: Router) {}
 
   logIn(email: string, password: string): void {
-    const $data = this.http.post(this.loginApi, {email: email, password: password})
-      .map(resp => resp.json().data);
+    const $data = this.http.post(this.loginApi, {email: email, password: password}).map(resp => resp.json().data);
 
     $data.subscribe(resp => {
       this.notifyService.success('logged in');
@@ -52,6 +45,4 @@ export class LoginService {
   private get loginApi(): string {
     return WebUtils.urlJoin(this.apiUrl, 'login');
   }
-
-
 }

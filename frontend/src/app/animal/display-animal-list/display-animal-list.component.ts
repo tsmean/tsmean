@@ -7,14 +7,9 @@ import {Animal} from '../animal.model';
   styleUrls: ['./display-animal-list.component.css']
 })
 export class DisplayAnimalListComponent implements OnInit {
+  @Input() animalIds: string[];
 
-  @Input()
-  animalIds: string[];
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 }

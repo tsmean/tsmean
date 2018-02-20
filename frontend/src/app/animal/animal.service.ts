@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Animal, AnimalWithoutId} from './animal.model';
 
@@ -8,14 +8,9 @@ import {ResourceService} from '../resource/resource.service';
 
 @Injectable()
 export class AnimalService {
+  constructor(private resourceService: ResourceService, private http: Http, private animalStoreService: AnimalStoreService) {}
 
-  constructor(
-      private resourceService: ResourceService,
-      private http: Http,
-      private animalStoreService: AnimalStoreService
-  ) { }
-
-  private get resourceName (): string {
+  private get resourceName(): string {
     return 'animals';
   }
 
@@ -38,7 +33,7 @@ export class AnimalService {
 
   // small extra: add a picture to the animal
   // works with observable to achieve best user experience
-  addAnimalPic (animalName: string, animalObs: Observable<Animal>) {
+  addAnimalPic(animalName: string, animalObs: Observable<Animal>) {
     const animalImageObs = this.http.get(`https://animal-images.herokuapp.com/find?q=${animalName.toLowerCase()}`);
     animalObs.subscribe(animalResp => {
       animalImageObs.subscribe(animal => {
@@ -49,5 +44,4 @@ export class AnimalService {
       });
     });
   }
-
 }

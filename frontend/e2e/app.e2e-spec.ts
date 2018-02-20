@@ -1,4 +1,4 @@
-import { AppPage } from './app.po';
+import {AppPage} from './app.po';
 
 describe('tsmean-frontend App', () => {
   let page: AppPage;

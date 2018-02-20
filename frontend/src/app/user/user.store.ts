@@ -6,13 +6,9 @@ import {UserService} from './user.service';
 
 @Injectable()
 export class UserStore {
-
   private _user: BehaviorSubject<User>;
 
-  constructor(
-    private loginService: LoginService,
-    private userService: UserService
-  ) {
+  constructor(private loginService: LoginService, private userService: UserService) {
     // TODO: better default user
     this._user = new BehaviorSubject({
       email: '',
@@ -34,5 +30,4 @@ export class UserStore {
   setUser(user: User): void {
     this.user.next(user);
   }
-
 }

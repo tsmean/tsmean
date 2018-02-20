@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../login.service';
 import {NotifyService} from 'notify-angular';
 import {Router} from '@angular/router';
@@ -14,7 +14,6 @@ import {UserStore} from '../user.store';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent {
-
   newUser: UserWithoutId = {
     email: '',
     firstName: '',
@@ -24,12 +23,12 @@ export class SignUpComponent {
   password = '';
 
   constructor(
-      private userService: UserService,
-      private notifyService: NotifyService,
-      private router: Router,
-      private loginService: LoginService,
-      private userStore: UserStore
-  ) { }
+    private userService: UserService,
+    private notifyService: NotifyService,
+    private router: Router,
+    private loginService: LoginService,
+    private userStore: UserStore
+  ) {}
 
   doSignUp() {
     this.userService.createUser(this.newUser, this.password).subscribe(user => {
@@ -39,5 +38,4 @@ export class SignUpComponent {
       this.router.navigate(['/dashboard']);
     });
   }
-
 }

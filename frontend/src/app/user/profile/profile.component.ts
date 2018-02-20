@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../user.service';
 
 import {NotifyService} from 'notify-angular';
@@ -11,14 +11,9 @@ import {UserStore} from '../user.store';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-
   user: User;
 
-  constructor(
-    private userService: UserService,
-    private notifyService: NotifyService,
-    private userStore: UserStore
-  ) {
+  constructor(private userService: UserService, private notifyService: NotifyService, private userStore: UserStore) {
     userStore.user.subscribe(user => {
       this.user = user;
     });
@@ -30,5 +25,4 @@ export class ProfileComponent {
       this.notifyService.success('User updated');
     });
   }
-
 }

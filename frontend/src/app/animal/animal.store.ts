@@ -6,16 +6,13 @@ import {ResourceStoreService} from '../resource/resource.store';
 
 @Injectable()
 export class AnimalStoreService {
-
-  constructor(
-      private resourceStore: ResourceStoreService
-  ) { }
+  constructor(private resourceStore: ResourceStoreService) {}
 
   private get resourceName() {
     return 'animals';
   }
 
-  addOrUpdate (animal: Animal): void {
+  addOrUpdate(animal: Animal): void {
     this.resourceStore.addOrUpdate(this.resourceName, animal);
   }
 
@@ -23,12 +20,11 @@ export class AnimalStoreService {
     this.resourceStore.addOrUpdateMany(this.resourceName, animals);
   }
 
-  remove (resourceId: number): void {
+  remove(resourceId: number): void {
     this.resourceStore.remove(this.resourceName, resourceId);
   }
 
-  get (resourceId: number): BehaviorSubject<Animal> {
+  get(resourceId: number): BehaviorSubject<Animal> {
     return this.resourceStore.get(this.resourceName, resourceId);
   }
-
 }
