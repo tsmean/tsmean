@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import {Component, Inject} from '@nestjs/common';
 import {FindManyOptions, Repository} from 'typeorm';
 import {User} from './user.entity';
 import {HASHING_ALGORITHM, USER_REPOSITORY_TOKEN} from './constants';
@@ -9,21 +9,17 @@ import {Log} from '../logger/logger';
 
 @Component()
 export class UserService {
-  constructor(
-    @Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: Repository<User>,
-    private readonly log: Log
-  ) {}
+  constructor(@Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: Repository<User>, private readonly log: Log) {}
 
   // Create
   // Precondition: the user needs to have a unique email address
   async create(userDto: IUser, password: string): Promise<User> {
-
     this.log.debug('trying to create user...');
 
     const user = this.userRepository.create(userDto);
     user.password = {
       hash: password, // TODO: hash password
-      algorithm: HASHING_ALGORITHM,
+      algorithm: HASHING_ALGORITHM
     };
 
     const savedUser = await this.userRepository.save(user);
@@ -36,8 +32,8 @@ export class UserService {
     const options = {
       take: 100,
       skip: 0,
-      ...findOptions, // overwrite default ones
-    }
+      ...findOptions // overwrite default ones
+    };
     this.log.debug(`searching for max ${options.take} users with an offset of ${options.skip} ...`);
     return await this.userRepository.find(options);
   }
@@ -54,7 +50,7 @@ export class UserService {
     });
   }
 
-  emailIsTaken (email: string): Promise<boolean> {
+  emailIsTaken(email: string): Promise<boolean> {
     this.log.debug('checking if email is taken...');
     return this.findOneByEmail(email).then(user => {
       return !!user;
@@ -72,5 +68,4 @@ export class UserService {
     this.log.debug('trying to remove user...');
     return await this.userRepository.removeById(id);
   }
-
 }

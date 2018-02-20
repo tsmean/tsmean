@@ -1,6 +1,5 @@
 import {AppProperties} from './app-properties.model';
 export class AppConfig {
-
   private _appConfig: AppProperties;
 
   // configName is the name of the properties file.
@@ -12,7 +11,6 @@ export class AppConfig {
   public get appConfig(): AppProperties {
     return this._appConfig;
   }
-
 }
 
 export const appConfig = new AppConfig();

@@ -1,5 +1,5 @@
 import {Module, NestModule, RequestMethod} from '@nestjs/common';
-import { UserController } from './user.controller';
+import {UserController} from './user.controller';
 import {PasswordCryptographerServiceImpl} from './password-cryptographer/password-cryptographer';
 import {LocalStrategy} from './local.strategy';
 import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
@@ -23,16 +23,10 @@ import {apiPath} from '../api';
     UserService,
     LocalStrategy
   ],
-  modules: [
-    EmailValidatorModule,
-    DatabaseModule,
-    LoggerModule
-  ]
+  modules: [EmailValidatorModule, DatabaseModule, LoggerModule]
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewaresConsumer) {
-    consumer
-      .apply(passport.authenticate('local', { session: false }))
-      .forRoutes({ path: apiPath(1, 'login'), method: RequestMethod.ALL });
+    consumer.apply(passport.authenticate('local', {session: false})).forRoutes({path: apiPath(1, 'login'), method: RequestMethod.ALL});
   }
 }

@@ -14,13 +14,13 @@ import {
   Inject,
   ForbiddenException,
   InternalServerErrorException,
-  ParseIntPipe,
+  ParseIntPipe
 } from '@nestjs/common';
-import { AnimalService } from './animal.service';
-import { RolesGuard } from '../common/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
-import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
+import {AnimalService} from './animal.service';
+import {RolesGuard} from '../common/guards/roles.guard';
+import {Roles} from '../common/decorators/roles.decorator';
+import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
+import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {Animal} from './animal.entity';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
@@ -30,9 +30,7 @@ import {apiPath} from '../api';
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {
-  constructor(
-    private readonly animalService: AnimalService
-  ) {}
+  constructor(private readonly animalService: AnimalService) {}
 
   @Post()
   // @Roles('admin')
@@ -53,13 +51,16 @@ export class AnimalController {
     const options = {
       take: 100,
       skip: 0,
-      ...findOptions, // overwrite default ones
-    }
+      ...findOptions // overwrite default ones
+    };
     return this.animalService.find(options);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id): Promise<Animal> {
+  findOne(
+    @Param('id', new ParseIntPipe())
+    id
+  ): Promise<Animal> {
     return this.animalService.findOneById(id);
   }
 
@@ -70,14 +71,20 @@ export class AnimalController {
   }
 
   @Patch(':id')
-  async partialUpdate(@Param('id', new ParseIntPipe()) id, partialEntry: DeepPartial<Animal>) {
+  async partialUpdate(
+    @Param('id', new ParseIntPipe())
+    id,
+    partialEntry: DeepPartial<Animal>
+  ) {
     return this.animalService.update(id, partialEntry);
   }
 
   @Delete(':id')
   // TODO: Only animal can delete himself or maybe admin
-  async remove(@Param('id', new ParseIntPipe()) id) {
+  async remove(
+    @Param('id', new ParseIntPipe())
+    id
+  ) {
     return this.animalService.remove(id);
   }
-
 }

@@ -1,8 +1,7 @@
 import {WelcomeHtmlController} from '../../src/welcome/welcome-html-router';
-import { Test } from '@nestjs/testing';
+import {Test} from '@nestjs/testing';
 
 describe('Test simple welcome Html Router', () => {
-
   let welcomeRouter: WelcomeHtmlController;
 
   beforeEach(async () => {
@@ -16,5 +15,4 @@ describe('Test simple welcome Html Router', () => {
   it('should return html containing the word welcome', async () => {
     expect(await welcomeRouter.welcome()).toContain('Welcome');
   });
-
 });

@@ -3,10 +3,9 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
-import { ValidationPipe } from '@nestjs/common';
+import {ValidationPipe} from '@nestjs/common';
 
 export function main() {
-
   appConfig.setAppConfig(process.argv[2] || 'local');
 
   async function bootstrap() {
@@ -23,7 +22,6 @@ export function main() {
   }
 
   bootstrap();
-
-};
+}
 
 main();

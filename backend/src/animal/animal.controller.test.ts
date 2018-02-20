@@ -1,5 +1,5 @@
-import { Test } from '@nestjs/testing';
-import { AnimalController } from './animal.controller';
+import {Test} from '@nestjs/testing';
+import {AnimalController} from './animal.controller';
 import {AnimalService} from './animal.service';
 import {Animal} from './animal.entity';
 import {databaseProviders} from '../database/database.providers';
@@ -13,12 +13,7 @@ describe('AnimalController', () => {
   beforeAll(async () => {
     const module = await Test.createTestingModule({
       controllers: [AnimalController],
-      components: [
-        Log,
-        ...databaseProviders,
-        ...animalProviders,
-        AnimalService
-      ],
+      components: [Log, ...databaseProviders, ...animalProviders, AnimalService]
     }).compile();
 
     animalService = module.get<AnimalService>(AnimalService);
@@ -31,14 +26,14 @@ describe('AnimalController', () => {
     expect(await animalController.find()).toBe(animals);
   });
 
-  it('should be able to find one animal by id', async (done) => {
+  it('should be able to find one animal by id', async done => {
     const animal = exampleAnimal(1);
     jest.spyOn(animalService, 'findOneById').mockImplementation(() => animal);
     expect(await animalController.findOne(1)).toBe(animal);
     done();
   });
 
-/*  it('should be able to update one animal', async (done) => {
+  /*  it('should be able to update one animal', async (done) => {
     const animal = exampleAnimal(1);
     jest.spyOn(animalService, 'update').mockImplementation(() => undefined);
     const returnVal = await animalController.fullUpdate(animal);
@@ -46,7 +41,7 @@ describe('AnimalController', () => {
     done();
   });*/
 
-  it('should be able to partial update one animal', async (done) => {
+  it('should be able to partial update one animal', async done => {
     const animal = exampleAnimal(1);
     jest.spyOn(animalService, 'update').mockImplementation(() => undefined);
     const returnVal = await animalController.partialUpdate(animal.id, animal);
@@ -54,7 +49,7 @@ describe('AnimalController', () => {
     done();
   });
 
-  it('should be able to remove one animal', async (done) => {
+  it('should be able to remove one animal', async done => {
     const animal = exampleAnimal(1);
     jest.spyOn(animalService, 'remove').mockImplementation(() => undefined);
     const returnVal = await animalController.remove(animal.id);
@@ -69,5 +64,4 @@ describe('AnimalController', () => {
       pic: 'some/path'
     };
   }
-
 });

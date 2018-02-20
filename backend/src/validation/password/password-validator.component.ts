@@ -7,4 +7,3 @@ export class PasswordValidatorImpl extends PasswordValidator {
     super();
   }
 }
-

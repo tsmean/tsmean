@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import {Component, Inject} from '@nestjs/common';
 import {FindManyOptions, Repository} from 'typeorm';
 import {Animal} from './animal.entity';
 import {ANIMAL_REPOSITORY_TOKEN} from './constants';
@@ -7,10 +7,7 @@ import {Log} from '../logger/logger';
 
 @Component()
 export class AnimalService {
-  constructor(
-    @Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>,
-    private log: Log
-  ) {}
+  constructor(@Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>, private log: Log) {}
 
   // Create
   async create(animalDto: Animal): Promise<Animal> {
@@ -25,8 +22,8 @@ export class AnimalService {
     const options = {
       take: 100,
       skip: 0,
-      ...findOptions, // overwrite default ones
-    }
+      ...findOptions // overwrite default ones
+    };
     return await this.animalRepository.find(options);
   }
 
@@ -44,5 +41,4 @@ export class AnimalService {
   async remove(id: number): Promise<void> {
     return await this.animalRepository.removeById(id);
   }
-
 }

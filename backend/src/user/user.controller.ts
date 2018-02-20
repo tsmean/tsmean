@@ -12,13 +12,13 @@ import {
   Patch,
   InternalServerErrorException,
   ForbiddenException,
-  ParseIntPipe,
+  ParseIntPipe
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { RolesGuard } from '../common/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
-import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
+import {UserService} from './user.service';
+import {RolesGuard} from '../common/guards/roles.guard';
+import {Roles} from '../common/decorators/roles.decorator';
+import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
+import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {User} from './user.entity';
 import {CreateUserDto} from '@tsmean/shared';
 import {FindManyOptions} from 'typeorm';
@@ -30,10 +30,7 @@ import {apiPath} from '../api';
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly emailValidator: EmailValidatorImpl
-  ) {}
+  constructor(private readonly userService: UserService, private readonly emailValidator: EmailValidatorImpl) {}
 
   @Post()
   // @Roles('admin')
@@ -43,7 +40,7 @@ export class UserController {
       return {
         message: 'Success',
         status: 200,
-        data: data,
+        data: data
       };
     } catch (err) {
       if (err.message === 'User already exists') {
@@ -60,8 +57,8 @@ export class UserController {
     const options = {
       take: 100,
       skip: 0,
-      ...findOptions, // overwrite default ones
-    }
+      ...findOptions // overwrite default ones
+    };
     return this.userService.find(options);
   }
 
@@ -72,9 +69,7 @@ export class UserController {
   // TODO: Only user can get info on himself or maybe admin
   findOne(@Param('idOrEmail') idOrEmail): Promise<User> {
     const isEmail = this.emailValidator.simpleCheck(idOrEmail);
-    return isEmail ?
-      this.userService.findOneByEmail(idOrEmail) :
-      this.userService.findOneById(parseInt(idOrEmail, 10));
+    return isEmail ? this.userService.findOneByEmail(idOrEmail) : this.userService.findOneById(parseInt(idOrEmail, 10));
   }
 
   @Put()
@@ -84,14 +79,20 @@ export class UserController {
   }
 
   @Patch(':id')
-  async partialUpdate(@Param('id', new ParseIntPipe()) id, partialEntry: DeepPartial<User>) {
+  async partialUpdate(
+    @Param('id', new ParseIntPipe())
+    id,
+    partialEntry: DeepPartial<User>
+  ) {
     return this.userService.update(id, partialEntry);
   }
 
   @Delete(':id')
   // TODO: Only user can delete himself or maybe admin
-  async remove(@Param('id', new ParseIntPipe()) id) {
+  async remove(
+    @Param('id', new ParseIntPipe())
+    id
+  ) {
     return this.userService.remove(id);
   }
-
 }

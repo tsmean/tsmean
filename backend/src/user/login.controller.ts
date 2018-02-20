@@ -10,19 +10,17 @@ import {apiPath} from '../api';
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly emailValidator: EmailValidatorImpl
-  ) {}
+  constructor(private readonly userService: UserService, private readonly emailValidator: EmailValidatorImpl) {}
 
   @Post()
-  async login(@Body() req: {
-    username: string;
-    password: string;
-  }, @Res() res) {
-
+  async login(
+    @Body()
+    req: {
+      username: string;
+      password: string;
+    },
+    @Res() res
+  ) {
     console.log(req);
-
   }
-
 }

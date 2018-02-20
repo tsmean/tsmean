@@ -7,6 +7,6 @@ export const userProviders = [
   {
     provide: USER_REPOSITORY_TOKEN,
     useFactory: (connection: Connection) => connection.getRepository(User),
-    inject: [DB_CONNECTION_TOKEN],
-  },
+    inject: [DB_CONNECTION_TOKEN]
+  }
 ];

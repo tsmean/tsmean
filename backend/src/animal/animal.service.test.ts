@@ -6,7 +6,6 @@ import {Log} from '../logger/logger';
 import {Animal} from './animal.entity';
 
 describe('animal service', () => {
-
   let animalService: AnimalService;
 
   /**
@@ -16,17 +15,13 @@ describe('animal service', () => {
    */
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      components: [
-        Log,
-        ...databaseProviders,
-        ...animalProviders,
-        AnimalService],
+      components: [Log, ...databaseProviders, ...animalProviders, AnimalService]
     }).compile();
 
     animalService = module.get<AnimalService>(AnimalService);
   });
 
-  it('should be able to create a animal', (done) => {
+  it('should be able to create a animal', done => {
     createRandomAnimal().then(resp => {
       if (resp.id !== undefined) {
         done();
@@ -34,14 +29,14 @@ describe('animal service', () => {
     });
   });
 
-  it('should be able to find all animals', (done) => {
+  it('should be able to find all animals', done => {
     animalService.find().then(resp => {
       expect(Array.isArray(resp)).toBe(true);
       done();
     });
   });
 
-  it('should be able to find one animal by id', async (done) => {
+  it('should be able to find one animal by id', async done => {
     const createdAnimal = await createRandomAnimal();
     const foundAnimal = await animalService.findOneById(createdAnimal.id);
     expect(!!foundAnimal).toBe(true);
@@ -49,7 +44,7 @@ describe('animal service', () => {
     done();
   });
 
-  it('should be able to update animal', async (done) => {
+  it('should be able to update animal', async done => {
     const createdAnimal = await createRandomAnimal();
     await animalService.update(createdAnimal.id, {name: 'Elephant'});
     const updatedAnimal = await animalService.findOneById(createdAnimal.id);
@@ -58,7 +53,7 @@ describe('animal service', () => {
     done();
   });
 
-  it('should be able to remove animal', async (done) => {
+  it('should be able to remove animal', async done => {
     const createdAnimal = await createRandomAnimal();
     await animalService.remove(createdAnimal.id);
     const deletedAnimal = await animalService.findOneById(createdAnimal.id);
@@ -67,7 +62,7 @@ describe('animal service', () => {
   });
 
   let counter = 0;
-  function createRandomAnimal (): Promise<Animal> {
+  function createRandomAnimal(): Promise<Animal> {
     // TODO: find out how to drop table in typeorm...
     const email = Math.random() + (counter++).toString() + '@gmail.com';
     const animal: Animal = {
@@ -76,5 +71,4 @@ describe('animal service', () => {
     };
     return animalService.create(animal);
   }
-
 });
