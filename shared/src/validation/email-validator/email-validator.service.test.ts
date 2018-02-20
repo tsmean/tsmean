@@ -1,4 +1,5 @@
 import {EmailValidation, EmailValidator} from './email-validator.service';
+
 describe('Email Validator', () => {
   let emailValidator: EmailValidator;
 

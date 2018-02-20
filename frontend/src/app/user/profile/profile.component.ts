@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../user.service';
-
 import {NotifyService} from 'notify-angular';
+
+import {UserService} from '../user.service';
 import {User, UserWithoutId} from '../user';
 import {UserStore} from '../user.store';
 

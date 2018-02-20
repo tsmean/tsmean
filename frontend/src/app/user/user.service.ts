@@ -1,13 +1,13 @@
 import {Inject, Injectable} from '@angular/core';
-import {User, UserWithoutId} from './user';
-import {Observable} from 'rxjs/Observable';
-import {WebUtils} from '@tsmean/utils';
 import {Http} from '@angular/http';
-import {ApiUrl} from './api-url';
 import {NotifyService} from 'notify-angular';
-import {LoginService} from './login.service';
-
+import {WebUtils} from '@tsmean/utils';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+
+import {User, UserWithoutId} from './user';
+import {ApiUrl} from './api-url';
+import {LoginService} from './login.service';
 import {ResourceService} from '../resource/resource.service';
 
 @Injectable()

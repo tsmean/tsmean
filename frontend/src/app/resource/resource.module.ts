@@ -1,7 +1,8 @@
 import {InjectionToken, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ResourceService} from './resource.service';
 import {Http, HttpModule} from '@angular/http';
+
+import {ResourceService} from './resource.service';
 import {ResourceStoreService} from './resource.store';
 import {ApiUrl} from './api-url-injection-token';
 

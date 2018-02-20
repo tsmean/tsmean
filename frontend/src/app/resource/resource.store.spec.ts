@@ -1,7 +1,7 @@
 import {TestBed, inject} from '@angular/core/testing';
+import {Resource} from '@tsmean/shared';
 
 import {ResourceStoreService} from './resource.store';
-import {Resource} from '@tsmean/shared';
 
 describe('Resource Store', () => {
   beforeEach(() => {

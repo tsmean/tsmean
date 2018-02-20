@@ -1,4 +1,5 @@
 import {IsString, IsInt} from 'class-validator';
+
 import {IUser} from '../../models/user.model';
 
 export class UpdateUserDto {

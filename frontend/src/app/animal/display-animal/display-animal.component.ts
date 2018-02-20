@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {CoreUtils} from '@tsmean/utils';
+
 import {Animal} from '../animal.model';
 import {AnimalSettings} from '../animal-settings';
 import {AnimalService} from '../animal.service';
-
-import {CoreUtils} from '@tsmean/utils';
 import {AnimalStoreService} from '../animal.store';
 import {ResourceStoreService} from '../../resource/resource.store';
 

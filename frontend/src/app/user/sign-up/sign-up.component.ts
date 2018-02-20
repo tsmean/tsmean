@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from '../login.service';
-import {NotifyService} from 'notify-angular';
 import {Router} from '@angular/router';
-
+import {NotifyService} from 'notify-angular';
 import 'rxjs/operator/catch';
+
+import {LoginService} from '../login.service';
 import {UserService} from '../user.service';
 import {User, UserWithoutId} from '../user';
 import {UserStore} from '../user.store';

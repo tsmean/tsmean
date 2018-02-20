@@ -1,7 +1,7 @@
 import {TestBed, inject} from '@angular/core/testing';
-
 import {HttpModule, ResponseOptions, XHRBackend, Response} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
+
 import {AnimalDashboardListStore} from './animal-dashboard-list.store';
 
 describe('Animal Dashboard List Store Service', () => {

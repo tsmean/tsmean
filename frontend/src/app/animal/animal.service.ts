@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Animal, AnimalWithoutId} from './animal.model';
-
 import {Http} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+
+import {Animal, AnimalWithoutId} from './animal.model';
 import {AnimalStoreService} from './animal.store';
 import {ResourceService} from '../resource/resource.service';
 

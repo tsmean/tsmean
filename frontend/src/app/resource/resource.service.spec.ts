@@ -1,8 +1,8 @@
 import {TestBed, inject} from '@angular/core/testing';
-
-import {ResourceService} from './resource.service';
 import {HttpModule, ResponseOptions, XHRBackend, Response} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
+
+import {ResourceService} from './resource.service';
 import {ApiUrl} from './api-url-injection-token';
 
 describe('ResourceService', () => {

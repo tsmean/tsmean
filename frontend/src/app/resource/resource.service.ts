@@ -1,14 +1,13 @@
 import {forwardRef, Inject, Injectable, InjectionToken} from '@angular/core';
 import {Http} from '@angular/http';
-
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/catch';
-import {Resource, ResourceWithoutId} from '@tsmean/shared';
-
-import {WebUtils} from '@tsmean/utils';
 import {Observable} from 'rxjs/Observable';
+import {Resource, ResourceWithoutId} from '@tsmean/shared';
+import {WebUtils} from '@tsmean/utils';
+
 import {ApiUrl} from './api-url-injection-token';
 
 @Injectable()

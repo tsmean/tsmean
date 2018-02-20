@@ -1,4 +1,5 @@
 import {PasswordValidation, PasswordValidator} from './password-validator.service';
+
 describe('Password Validator', () => {
   let passwordValidator: PasswordValidator;
 

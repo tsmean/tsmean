@@ -1,17 +1,16 @@
 import {Inject, Injectable} from '@angular/core';
 import {Http} from '@angular/http';
+import {Router} from '@angular/router';
 import {NotifyService} from 'notify-angular';
 import {Cookies} from '@tsmean/cookies';
-import {Router} from '@angular/router';
-import {User} from './user';
 import {WebUtils} from '@tsmean/utils';
-import {ApiUrl} from './api-url';
-
-import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
-
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+
+import {User} from './user';
+import {ApiUrl} from './api-url';
 
 @Injectable()
 export class LoginService {

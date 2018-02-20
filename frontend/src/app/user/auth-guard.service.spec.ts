@@ -1,13 +1,13 @@
 import {TestBed, inject} from '@angular/core/testing';
-
-import {AuthGuardService} from './auth-guard.service';
 import {RouterModule, Router} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
-import {LoginService} from './login.service';
-import {ApiUrl} from './api-url';
-import {NotifyModule} from 'notify-angular';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 import {HttpModule, Response, ResponseOptions, XHRBackend} from '@angular/http';
+import {NotifyModule} from 'notify-angular';
+
+import {AuthGuardService} from './auth-guard.service';
+import {LoginService} from './login.service';
+import {ApiUrl} from './api-url';
 
 describe('AuthGuardService', () => {
   beforeEach(() => {

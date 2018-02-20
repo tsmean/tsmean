@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Animal} from './animal.model';
-
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+
+import {Animal} from './animal.model';
 import {ResourceStoreService} from '../resource/resource.store';
 
 @Injectable()

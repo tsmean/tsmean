@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Animal, AnimalWithoutId} from '../animal.model';
-import {AnimalService} from '../animal.service';
 import {NotifyService} from 'notify-angular';
-import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
-import {AnimalStoreService} from '../animal.store';
 import {Http} from '@angular/http';
 import {WebUtils} from '@tsmean/utils';
+
+import {Animal, AnimalWithoutId} from '../animal.model';
+import {AnimalService} from '../animal.service';
+import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
+import {AnimalStoreService} from '../animal.store';
 
 @Component({
   selector: 'app-animal-create',
