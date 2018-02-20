@@ -15,10 +15,10 @@ Based on `properties.template.json` file:
 ```
 
 Create you own properties.json like:
-- local.properties.json
-- prod.properties.json
+- development.properties.json
+- production.properties.json
 - test.properties.json
 
-Where `local`, `prod` or `test` are the command line arguments passed to the main node process (default `local`).
+Where `development`, `production` or `test` are the value of `NODE_ENV` env variable on runtime (default `development`).
 
 They are added to .gitignore so they won't be pushed to the repository.

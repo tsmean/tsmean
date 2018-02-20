@@ -3,26 +3,19 @@ import {ValidationPipe} from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
-import {appConfig} from './config/app-config';
 import {AppModule} from './app.module';
 
-export function main() {
-  appConfig.setAppConfig(process.argv[2] || 'local');
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
 
-  async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+  app.use(bodyParser.json());
+  app.useGlobalPipes(new ValidationPipe());
 
-    app.use(bodyParser.json());
-    app.useGlobalPipes(new ValidationPipe());
+  // Allow CORS since frontend is served completely independently
+  app.use(cors());
 
-    // Allow CORS since frontend is served completely independently
-    app.use(cors());
-
-    const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4242;
-    await app.listen(port);
-  }
-
-  bootstrap();
+  const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4242;
+  await app.listen(port);
 }
 
-main();
+bootstrap();
