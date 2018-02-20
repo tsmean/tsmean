@@ -1,7 +1,6 @@
 export abstract class PasswordValidator {
   validatePassword(password: string): Promise<PasswordValidation> {
     return new Promise((resolve, reject) => {
-
       const passwordIsLongEnough = password.length >= 6;
       if (!passwordIsLongEnough) {
         resolve({
@@ -18,9 +17,8 @@ export abstract class PasswordValidator {
        */
 
       resolve({
-        isValid: true,
+        isValid: true
       });
-
     });
   }
 }
