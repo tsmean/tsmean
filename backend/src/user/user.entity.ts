@@ -1,4 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from 'typeorm';
+
 import {UserPassword} from './user-password.entity';
 
 @Entity()

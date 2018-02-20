@@ -1,5 +1,6 @@
-import {PasswordCryptographerServiceImpl} from './password-cryptographer';
 import {Test} from '@nestjs/testing';
+
+import {PasswordCryptographerServiceImpl} from './password-cryptographer';
 
 describe('bcrypt', () => {
   let passwordCryptographer: PasswordCryptographerServiceImpl;

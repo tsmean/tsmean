@@ -1,8 +1,9 @@
 import {Component, Inject} from '@nestjs/common';
 import {FindManyOptions, Repository} from 'typeorm';
+import {DeepPartial} from 'typeorm/common/DeepPartial';
+
 import {User} from './user.entity';
 import {HASHING_ALGORITHM, USER_REPOSITORY_TOKEN} from './constants';
-import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {UserPassword} from './user-password.entity';
 import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';

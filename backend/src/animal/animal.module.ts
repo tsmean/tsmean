@@ -1,7 +1,8 @@
 import {Module, NestModule, RequestMethod} from '@nestjs/common';
-import {AnimalController} from './animal.controller';
 import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
 import * as passport from 'passport';
+
+import {AnimalController} from './animal.controller';
 import {AnimalService} from './animal.service';
 import {animalProviders} from './animal.providers';
 import {DatabaseModule} from '../database/database.module';

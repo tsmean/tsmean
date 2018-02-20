@@ -16,14 +16,15 @@ import {
   InternalServerErrorException,
   ParseIntPipe
 } from '@nestjs/common';
+import {FindManyOptions} from 'typeorm';
+import {DeepPartial} from 'typeorm/common/DeepPartial';
+
 import {AnimalService} from './animal.service';
 import {RolesGuard} from '../common/guards/roles.guard';
 import {Roles} from '../common/decorators/roles.decorator';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {Animal} from './animal.entity';
-import {FindManyOptions} from 'typeorm';
-import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {apiPath} from '../api';
 
 @Controller(apiPath(1, 'animals'))

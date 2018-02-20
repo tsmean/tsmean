@@ -1,9 +1,10 @@
 import {Module, NestModule, RequestMethod} from '@nestjs/common';
+import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
+import * as passport from 'passport';
+
 import {UserController} from './user.controller';
 import {PasswordCryptographerServiceImpl} from './password-cryptographer/password-cryptographer';
 import {LocalStrategy} from './local.strategy';
-import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
-import * as passport from 'passport';
 import {UserService} from './user.service';
 import {userProviders} from './user.providers';
 import {DatabaseModule} from '../database/database.module';

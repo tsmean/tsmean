@@ -1,8 +1,9 @@
 import {Component, Inject} from '@nestjs/common';
 import {FindManyOptions, Repository} from 'typeorm';
+import {DeepPartial} from 'typeorm/common/DeepPartial';
+
 import {Animal} from './animal.entity';
 import {ANIMAL_REPOSITORY_TOKEN} from './constants';
-import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {Log} from '../logger/logger';
 
 @Component()

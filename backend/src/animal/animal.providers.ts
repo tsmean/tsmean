@@ -1,4 +1,5 @@
 import {Connection, Repository} from 'typeorm';
+
 import {Animal} from './animal.entity';
 import {DB_CONNECTION_TOKEN, ANIMAL_REPOSITORY_TOKEN} from './constants';
 

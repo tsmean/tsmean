@@ -1,6 +1,7 @@
+import {Component, Inject} from '@nestjs/common';
 import * as passport from 'passport';
 import * as local from 'passport-local';
-import {Component, Inject} from '@nestjs/common';
+
 import {UserService} from './user.service';
 import {PASSWORD_CRYPTOGRAPHER_TOKEN} from './constants';
 import {PasswordCryptographerService} from './password-cryptographer/password-cryptographer.interface';

@@ -14,6 +14,9 @@ import {
   ForbiddenException,
   ParseIntPipe
 } from '@nestjs/common';
+import {FindManyOptions} from 'typeorm';
+import {DeepPartial} from 'typeorm/common/DeepPartial';
+
 import {UserService} from './user.service';
 import {RolesGuard} from '../common/guards/roles.guard';
 import {Roles} from '../common/decorators/roles.decorator';
@@ -21,9 +24,7 @@ import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {User} from './user.entity';
 import {CreateUserDto} from '@tsmean/shared';
-import {FindManyOptions} from 'typeorm';
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
-import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {apiPath} from '../api';
 
 @Controller(apiPath(1, 'users'))
