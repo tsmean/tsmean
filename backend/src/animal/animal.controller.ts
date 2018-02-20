@@ -1,84 +1,91 @@
-import {Controller, Get, Post, Put, Delete, Patch, Body, UseGuards, UseInterceptors, Param, Res, Query, Inject} from '@nestjs/common';
-import { AnimalService } from './animal.service';
-import { RolesGuard } from '../common/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
-import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
-import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
-import {Animal} from './animal.entity';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Patch,
+  Body,
+  UseGuards,
+  UseInterceptors,
+  Param,
+  Res,
+  Query,
+  Inject,
+  ForbiddenException,
+  InternalServerErrorException,
+  ParseIntPipe
+} from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
+
+import {AnimalService} from './animal.service';
+import {RolesGuard} from '../common/guards/roles.guard';
+import {Roles} from '../common/decorators/roles.decorator';
+import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
+import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
+import {Animal} from './animal.entity';
 import {apiPath} from '../api';
 
 @Controller(apiPath(1, 'animals'))
 @UseGuards(RolesGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {
-  constructor(
-    private readonly animalService: AnimalService
-  ) {}
+  constructor(private readonly animalService: AnimalService) {}
 
   @Post()
   // @Roles('admin')
-  async create(@Body() requestBody: Animal, @Res() res) {
-
-    this.animalService.create(requestBody)
-      .then(data => {
-        res.status(200).send({
-          message: 'Success',
-          status: res.status,
-          data: data
-        });
-      })
-      .catch(err => {
-        if (err.message === 'Animal already exists') {
-          res.statusMessage = err.message;
-          res.status(403).send();
-        } else {
-          res.statusMessage = err.message;
-          res.status(500).send(err.message);
-        }
-      });
+  async create(@Body() requestBody: Animal) {
+    try {
+      return await this.animalService.create(requestBody);
+    } catch (err) {
+      if (err.message === 'Animal already exists') {
+        throw new ForbiddenException(err.message);
+      } else {
+        throw new InternalServerErrorException(err.message);
+      }
+    }
   }
 
   @Get()
-  async find(options?: FindManyOptions<Animal>): Promise<Animal[]> {
-    const defaultOptions = {
+  async find(@Query() findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
+    const options = {
       take: 100,
-      skip: 0
+      skip: 0,
+      ...findOptions // overwrite default ones
     };
-    return this.animalService.find(options || defaultOptions);
+    return this.animalService.find(options);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseIntPipe()) id): Promise<Animal> {
+  findOne(
+    @Param('id', new ParseIntPipe())
+    id
+  ): Promise<Animal> {
     return this.animalService.findOneById(id);
   }
 
   @Put()
   // TODO: Only animal can update himself or maybe admin
-  async fullUpdate(@Body() requestBody: Animal, @Res() res) {
-    this.animalService.update(requestBody.id, requestBody).then(data => {
-      res.status(200).send({
-        message: 'Success',
-        status: res.status,
-        data: data
-      });
-    }).catch(err => {
-      res.statusMessage = err.message;
-      res.status(500).send(err.message);
-      });
+  async fullUpdate(@Body() requestBody: Animal) {
+    return await this.animalService.update(requestBody.id, requestBody);
   }
 
   @Patch(':id')
-  async partialUpdate(@Param('id', new ParseIntPipe()) id, partialEntry: DeepPartial<Animal>) {
+  async partialUpdate(
+    @Param('id', new ParseIntPipe())
+    id,
+    partialEntry: DeepPartial<Animal>
+  ) {
     return this.animalService.update(id, partialEntry);
   }
 
   @Delete(':id')
   // TODO: Only animal can delete himself or maybe admin
-  async remove(@Param('id', new ParseIntPipe()) id) {
+  async remove(
+    @Param('id', new ParseIntPipe())
+    id
+  ) {
     return this.animalService.remove(id);
   }
-
 }

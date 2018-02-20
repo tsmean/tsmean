@@ -1,16 +1,14 @@
-import { Component, Inject } from '@nestjs/common';
+import {Component, Inject} from '@nestjs/common';
 import {FindManyOptions, Repository} from 'typeorm';
+import {DeepPartial} from 'typeorm/common/DeepPartial';
+
 import {Animal} from './animal.entity';
 import {ANIMAL_REPOSITORY_TOKEN} from './constants';
-import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {Log} from '../logger/logger';
 
 @Component()
 export class AnimalService {
-  constructor(
-    @Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>,
-    private log: Log
-  ) {}
+  constructor(@Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>, private log: Log) {}
 
   // Create
   async create(animalDto: Animal): Promise<Animal> {
@@ -21,13 +19,13 @@ export class AnimalService {
   }
 
   // Read
-  async find(options?: FindManyOptions<Animal>): Promise<Animal[]> {
-    const defaultOptions = {
+  async find(findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
+    const options = {
       take: 100,
-      skip: 0
+      skip: 0,
+      ...findOptions // overwrite default ones
     };
-    const resultingOptions = options || defaultOptions;
-    return await this.animalRepository.find(resultingOptions);
+    return await this.animalRepository.find(options);
   }
 
   async findOneById(id: number): Promise<Animal> {
@@ -44,5 +42,4 @@ export class AnimalService {
   async remove(id: number): Promise<void> {
     return await this.animalRepository.removeById(id);
   }
-
 }

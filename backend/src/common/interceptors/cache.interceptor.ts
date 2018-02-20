@@ -1,5 +1,5 @@
-import { Interceptor, NestInterceptor, ExecutionContext } from '@nestjs/common';
-import { Observable } from 'rxjs/Observable';
+import {Interceptor, NestInterceptor, ExecutionContext} from '@nestjs/common';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
 @Interceptor()

@@ -1,6 +1,6 @@
 import {EmailValidation, EmailValidator} from './email-validator.service';
-describe('Email Validator', () => {
 
+describe('Email Validator', () => {
   let emailValidator: EmailValidator;
 
   beforeAll(() => {
@@ -12,16 +12,15 @@ describe('Email Validator', () => {
     emailValidator = new EmailValidatorImpl();
   });
 
-  it('should accept a good email', async (done) => {
+  it('should accept a good email', async done => {
     const emailValidation: EmailValidation = await emailValidator.validateEmail('bersling@gmail.com');
     expect(emailValidation.isValid).toBe(true);
     done();
   });
 
-  it('should reject a bad email address', async (done) => {
+  it('should reject a bad email address', async done => {
     const emailValidation: EmailValidation = await emailValidator.validateEmail('kljaf');
     expect(emailValidation.isValid).toBe(false);
     done();
   });
-
 });

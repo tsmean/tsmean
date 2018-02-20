@@ -5,10 +5,9 @@ export class Animal {
   @PrimaryGeneratedColumn()
   id?: number;
 
-  @Column({ length: 35 })
+  @Column({length: 35})
   name: string;
 
-  @Column({ length: 255 })
-  pic: string;
-
+  @Column({length: 255, nullable: true})
+  pic?: string;
 }
