@@ -38,12 +38,7 @@ export class AnimalController {
   // @Roles('admin')
   async create(@Body() requestBody: Animal) {
     try {
-      const data = await this.animalService.create(requestBody);
-      return {
-        message: 'Success',
-        status: 200,
-        data: data
-      };
+      return await this.animalService.create(requestBody);
     } catch (err) {
       if (err.message === 'Animal already exists') {
         throw new ForbiddenException(err.message);
@@ -71,12 +66,7 @@ export class AnimalController {
   @Put()
   // TODO: Only animal can update himself or maybe admin
   async fullUpdate(@Body() requestBody: Animal) {
-    const data = await this.animalService.update(requestBody.id, requestBody);
-    return {
-      message: 'Success',
-      status: 200,
-      data: data
-    };
+    return await this.animalService.update(requestBody.id, requestBody);
   }
 
   @Patch(':id')
