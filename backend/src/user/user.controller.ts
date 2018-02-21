@@ -13,35 +13,38 @@ import {
   InternalServerErrorException,
   ForbiddenException,
   ParseIntPipe,
-  Query
+  Query,
+  UnauthorizedException,
+  NotFoundException
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {UserService} from './user.service';
-import {RolesGuard} from '../common/guards/roles.guard';
-import {Roles} from '../common/decorators/roles.decorator';
+import {AuthGuard} from '../common/guards/auth.guard';
+import {Authorized} from '../common/decorators/authorized.decorator';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {User} from './user.entity';
 import {CreateUserDto} from '@tsmean/shared';
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
 import {apiPath} from '../api';
+import {UserRole} from './user.role';
+import {CurrentUser} from './user.decorator';
 
 @Controller(apiPath(1, 'users'))
-@UseGuards(RolesGuard)
+@UseGuards(AuthGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService, private readonly emailValidator: EmailValidatorImpl) {}
 
   @Post()
-  // @Roles('admin')
   async create(@Body() requestBody: CreateUserDto) {
     try {
       const data = await this.userService.create(requestBody.user, requestBody.password);
       return {
-        message: 'Success',
-        status: 200,
+        message: 'Created',
+        status: 201,
         data: data
       };
     } catch (err) {
@@ -54,7 +57,7 @@ export class UserController {
   }
 
   @Get()
-  // TODO: Only user can get info on himself or maybe admin
+  @Authorized(UserRole.Admin)
   async find(@Query() findOptions?: FindManyOptions<User>): Promise<User[]> {
     const options = {
       take: 100,
@@ -68,33 +71,53 @@ export class UserController {
    * Duck-Typed Input: could either be an integer for the id or the e-mail address of the user
    */
   @Get(':idOrEmail')
-  // TODO: Only user can get info on himself or maybe admin
-  findOne(@Param('idOrEmail') idOrEmail): Promise<User> {
+  async findOne(@Param('idOrEmail') idOrEmail, @CurrentUser() currentUser: User): Promise<User> {
     const isEmail = this.emailValidator.simpleCheck(idOrEmail);
-    return isEmail ? this.userService.findOneByEmail(idOrEmail) : this.userService.findOneById(parseInt(idOrEmail, 10));
+    const foundUser = isEmail
+      ? await this.userService.findOneByEmail(idOrEmail)
+      : await this.userService.findOneById(parseInt(idOrEmail, 10));
+
+    if ((!foundUser || foundUser.id !== currentUser.id) && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can get info of himself (or admin)!');
+    }
+
+    if (!foundUser) {
+      throw new NotFoundException(`User '${idOrEmail}' has not been found`);
+    }
+
+    return foundUser;
   }
 
   @Put()
-  // TODO: Only user can update himself or maybe admin
-  async fullUpdate(@Body() user: User) {
+  async fullUpdate(@Body() user: User, @CurrentUser() currentUser: User) {
+    if (user.id !== currentUser.id && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can update himself (or admin)!');
+    }
     return this.userService.update(user.id, user);
   }
 
   @Patch(':id')
   async partialUpdate(
     @Param('id', new ParseIntPipe())
-    id,
-    partialEntry: DeepPartial<User>
+    userId: number,
+    @Body() partialEntry: DeepPartial<User>,
+    @CurrentUser() currentUser: User
   ) {
-    return this.userService.update(id, partialEntry);
+    if (userId !== currentUser.id && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can update himself (or admin)!');
+    }
+    return this.userService.update(userId, partialEntry);
   }
 
   @Delete(':id')
-  // TODO: Only user can delete himself or maybe admin
   async remove(
     @Param('id', new ParseIntPipe())
-    id
+    userId: number,
+    @CurrentUser() currentUser: User
   ) {
-    return this.userService.remove(id);
+    if (userId !== currentUser.id && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can delete himself (or admin)!');
+    }
+    return this.userService.remove(userId);
   }
 }
