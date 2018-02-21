@@ -20,21 +20,19 @@ import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {AnimalService} from './animal.service';
-import {RolesGuard} from '../common/guards/roles.guard';
-import {Roles} from '../common/decorators/roles.decorator';
+import {AuthGuard} from '../common/guards/auth.guard';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {Animal} from './animal.entity';
 import {apiPath} from '../api';
 
 @Controller(apiPath(1, 'animals'))
-@UseGuards(RolesGuard)
+@UseGuards(AuthGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {
   constructor(private readonly animalService: AnimalService) {}
 
   @Post()
-  // @Roles('admin')
   async create(@Body() requestBody: Animal) {
     try {
       return await this.animalService.create(requestBody);
@@ -66,7 +64,6 @@ export class AnimalController {
   }
 
   @Put()
-  // TODO: Only animal can update himself or maybe admin
   async fullUpdate(@Body() requestBody: Animal) {
     return await this.animalService.update(requestBody.id, requestBody);
   }
@@ -75,13 +72,12 @@ export class AnimalController {
   async partialUpdate(
     @Param('id', new ParseIntPipe())
     id,
-    partialEntry: DeepPartial<Animal>
+    @Body() partialEntry: DeepPartial<Animal>
   ) {
     return this.animalService.update(id, partialEntry);
   }
 
   @Delete(':id')
-  // TODO: Only animal can delete himself or maybe admin
   async remove(
     @Param('id', new ParseIntPipe())
     id

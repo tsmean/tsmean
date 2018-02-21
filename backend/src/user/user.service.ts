@@ -7,6 +7,7 @@ import {HASHING_ALGORITHM, USER_REPOSITORY_TOKEN} from './constants';
 import {UserPassword} from './user-password.entity';
 import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';
+import {UserRole} from './user.role';
 
 @Component()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
     this.log.debug('trying to create user...');
 
     const user = this.userRepository.create(userDto);
+    user.role = UserRole.Regular;
     user.password = {
       hash: password, // TODO: hash password
       algorithm: HASHING_ALGORITHM
