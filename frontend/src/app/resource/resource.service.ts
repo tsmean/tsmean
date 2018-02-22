@@ -1,5 +1,5 @@
 import {forwardRef, Inject, Injectable, InjectionToken} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
@@ -12,7 +12,7 @@ import {ApiUrl} from './api-url-injection-token';
 
 @Injectable()
 export class ResourceService {
-  constructor(@Inject(ApiUrl) private apiUrl: string, private http: Http) {}
+  constructor(@Inject(ApiUrl) private apiUrl: string, private http: HttpClient) {}
 
   /**
    * Url to web api, appended with resource name
@@ -25,7 +25,7 @@ export class ResourceService {
   getResources(resourceName: string): Observable<Resource[]> {
     const $data = this.http
       .get(this.resourcesUrl(resourceName))
-      .map(resp => resp.json().data)
+      .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
   }
@@ -33,7 +33,7 @@ export class ResourceService {
   getResource(resourceId: number, resourceName: string): Observable<Resource> {
     const $data = this.http
       .get(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
-      .map(resp => resp.json().data)
+      .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
   }
@@ -41,7 +41,7 @@ export class ResourceService {
   createResource(newResource: ResourceWithoutId, resourceName: string): Observable<Resource> {
     const $data = this.http
       .post(this.resourcesUrl(resourceName), newResource)
-      .map(resp => resp.json().data)
+      .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
   }
@@ -49,7 +49,7 @@ export class ResourceService {
   updateResource(resource: Resource, resourceName: string): Observable<Resource> {
     const $data = this.http
       .put(this.resourcesUrl(resourceName), resource)
-      .map(resp => resp.json().data)
+      .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
   }
@@ -58,7 +58,7 @@ export class ResourceService {
   deleteResource(resourceId: number, resourceName: string): Observable<void> {
     const $data = this.http
       .delete(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
-      .map(resp => resp.json().data)
+      .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
   }

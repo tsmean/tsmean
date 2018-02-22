@@ -33,8 +33,8 @@ export class SignUpComponent {
   doSignUp() {
     this.userService.createUser(this.newUser, this.password).subscribe(user => {
       this.notifyService.success('User created');
+      this.loginService.logIn(user.email, this.password);
       this.userStore.setUser(user);
-      this.loginService.logInAfterSignUp(user.email);
       this.router.navigate(['/dashboard']);
     });
   }

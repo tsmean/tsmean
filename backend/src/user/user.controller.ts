@@ -67,6 +67,12 @@ export class UserController {
     return this.userService.find(options);
   }
 
+  @Get('current')
+  @Authorized()
+  async getCurrent(@CurrentUser() currentUser: User): Promise<User> {
+    return currentUser;
+  }
+
   /**
    * Duck-Typed Input: could either be an integer for the id or the e-mail address of the user
    */
