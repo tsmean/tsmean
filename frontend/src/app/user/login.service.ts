@@ -10,6 +10,7 @@ import 'rxjs/add/operator/catch';
 
 import {ApiUrl} from './api-url';
 import {TokenStorage} from './token.storage';
+import {UserStore} from './user.store';
 
 @Injectable()
 export class LoginService {
@@ -20,6 +21,7 @@ export class LoginService {
     private tokenStorage: TokenStorage,
     private http: HttpClient,
     private notifyService: NotifyService,
+    private userStore: UserStore,
     private router: Router
   ) {
     this.isLoggedIn = tokenStorage.token !== undefined;
@@ -32,6 +34,7 @@ export class LoginService {
       .subscribe((resp: any) => {
         this.isLoggedIn = true;
         this.tokenStorage.set(resp.token);
+        this.userStore.setUser(resp.user);
         this.notifyService.success('logged in');
         this.router.navigate(['/dashboard']);
       });

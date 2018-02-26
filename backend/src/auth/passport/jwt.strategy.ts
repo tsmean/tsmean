@@ -20,7 +20,7 @@ export class JwtStrategy extends Strategy {
     passport.use(this);
   }
 
-  public async verify(req, payload, done) {
+  async verify(req, payload, done) {
     const isValid = await this.authService.validateUser(payload);
     if (!isValid) {
       return done('Unauthorized', false);

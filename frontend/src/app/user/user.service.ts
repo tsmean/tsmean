@@ -7,7 +7,6 @@ import 'rxjs/add/observable/of';
 
 import {User, UserWithoutId} from './user';
 import {ApiUrl} from './api-url';
-import {LoginService} from './login.service';
 import {ResourceService} from '../resource/resource.service';
 
 @Injectable()
@@ -16,8 +15,7 @@ export class UserService {
     @Inject(ApiUrl) private apiUrl: string,
     private http: HttpClient,
     private notifyService: NotifyService,
-    private resourceService: ResourceService,
-    private loginService: LoginService
+    private resourceService: ResourceService
   ) {}
 
   createUser(user: UserWithoutId, password: string): Observable<User> {
@@ -31,12 +29,10 @@ export class UserService {
   }
 
   getUser(): Observable<User> {
-    if (this.loginService.loggedIn()) {
-      const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'users/current')).map((resp: any) => resp.data);
-      return $data.catch(this.handleError);
-    } else {
+    const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'users/current')).map((resp: any) => resp.data);
+    return $data.catch(() => {
       throw new Error('cannot fetch user, since not logged in');
-    }
+    });
   }
 
   getUserById(id: number): Observable<User> {

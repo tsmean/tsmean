@@ -70,13 +70,14 @@ export class UserController {
   @Get('current')
   @Authorized()
   async getCurrent(@CurrentUser() currentUser: User): Promise<User> {
-    return currentUser;
+    return await this.userService.findOneById(currentUser.id);
   }
 
   /**
    * Duck-Typed Input: could either be an integer for the id or the e-mail address of the user
    */
   @Get(':idOrEmail')
+  @Authorized()
   async findOne(@Param('idOrEmail') idOrEmail, @CurrentUser() currentUser: User): Promise<User> {
     const isEmail = this.emailValidator.simpleCheck(idOrEmail);
     const foundUser = isEmail
@@ -95,6 +96,7 @@ export class UserController {
   }
 
   @Put()
+  @Authorized()
   async fullUpdate(@Body() user: User, @CurrentUser() currentUser: User) {
     if (user.id !== currentUser.id && currentUser.role !== UserRole.Admin) {
       throw new ForbiddenException('Only user can update himself (or admin)!');
@@ -103,6 +105,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @Authorized()
   async partialUpdate(
     @Param('id', new ParseIntPipe())
     userId: number,
@@ -116,6 +119,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Authorized()
   async remove(
     @Param('id', new ParseIntPipe())
     userId: number,

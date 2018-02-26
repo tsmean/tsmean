@@ -21,6 +21,11 @@
         </a>
       </li>
       <li class="nav-item" *ngIf="loggedIn()">
+        <a class="nav-link" routerLink="profile">
+          <b>Profile</b>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="loggedIn()">
         <button mat-button class="nav-link" (click)="logOut()">
           <b>Log Out</b>
         </button>
