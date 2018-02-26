@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NotifyService} from 'notify-angular';
-import {Http} from '@angular/http';
 import {WebUtils} from '@tsmean/utils';
 
 import {Animal, AnimalWithoutId} from '../animal.model';
@@ -21,7 +20,6 @@ export class CreateAnimalComponent implements OnInit {
     private notifyService: NotifyService,
     private dashboardList: AnimalDashboardListStore,
     private animalStoreService: AnimalStoreService,
-    private http: Http
   ) {}
 
   ngOnInit() {

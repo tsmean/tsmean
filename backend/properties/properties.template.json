@@ -6,5 +6,8 @@
     "port": 12345,
     "dbname": "yourDbName",
     "testsMayDropDb": "true"
+  },
+  "token": {
+    "secret": "tsmean"
   }
 }

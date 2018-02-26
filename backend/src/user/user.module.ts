@@ -3,15 +3,16 @@ import {MiddlewaresConsumer} from '@nestjs/common/interfaces/middlewares';
 import * as passport from 'passport';
 
 import {UserController} from './user.controller';
-import {PasswordCryptographerServiceImpl} from './password-cryptographer/password-cryptographer';
-import {LocalStrategy} from './local.strategy';
 import {UserService} from './user.service';
 import {userProviders} from './user.providers';
+import {PasswordCryptographerServiceImpl} from '../auth/password-cryptographer/password-cryptographer';
+import {PASSWORD_CRYPTOGRAPHER_TOKEN} from '../auth/constants';
 import {DatabaseModule} from '../database/database.module';
-import {PASSWORD_CRYPTOGRAPHER_TOKEN} from './constants';
 import {LoggerModule} from '../logger/logger.module';
 import {EmailValidatorModule} from '../validation/email/email-validator.module';
 import {apiPath} from '../api';
+import {AuthMiddleware} from '../auth/auth.middleware';
+import {PasswordValidatorModule} from '../validation/password/password-validator.module';
 
 @Module({
   controllers: [UserController],
@@ -21,13 +22,16 @@ import {apiPath} from '../api';
       provide: PASSWORD_CRYPTOGRAPHER_TOKEN,
       useClass: PasswordCryptographerServiceImpl
     },
-    UserService,
-    LocalStrategy
+    UserService
   ],
-  modules: [EmailValidatorModule, DatabaseModule, LoggerModule]
+  exports: [UserService],
+  modules: [PasswordValidatorModule, EmailValidatorModule, DatabaseModule, LoggerModule]
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewaresConsumer) {
-    consumer.apply(passport.authenticate('local', {session: false})).forRoutes({path: apiPath(1, 'login'), method: RequestMethod.ALL});
+    consumer
+      .apply(AuthMiddleware)
+      .with({excludedPath: apiPath(1, 'users'), method: RequestMethod.POST})
+      .forRoutes(UserController);
   }
 }

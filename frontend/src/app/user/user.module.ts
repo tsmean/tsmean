@@ -12,6 +12,7 @@ import {LoginComponent} from './login/login.component';
 import {ProfileComponent} from './profile/profile.component';
 import {UserService} from './user.service';
 import {UserStore} from './user.store';
+import {TokenStorage} from './token.storage';
 
 @NgModule({
   imports: [CommonModule, FormsModule, MatButtonModule, MatInputModule, MatCardModule, HttpModule, NotifyModule.forRoot()],
@@ -22,7 +23,7 @@ export class UserModule {
   static forRoot(apiUrl: string) {
     return {
       ngModule: UserModule,
-      providers: [{provide: ApiUrl, useValue: apiUrl}, LoginService, UserService, UserStore]
+      providers: [{provide: ApiUrl, useValue: apiUrl}, TokenStorage, LoginService, UserService, UserStore]
     };
   }
 }

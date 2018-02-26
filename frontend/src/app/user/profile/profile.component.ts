@@ -20,8 +20,8 @@ export class ProfileComponent {
   }
 
   doChange() {
-    this.userService.updateUser(this.user).subscribe((user: User) => {
-      this.userStore.setUser(user);
+    this.userService.updateUser(this.user).subscribe(() => {
+      this.userStore.setUser(this.user);
       this.notifyService.success('User updated');
     });
   }

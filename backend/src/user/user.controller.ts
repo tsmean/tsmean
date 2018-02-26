@@ -15,7 +15,8 @@ import {
   ParseIntPipe,
   Query,
   UnauthorizedException,
-  NotFoundException
+  NotFoundException,
+  BadRequestException
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
@@ -31,15 +32,29 @@ import {EmailValidatorImpl} from '../validation/email/email-validator.component'
 import {apiPath} from '../api';
 import {UserRole} from './user.role';
 import {CurrentUser} from './user.decorator';
+import { PasswordValidatorImpl } from '../validation/password/password-validator.component';
 
 @Controller(apiPath(1, 'users'))
 @UseGuards(AuthGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
-  constructor(private readonly userService: UserService, private readonly emailValidator: EmailValidatorImpl) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly emailValidator: EmailValidatorImpl,
+    private readonly passwordValidator: PasswordValidatorImpl
+  ) {}
 
   @Post()
   async create(@Body() requestBody: CreateUserDto) {
+    const emailValidation = await this.emailValidator.validateEmail(requestBody.user.email);
+    if (!emailValidation.isValid) {
+      throw new BadRequestException('Invalid email!');
+    }
+    const passwordValidation = await this.passwordValidator.validatePassword(requestBody.password);
+    if (!emailValidation.isValid) {
+      throw new BadRequestException('Invalid password!');
+    }
+
     try {
       const data = await this.userService.create(requestBody.user, requestBody.password);
       return {
@@ -67,10 +82,17 @@ export class UserController {
     return this.userService.find(options);
   }
 
+  @Get('current')
+  @Authorized()
+  async getCurrent(@CurrentUser() currentUser: User): Promise<User> {
+    return await this.userService.findOneById(currentUser.id);
+  }
+
   /**
    * Duck-Typed Input: could either be an integer for the id or the e-mail address of the user
    */
   @Get(':idOrEmail')
+  @Authorized()
   async findOne(@Param('idOrEmail') idOrEmail, @CurrentUser() currentUser: User): Promise<User> {
     const isEmail = this.emailValidator.simpleCheck(idOrEmail);
     const foundUser = isEmail
@@ -89,6 +111,7 @@ export class UserController {
   }
 
   @Put()
+  @Authorized()
   async fullUpdate(@Body() user: User, @CurrentUser() currentUser: User) {
     if (user.id !== currentUser.id && currentUser.role !== UserRole.Admin) {
       throw new ForbiddenException('Only user can update himself (or admin)!');
@@ -97,6 +120,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @Authorized()
   async partialUpdate(
     @Param('id', new ParseIntPipe())
     userId: number,
@@ -110,6 +134,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Authorized()
   async remove(
     @Param('id', new ParseIntPipe())
     userId: number,

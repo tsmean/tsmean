@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule} from '@angular/material';
 import 'hammerjs';
@@ -20,6 +20,7 @@ import {UserModule} from './user/user.module';
 import {AnimalModule} from './animal/animal.module';
 import {environment} from '../environments/environment';
 import {ResourceModule} from './resource/resource.module';
+import {AuthHeaderInterceptor} from './user/auth.http.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import {ResourceModule} from './resource/resource.module';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     MatInputModule,
     MatButtonModule,
@@ -52,6 +53,13 @@ import {ResourceModule} from './resource/resource.module';
       primaryColor: '#3F51B5',
       secondaryColor: '#FF4081'
     })
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHeaderInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
