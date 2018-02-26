@@ -15,7 +15,8 @@ import {
   ParseIntPipe,
   Query,
   UnauthorizedException,
-  NotFoundException
+  NotFoundException,
+  BadRequestException
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
@@ -31,15 +32,29 @@ import {EmailValidatorImpl} from '../validation/email/email-validator.component'
 import {apiPath} from '../api';
 import {UserRole} from './user.role';
 import {CurrentUser} from './user.decorator';
+import { PasswordValidatorImpl } from '../validation/password/password-validator.component';
 
 @Controller(apiPath(1, 'users'))
 @UseGuards(AuthGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
-  constructor(private readonly userService: UserService, private readonly emailValidator: EmailValidatorImpl) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly emailValidator: EmailValidatorImpl,
+    private readonly passwordValidator: PasswordValidatorImpl
+  ) {}
 
   @Post()
   async create(@Body() requestBody: CreateUserDto) {
+    const emailValidation = await this.emailValidator.validateEmail(requestBody.user.email);
+    if (!emailValidation.isValid) {
+      throw new BadRequestException('Invalid email!');
+    }
+    const passwordValidation = await this.passwordValidator.validatePassword(requestBody.password);
+    if (!emailValidation.isValid) {
+      throw new BadRequestException('Invalid password!');
+    }
+
     try {
       const data = await this.userService.create(requestBody.user, requestBody.password);
       return {

@@ -12,6 +12,7 @@ import {LoggerModule} from '../logger/logger.module';
 import {EmailValidatorModule} from '../validation/email/email-validator.module';
 import {apiPath} from '../api';
 import {AuthMiddleware} from '../auth/auth.middleware';
+import {PasswordValidatorModule} from '../validation/password/password-validator.module';
 
 @Module({
   controllers: [UserController],
@@ -24,7 +25,7 @@ import {AuthMiddleware} from '../auth/auth.middleware';
     UserService
   ],
   exports: [UserService],
-  modules: [EmailValidatorModule, DatabaseModule, LoggerModule]
+  modules: [PasswordValidatorModule, EmailValidatorModule, DatabaseModule, LoggerModule]
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewaresConsumer) {

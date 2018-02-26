@@ -67,6 +67,7 @@
     "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
+    "@types/supertest": "^2.0.4",
     "nodemon": "^1.15.1"
   }
 }

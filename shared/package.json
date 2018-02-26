@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "class-validator": "^0.7.3"
+    "class-validator": "^0.8.1"
   },
   "devDependencies": {
     "@types/jest": "^21.1.4",
