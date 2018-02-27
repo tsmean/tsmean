@@ -20,14 +20,12 @@ import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {AnimalService} from './animal.service';
-import {AuthGuard} from '../common/guards/auth.guard';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {Animal} from './animal.entity';
 import {apiPath} from '../api';
 
 @Controller(apiPath(1, 'animals'))
-@UseGuards(AuthGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {
   constructor(private readonly animalService: AnimalService) {}

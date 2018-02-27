@@ -1,9 +1,9 @@
 import {createConnection} from 'typeorm';
 import {ComponentMetatype} from '@nestjs/core/injector/module';
 
-import {DB_CONNECTION_TOKEN} from '../user/constants';
 import {CONFIG_TOKEN} from '../config/constants';
 import {AppProperties} from '../config/app-properties.model';
+import {DB_CONNECTION_TOKEN} from './constants';
 
 type Provider = Partial<ComponentMetatype>;
 

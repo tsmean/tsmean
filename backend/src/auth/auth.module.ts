@@ -9,11 +9,12 @@ import {UserModule} from '../user/user.module';
 import {authProviders} from './auth.providers';
 import {PasswordValidatorModule} from '../validation/password/password-validator.module';
 import {EmailValidatorModule} from '../validation/email/email-validator.module';
+import { AuthGuard } from './auth.guard';
 
 @Module({
   imports: [ConfigModule, UserModule, PasswordValidatorModule, EmailValidatorModule],
-  components: [AuthService, JwtStrategy, ...authProviders],
+  components: [AuthService, AuthGuard, JwtStrategy, ...authProviders],
   controllers: [AuthController],
-  exports: [AuthService]
+  exports: [AuthService, AuthGuard]
 })
 export class AuthModule {}

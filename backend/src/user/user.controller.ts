@@ -22,7 +22,6 @@ import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {UserService} from './user.service';
-import {AuthGuard} from '../common/guards/auth.guard';
 import {Authorized} from '../common/decorators/authorized.decorator';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
@@ -32,10 +31,9 @@ import {EmailValidatorImpl} from '../validation/email/email-validator.component'
 import {apiPath} from '../api';
 import {UserRole} from './user.role';
 import {CurrentUser} from './user.decorator';
-import { PasswordValidatorImpl } from '../validation/password/password-validator.component';
+import {PasswordValidatorImpl} from '../validation/password/password-validator.component';
 
 @Controller(apiPath(1, 'users'))
-@UseGuards(AuthGuard)
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class UserController {
   constructor(
