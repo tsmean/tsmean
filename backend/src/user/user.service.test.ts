@@ -5,6 +5,8 @@ import {userProviders} from './user.providers';
 import {databaseProviders} from '../database/database.providers';
 import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';
+import {configProviders} from '../config/config.providers';
+import {authProviders} from '../auth/auth.providers';
 
 describe('user service', () => {
   let userService: UserService;
@@ -16,7 +18,7 @@ describe('user service', () => {
    */
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      components: [Log, ...databaseProviders, ...userProviders, UserService]
+      components: [Log, ...configProviders, ...databaseProviders, ...authProviders, ...userProviders, UserService]
     }).compile();
 
     userService = module.get<UserService>(UserService);

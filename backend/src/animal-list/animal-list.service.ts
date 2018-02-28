@@ -36,7 +36,7 @@ export class AnimalListService {
       skip: 0,
       ...findOptions // overwrite default ones
     };
-    // user's lists or default global one
+    // user's lists + public or only the public one
     const qb = this.animalListRepository
       .createQueryBuilder('animalList')
       .leftJoinAndSelect('animalList.owner', 'owner')

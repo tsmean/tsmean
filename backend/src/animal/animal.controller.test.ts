@@ -6,6 +6,7 @@ import {Animal} from './animal.entity';
 import {databaseProviders} from '../database/database.providers';
 import {animalProviders} from './animal.providers';
 import {Log} from '../logger/logger';
+import {configProviders} from '../config/config.providers';
 
 describe('AnimalController', () => {
   let animalController: AnimalController;
@@ -14,7 +15,7 @@ describe('AnimalController', () => {
   beforeAll(async () => {
     const module = await Test.createTestingModule({
       controllers: [AnimalController],
-      components: [Log, ...databaseProviders, ...animalProviders, AnimalService]
+      components: [Log, ...configProviders, ...databaseProviders, ...animalProviders, AnimalService]
     }).compile();
 
     animalService = module.get<AnimalService>(AnimalService);
@@ -63,6 +64,6 @@ describe('AnimalController', () => {
       id: id,
       name: 'Mouse',
       pic: 'some/path'
-    };
+    } as Animal;
   }
 });

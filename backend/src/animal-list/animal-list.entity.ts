@@ -11,7 +11,7 @@ export class AnimalList {
   @Column()
   name: string;
 
-  @ManyToOne(type => User, user => user.animalLists, { nullable: true })
+  @ManyToOne(type => User, user => user.animalLists, {nullable: true})
   owner?: User;
 
   @OneToMany(type => Animal, animal => animal.list, {cascadeInsert: true})

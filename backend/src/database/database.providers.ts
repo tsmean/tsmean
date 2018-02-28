@@ -6,6 +6,7 @@ import {AppProperties} from '../config/app-properties.model';
 import {DB_CONNECTION_TOKEN} from './constants';
 
 type Provider = Partial<ComponentMetatype>;
+const nodeEnv = process.env.NODE_ENV;
 
 export const databaseProviders: Array<Provider> = [
   {
@@ -22,7 +23,7 @@ export const databaseProviders: Array<Provider> = [
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
         logger: 'advanced-console',
-        logging: 'all'
+        logging: nodeEnv !== 'test' ? 'all' : false
       })
   }
 ];

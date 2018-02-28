@@ -75,7 +75,13 @@ export class AnimalListController {
   }
 
   @Put()
-  async fullUpdate(@Body() requestBody: AnimalListDto) {
+  @Authorized()
+  async fullUpdate(@Body() requestBody: AnimalListDto, @CurrentUser() currentUser: User) {
+    const animalList = await this.animalListService.findOneById(requestBody.id);
+    if (!animalList.owner || animalList.owner.id !== currentUser.id) {
+      console.log(currentUser, animalList.owner);
+      throw new ForbiddenException('Access denied!');
+    }
     return await this.animalListService.update(requestBody.id, requestBody);
   }
 
@@ -84,8 +90,13 @@ export class AnimalListController {
   async partialUpdate(
     @Param('id', new ParseIntPipe())
     id: number,
-    @Body() partialEntry: DeepPartial<Animal>
+    @Body() partialEntry: DeepPartial<Animal>,
+    @CurrentUser() currentUser: User
   ) {
+    const animalList = await this.animalListService.findOneById(id);
+    if (!animalList.owner || animalList.owner.id !== currentUser.id) {
+      throw new ForbiddenException('Access denied!');
+    }
     return this.animalListService.update(id, partialEntry);
   }
 
@@ -93,8 +104,13 @@ export class AnimalListController {
   @Authorized()
   async remove(
     @Param('id', new ParseIntPipe())
-    id: number
+    id: number,
+    @CurrentUser() currentUser: User
   ) {
-    return this.animalListService.remove(id);
+    const animalList = await this.animalListService.findOneById(id);
+    if (!animalList.owner || animalList.owner.id !== currentUser.id) {
+      throw new ForbiddenException('Access denied!');
+    }
+    return this.animalListService.remove(animalList.id);
   }
 }

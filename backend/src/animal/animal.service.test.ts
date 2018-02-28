@@ -5,6 +5,7 @@ import {animalProviders} from './animal.providers';
 import {databaseProviders} from '../database/database.providers';
 import {Log} from '../logger/logger';
 import {Animal} from './animal.entity';
+import {configProviders} from '../config/config.providers';
 
 describe('animal service', () => {
   let animalService: AnimalService;
@@ -16,7 +17,7 @@ describe('animal service', () => {
    */
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      components: [Log, ...databaseProviders, ...animalProviders, AnimalService]
+      components: [Log, ...configProviders, ...databaseProviders, ...animalProviders, AnimalService]
     }).compile();
 
     animalService = module.get<AnimalService>(AnimalService);
