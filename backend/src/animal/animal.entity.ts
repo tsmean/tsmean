@@ -13,6 +13,6 @@ export class Animal {
   @Column({length: 255, nullable: true})
   pic?: string;
 
-  @ManyToOne(type => AnimalList, {onDelete: 'CASCADE'})
+  @ManyToOne(type => AnimalList, { eager: true, onDelete: 'CASCADE'})
   list: AnimalList;
 }

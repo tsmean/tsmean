@@ -9,6 +9,7 @@ import {LoggerModule} from '../logger/logger.module';
 @Module({
   controllers: [AnimalListController],
   components: [...animalListProviders, AnimalListService],
-  modules: [DatabaseModule, LoggerModule]
+  modules: [DatabaseModule, LoggerModule],
+  exports: [AnimalListService]
 })
 export class AnimalListModule {}
