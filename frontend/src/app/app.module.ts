@@ -21,6 +21,7 @@ import {AnimalModule} from './animal/animal.module';
 import {environment} from '../environments/environment';
 import {ResourceModule} from './resource/resource.module';
 import {AuthHeaderInterceptor} from './user/auth.http.interceptor';
+import {AnimalListModule} from './animal-list/animal-list.module';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {AuthHeaderInterceptor} from './user/auth.http.interceptor';
     NotifyModule.forRoot(),
     ResourceModule.forRoot(environment.api),
     AnimalModule.forRoot(),
+    AnimalListModule.forRoot(),
     UserModule.forRoot(environment.api),
     SpinnerModule.forRoot({
       animation: 'spin 1s ease-in-out infinite',
