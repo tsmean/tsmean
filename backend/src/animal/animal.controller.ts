@@ -42,11 +42,11 @@ export class AnimalController {
     @Body() requestBody: AnimalDto,
     @CurrentUser() currentUser?: User
   ) {
-    const animalList = await this.getAnimalsList(listId, currentUser);
+    const animalsList = await this.getAnimalsList(listId, currentUser);
 
     return await this.animalService.create({
       name: requestBody.name,
-      list: animalList
+      list: animalsList
     });
   }
 

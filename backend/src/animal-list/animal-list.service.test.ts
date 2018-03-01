@@ -1,4 +1,5 @@
 import {Test} from '@nestjs/testing';
+import {Repository} from 'typeorm';
 
 import {AnimalListService} from './animal-list.service';
 import {animalListProviders} from './animal-list.providers';
@@ -8,10 +9,13 @@ import {AnimalList} from './animal-list.entity';
 import {configProviders} from '../config/config.providers';
 import {User} from '../user/user.entity';
 import {UserRole} from '../user/user.role';
+import {ANIMAL_LIST_REPOSITORY_TOKEN} from './constants';
+import {Animal} from '../animal/animal.entity';
 
 describe('AnimalListService', () => {
   let animalListService: AnimalListService;
   const mockAdminUser: User = {id: 1, role: UserRole.Admin} as User;
+  let animalListRepository: Repository<AnimalList>;
 
   /**
    * Can't be beforeEach here, or else you'll get error since JEST runs in parallel:
@@ -24,49 +28,51 @@ describe('AnimalListService', () => {
     }).compile();
 
     animalListService = module.get<AnimalListService>(AnimalListService);
+    animalListRepository = module.get<Repository<AnimalList>>(ANIMAL_LIST_REPOSITORY_TOKEN);
   });
 
-  it('should be able to create an animal list', done => {
-    createRandomAnimalList().then(resp => {
-      if (resp.id !== undefined) {
-        done();
-      }
-    });
-  });
+  it('should be able to create an animal list', async () => {
+    const exampleList = createExampleList(1);
+    jest.spyOn(animalListRepository, 'save').mockImplementation(entity => entity);
 
-  it('should be able to find all animal lists', async () => {
-    const resp = await animalListService.find();
-    expect(Array.isArray(resp)).toBe(true);
+    const addedList = await animalListService.create(exampleList, mockAdminUser);
+
+    expect(addedList.name).toEqual(exampleList.name);
   });
 
   it('should be able to find one animal list by id', async () => {
-    const createdAnimalList = await createRandomAnimalList();
-    const foundAnimalList = await animalListService.findOneById(createdAnimalList.id);
-    expect(!!foundAnimalList).toBe(true);
-    expect(foundAnimalList.id).toBe(createdAnimalList.id);
+    const createdList = await createExampleList(1);
+    jest.spyOn(animalListRepository, 'findOneById').mockImplementation(id => createExampleList(id));
+
+    const foundList = await animalListService.findOneById(createdList.id);
+    expect(!!foundList).toBe(true);
+    expect(foundList.id).toBe(createdList.id);
   });
 
   it('should be able to update animal list', async () => {
-    const createdAnimalList = await createRandomAnimalList();
-    await animalListService.update(createdAnimalList.id, {name: 'New list'});
-    const updatedAnimalList = await animalListService.findOneById(createdAnimalList.id);
-    expect(updatedAnimalList).not.toBeUndefined();
-    expect(updatedAnimalList.name).toBe('New list');
+    const createdList = await createExampleList(1);
+    jest.spyOn(animalListRepository, 'findOneById').mockImplementation(id => createExampleList(id));
+
+    const updatedAnimal = await animalListService.update(createdList.id, {name: 'New name'});
+    expect(updatedAnimal).toBeDefined();
+    expect(updatedAnimal.name).toBe('New name');
   });
 
   it('should be able to remove animal list', async () => {
-    const createdAnimalList = await createRandomAnimalList();
-    await animalListService.remove(createdAnimalList.id);
-    const deletedAnimalList = await animalListService.findOneById(createdAnimalList.id);
-    expect(deletedAnimalList).toBeUndefined();
+    let hasRemoved: number;
+    const createdList = await createExampleList(1);
+    jest.spyOn(animalListRepository, 'findOneById').mockImplementation(id => createExampleList(id));
+    jest.spyOn(animalListRepository, 'deleteById').mockImplementation(id => (hasRemoved = id));
+
+    await animalListService.remove(createdList.id);
+    expect(hasRemoved).toEqual(createdList.id);
   });
 
-  let counter = 0;
-  function createRandomAnimalList(): Promise<AnimalList> {
-    const animalList = {
-      id: ++counter,
-      name: 'Random list'
-    };
-    return animalListService.create(animalList, mockAdminUser);
+  function createExampleList(id: number, animals?: Animal[]): AnimalList {
+    return {
+      id,
+      name: 'Mouse',
+      animals
+    } as AnimalList;
   }
 });
