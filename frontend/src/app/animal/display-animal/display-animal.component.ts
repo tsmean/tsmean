@@ -14,6 +14,7 @@ import {ResourceStoreService} from '../../resource/resource.store';
 })
 export class DisplayAnimalComponent implements OnChanges {
   @Input() animalId: number;
+  @Input() listId: number;
 
   animal: Animal;
 
@@ -43,13 +44,13 @@ export class DisplayAnimalComponent implements OnChanges {
   }
 
   updateAnimal() {
-    const animalObs = this.animalService.updateAnimal(this.animalCopy);
+    const animalObs = this.animalService.updateAnimal(this.animalCopy, this.listId);
     animalObs.subscribe(animal => {
       this.animalStore.addOrUpdate(animal);
       this.toggleEditable();
     });
     if (this.animalCopy.name) {
-      this.animalService.addAnimalPic(this.animalCopy.name, animalObs);
+      this.animalService.addAnimalPic(this.animalCopy.name, animalObs, this.listId);
     }
   }
 

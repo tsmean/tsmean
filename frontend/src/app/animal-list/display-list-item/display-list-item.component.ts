@@ -5,6 +5,7 @@ import {AnimalList} from '../animal-list.model';
 import {ListSettings} from '../list-settings';
 import {AnimalListService} from '../animal-list.service';
 import {AnimalListStoreService} from '../animal-list.store';
+import { AnimalListDashboardListStore } from '../animal-list-dashboard-list.store';
 
 @Component({
   selector: 'app-animal-list-display',
@@ -24,8 +25,13 @@ export class DisplayListItemComponent implements OnChanges {
 
   constructor(
     private animalListService: AnimalListService,
-    private animalListStore: AnimalListStoreService
+    private animalListStore: AnimalListStoreService,
+    private dashboardLists: AnimalListDashboardListStore
   ) {}
+
+  chooseList() {
+    this.dashboardLists.setCurrent(this.listId);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['listId']) {

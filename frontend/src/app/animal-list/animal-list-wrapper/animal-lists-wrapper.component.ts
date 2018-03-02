@@ -11,19 +11,11 @@ import {AnimalList} from '../animal-list.model';
   styleUrls: ['./animal-lists-wrapper.component.css']
 })
 export class AnimalListWrapperComponent implements OnInit {
-  private _listId = 2;
   listIds: number[] = [];
-
-  @Input()
-  set listId(id: number) {
-    console.log('listId', id);
-    this._listId = id;
-    this.subscribeToAnimalsList();
-  }
 
   constructor(
     private animalListService: AnimalListService,
-    private dashboardList: AnimalListDashboardListStore,
+    private dashboardLists: AnimalListDashboardListStore,
     private animalListsStore: AnimalListStoreService
   ) {}
 
@@ -33,10 +25,10 @@ export class AnimalListWrapperComponent implements OnInit {
   }
 
   private subscribeToAnimalsList() {
-    this.animalListService.getAnimalLists(this._listId).subscribe(
+    this.animalListService.getAnimalLists().subscribe(
       lists => {
         this.animalListsStore.addOrUpdateMany(lists);
-        this.dashboardList.set(lists.map(list => list.id));
+        this.dashboardLists.set(lists.map(list => list.id));
       },
       errorResp => {
         console.error('something went wrong when getting animal lists:', errorResp);
@@ -44,7 +36,7 @@ export class AnimalListWrapperComponent implements OnInit {
     );
 
     // set up listener
-    this.dashboardList.get().subscribe(newList => {
+    this.dashboardLists.get().subscribe(newList => {
       this.listIds = newList;
     });
   }

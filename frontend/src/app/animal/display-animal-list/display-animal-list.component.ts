@@ -9,6 +9,7 @@ import {Animal} from '../animal.model';
 })
 export class DisplayAnimalListComponent implements OnInit {
   @Input() animalIds: string[];
+  @Input() listId: number;
 
   constructor() {}
 

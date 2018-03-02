@@ -4,6 +4,8 @@ import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
 import {Animal} from '../animal.model';
+import {Subscription} from 'rxjs/Subscription';
+import {AnimalListDashboardListStore} from '../../animal-list/animal-list-dashboard-list.store';
 
 @Component({
   selector: 'app-animal-wrapper',
@@ -11,32 +13,38 @@ import {Animal} from '../animal.model';
   styleUrls: ['./animal-wrapper.component.css']
 })
 export class AnimalWrapperComponent implements OnInit {
-  private _listId = 2;
+  private currentListId = 1;
+  private animalsSubscription: Subscription;
   animalIds: number[] = [];
-
-  @Input()
-  set listId(id: number) {
-    console.log('listId', id);
-    this._listId = id;
-    this.subscribeToAnimalsList();
-  }
 
   constructor(
     private animalService: AnimalService,
-    private dashboardList: AnimalDashboardListStore,
+    private dashboardAnimals: AnimalDashboardListStore,
+    private dashboardLists: AnimalListDashboardListStore,
     private animalStore: AnimalStoreService
   ) {}
 
   ngOnInit() {
     // get animals and initialize dashboard list
-    this.subscribeToAnimalsList();
+    this.subscribeToCurrentList();
   }
 
-  private subscribeToAnimalsList() {
-    this.animalService.getAnimals(this._listId).subscribe(
+  private subscribeToCurrentList() {
+    this.dashboardLists.getCurrent().subscribe(currentListId => {
+      console.log('subscribeToCurrentList', currentListId);
+      this.currentListId = currentListId;
+      this.reSubscribeToAnimals();
+    });
+  }
+
+  private reSubscribeToAnimals() {
+    if (this.animalsSubscription) {
+      this.animalsSubscription.unsubscribe();
+    }
+    this.animalsSubscription = this.animalService.getAnimals(this.currentListId).subscribe(
       animals => {
         this.animalStore.addOrUpdateMany(animals);
-        this.dashboardList.set(animals.map(animal => animal.id));
+        this.dashboardAnimals.set(animals.map(animal => animal.id));
       },
       errorResp => {
         console.error('something went wrong when getting animals:', errorResp);
@@ -44,7 +52,7 @@ export class AnimalWrapperComponent implements OnInit {
     );
 
     // set up listener
-    this.dashboardList.get().subscribe(newList => {
+    this.dashboardAnimals.get().subscribe(newList => {
       this.animalIds = newList;
     });
   }

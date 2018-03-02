@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card (click)="chooseList()" class="clickable-card">
 
   <div style="display: flex; align-items: center">
 
@@ -8,9 +8,9 @@
         {{list.name}}
       </div>
       <mat-form-field *ngIf="listSettings.isBeingEdited">
-        <input matInput placeholder="Animal's Name" [(ngModel)]="listCopy.name"/>
+        <input matInput placeholder="List's Name" [(ngModel)]="listCopy.name">
       </mat-form-field>
-      <button color="accent" mat-raised-button *ngIf="listSettings.isBeingEdited" (click)="updateAnimal()">Update Animal</button>
+      <button color="accent" mat-raised-button *ngIf="listSettings.isBeingEdited" (click)="updateAnimalList()">Update List</button>
     </div>
 
     <div>

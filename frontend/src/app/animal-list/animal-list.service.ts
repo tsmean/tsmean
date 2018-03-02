@@ -12,7 +12,7 @@ export class AnimalListService {
     return `animal-lists`;
   }
 
-  getAnimalLists(listId: number): Observable<AnimalList[]> {
+  getAnimalLists(): Observable<AnimalList[]> {
     return this.resourceService.getResources(this.resourceName);
   }
 

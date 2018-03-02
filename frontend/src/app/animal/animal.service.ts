@@ -10,31 +10,30 @@ import {ResourceService} from '../resource/resource.service';
 export class AnimalService {
   constructor(private resourceService: ResourceService, private http: HttpClient, private animalStoreService: AnimalStoreService) {}
 
-  private getResourceName(listId: number = 1): string {
+  private getResourceName(listId: number = -999): string {
     return `animal-lists/${listId}/animals`;
   }
 
-  getAnimals(listId?: number): Observable<Animal[]> {
+  getAnimals(listId: number): Observable<Animal[]> {
     return this.resourceService.getResources(this.getResourceName(listId));
   }
 
-  createAnimal(animal: AnimalWithoutId, listId?: number): Observable<Animal> {
+  createAnimal(animal: AnimalWithoutId, listId: number): Observable<Animal> {
     const animalObs = this.resourceService.createResource(animal, this.getResourceName(listId));
     return animalObs;
   }
 
-  deleteAnimal(animalId: number, listId?: number): Observable<void> {
+  deleteAnimal(animalId: number, listId: number): Observable<void> {
     return this.resourceService.deleteResource(animalId, this.getResourceName(listId));
   }
 
-  updateAnimal(animal: Animal, listId?: number): Observable<Animal> {
+  updateAnimal(animal: Animal, listId: number): Observable<Animal> {
     return this.resourceService.updateResource(animal, this.getResourceName(listId));
   }
 
   // small extra: add a picture to the animal
   // works with observable to achieve best user experience
-  addAnimalPic(animalName: string, animalObs: Observable<Animal>) {
-    const listId = 1;
+  addAnimalPic(animalName: string, animalObs: Observable<Animal>, listId: number) {
     const animalImageObs = this.http.get(`https://animal-images.herokuapp.com/find?q=${animalName.toLowerCase()}`);
     animalObs.subscribe(animalResp => {
       animalImageObs.subscribe((animal: any) => {

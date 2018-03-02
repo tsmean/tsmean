@@ -12,6 +12,7 @@ import {AnimalStoreService} from '../animal.store';
 })
 export class DeleteAnimalComponent implements OnInit {
   @Input() animal: Animal;
+  @Input() listId: number;
 
   constructor(
     private animalService: AnimalService,
@@ -22,7 +23,7 @@ export class DeleteAnimalComponent implements OnInit {
   ngOnInit() {}
 
   public deleteAnimal() {
-    this.animalService.deleteAnimal(this.animal.id).subscribe(() => {
+    this.animalService.deleteAnimal(this.animal.id, this.listId).subscribe(() => {
       this.animalStore.remove(this.animal.id);
       this.dashboardList.removeById(this.animal.id);
     });
