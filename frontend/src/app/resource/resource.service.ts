@@ -18,7 +18,7 @@ export class ResourceService {
    * Url to web api, appended with resource name
    * yields e.g http://myserver/api/v1/users
    */
-  private resourcesUrl(resourceName: string) {
+  resourcesUrl(resourceName: string) {
     return WebUtils.urlJoin(this.apiUrl, resourceName);
   }
 

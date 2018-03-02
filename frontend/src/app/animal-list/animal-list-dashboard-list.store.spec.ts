@@ -2,25 +2,25 @@ import {TestBed, inject} from '@angular/core/testing';
 import {HttpModule, ResponseOptions, XHRBackend, Response} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
 
-import {AnimalDashboardListStore} from './animal-dashboard-list.store';
+import {AnimalListDashboardListStore} from './animal-list-dashboard-list.store';
 
-describe('Animal Dashboard List Store Service', () => {
+describe('Animals Lists Dashboard List Store Service', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AnimalDashboardListStore]
+      providers: [AnimalListDashboardListStore]
     });
   });
 
   it(
     'should be able to create the service',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       expect(dashboardListStore).toBeTruthy();
     })
   );
 
   it(
     'should be able to add items',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       dashboardListStore.add(1);
       dashboardListStore.add(2);
       dashboardListStore.get().subscribe(newList => {
@@ -33,7 +33,7 @@ describe('Animal Dashboard List Store Service', () => {
 
   it(
     'should be able to add item at index',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       dashboardListStore.add(1);
       dashboardListStore.add(2, 0);
       dashboardListStore.get().subscribe((newList: number[]) => {
@@ -46,7 +46,7 @@ describe('Animal Dashboard List Store Service', () => {
 
   it(
     'should be update item by id',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       dashboardListStore.add(1);
       dashboardListStore.add(2);
       dashboardListStore.updateById(1, 5);
@@ -60,7 +60,7 @@ describe('Animal Dashboard List Store Service', () => {
 
   it(
     'should be update item by index',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       dashboardListStore.add(1);
       dashboardListStore.add(2);
       dashboardListStore.updateByIndex(0, 5);
@@ -74,7 +74,7 @@ describe('Animal Dashboard List Store Service', () => {
 
   it(
     'should be remove item by id',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       dashboardListStore.add(1);
       dashboardListStore.add(2);
       dashboardListStore.removeById(1);
@@ -87,7 +87,7 @@ describe('Animal Dashboard List Store Service', () => {
 
   it(
     'should be remove item by index',
-    inject([AnimalDashboardListStore], (dashboardListStore: AnimalDashboardListStore) => {
+    inject([AnimalListDashboardListStore], (dashboardListStore: AnimalListDashboardListStore) => {
       dashboardListStore.add(1);
       dashboardListStore.add(2);
       dashboardListStore.removeByIndex(0);
