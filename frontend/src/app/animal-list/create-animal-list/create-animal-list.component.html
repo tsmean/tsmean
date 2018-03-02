@@ -1,0 +1,13 @@
+<a name="list-input"></a>
+<mat-card>
+  <div class="center">
+    <div>
+      <mat-form-field class="full-width">
+        <input id="list-input" type="text" matInput placeholder="List's Name" (keypress)="createListOnEnter($event)" [(ngModel)]="newList.name">
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button color="accent" (click)="createList()">Create</button>
+    </div>
+  </div>
+</mat-card>

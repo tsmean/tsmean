@@ -38,8 +38,8 @@ describe('Animal Dashboard List Store Service', () => {
       dashboardListStore.add(2, 0);
       dashboardListStore.get().subscribe((newList: number[]) => {
         expect(newList.length).toEqual(2);
-        expect(newList[0]).toEqual('2');
-        expect(newList[1]).toEqual('1');
+        expect(newList[0]).toEqual(2);
+        expect(newList[1]).toEqual(1);
       });
     })
   );
@@ -52,8 +52,8 @@ describe('Animal Dashboard List Store Service', () => {
       dashboardListStore.updateById(1, 5);
       dashboardListStore.get().subscribe(newList => {
         expect(newList.length).toEqual(2);
-        expect(newList[0]).toEqual('5');
-        expect(newList[1]).toEqual('2');
+        expect(newList[0]).toEqual(5);
+        expect(newList[1]).toEqual(2);
       });
     })
   );

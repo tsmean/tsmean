@@ -1,11 +1,12 @@
 import {createConnection} from 'typeorm';
 import {ComponentMetatype} from '@nestjs/core/injector/module';
 
-import {DB_CONNECTION_TOKEN} from '../user/constants';
 import {CONFIG_TOKEN} from '../config/constants';
 import {AppProperties} from '../config/app-properties.model';
+import {DB_CONNECTION_TOKEN} from './constants';
 
 type Provider = Partial<ComponentMetatype>;
+const nodeEnv = process.env.NODE_ENV;
 
 export const databaseProviders: Array<Provider> = [
   {
@@ -22,7 +23,7 @@ export const databaseProviders: Array<Provider> = [
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
         logger: 'advanced-console',
-        logging: 'all'
+        logging: nodeEnv !== 'test' ? 'all' : false
       })
   }
 ];

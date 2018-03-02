@@ -14,74 +14,126 @@ import {
   Inject,
   ForbiddenException,
   InternalServerErrorException,
-  ParseIntPipe
+  ParseIntPipe,
+  NotFoundException
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {AnimalService} from './animal.service';
-import {AuthGuard} from '../common/guards/auth.guard';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {Animal} from './animal.entity';
 import {apiPath} from '../api';
+import {AnimalListService} from '../animal-list/animal-list.service';
+import {CurrentUser} from '../user/user.decorator';
+import {User} from '../user/user.entity';
+import {AnimalDto} from '../../../shared/src/dto/animal/animal.dto';
 
-@Controller(apiPath(1, 'animals'))
-@UseGuards(AuthGuard)
+@Controller(apiPath(1, 'animal-lists/:listId/animals'))
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {
-  constructor(private readonly animalService: AnimalService) {}
+  constructor(private readonly animalService: AnimalService, private readonly animalListService: AnimalListService) {}
 
   @Post()
-  async create(@Body() requestBody: Animal) {
-    try {
-      return await this.animalService.create(requestBody);
-    } catch (err) {
-      if (err.message === 'Animal already exists') {
-        throw new ForbiddenException(err.message);
-      } else {
-        throw new InternalServerErrorException(err.message);
-      }
-    }
+  async create(
+    @Param('listId', new ParseIntPipe())
+    listId: number,
+    @Body() requestBody: AnimalDto,
+    @CurrentUser() currentUser?: User
+  ) {
+    const animalsList = await this.getAnimalsList(listId, currentUser);
+
+    return await this.animalService.create({
+      name: requestBody.name,
+      list: animalsList
+    });
   }
 
   @Get()
-  async find(@Query() findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
+  async find(
+    @Param('listId', new ParseIntPipe())
+    listId: number,
+    @CurrentUser() currentUser?: User,
+    @Query() findOptions?: FindManyOptions<Animal>
+  ): Promise<Animal[]> {
     const options = {
       take: 100,
       skip: 0,
       ...findOptions // overwrite default ones
     };
-    return this.animalService.find(options);
+    await this.getAnimalsList(listId, currentUser);
+    return this.animalService.find(listId, options);
   }
 
   @Get(':id')
-  findOne(
+  async findOne(
+    @Param('listId', new ParseIntPipe())
+    listId: number,
     @Param('id', new ParseIntPipe())
-    id
+    id: number,
+    @CurrentUser() currentUser?: User
   ): Promise<Animal> {
-    return this.animalService.findOneById(id);
+    await this.getAnimalsList(listId, currentUser);
+    try {
+      return await this.animalService.findOneById(id, listId);
+    } catch {
+      throw new ForbiddenException('Access denied!');
+    }
   }
 
   @Put()
-  async fullUpdate(@Body() requestBody: Animal) {
-    return await this.animalService.update(requestBody.id, requestBody);
+  async fullUpdate(
+    @Param('listId', new ParseIntPipe())
+    listId: number,
+    @Body() requestBody: Animal,
+    @CurrentUser() currentUser?: User
+  ) {
+    await this.getAnimalsList(listId, currentUser);
+    try {
+      return await this.animalService.update(requestBody.id, requestBody, listId);
+    } catch {
+      throw new ForbiddenException('Access denied!');
+    }
   }
 
   @Patch(':id')
   async partialUpdate(
     @Param('id', new ParseIntPipe())
-    id,
-    @Body() partialEntry: DeepPartial<Animal>
+    id: number,
+    @Body() partialEntry: DeepPartial<Animal>,
+    @Param('listId', new ParseIntPipe())
+    listId: number,
+    @CurrentUser() currentUser?: User
   ) {
-    return this.animalService.update(id, partialEntry);
+    await this.getAnimalsList(listId, currentUser);
+    try {
+      return await this.animalService.update(id, partialEntry, listId);
+    } catch {
+      throw new ForbiddenException('Access denied!');
+    }
   }
 
   @Delete(':id')
   async remove(
     @Param('id', new ParseIntPipe())
-    id
+    id: number,
+    @Param('listId', new ParseIntPipe())
+    listId: number,
+    @CurrentUser() currentUser?: User
   ) {
+    await this.getAnimalsList(listId, currentUser);
     return this.animalService.remove(id);
+  }
+
+  private async getAnimalsList(listId: number, currentUser?: User) {
+    const animalList = await this.animalListService.findOneById(listId);
+    if (!animalList) {
+      throw new NotFoundException('Animal list not found');
+    }
+    if (animalList.owner && (!currentUser || animalList.owner.id !== currentUser.id)) {
+      throw new ForbiddenException('Access denied!');
+    }
+    return animalList;
   }
 }

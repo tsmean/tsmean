@@ -1,13 +1,17 @@
 import {Test} from '@nestjs/testing';
+import {Repository} from 'typeorm';
 
 import {AnimalService} from './animal.service';
 import {animalProviders} from './animal.providers';
 import {databaseProviders} from '../database/database.providers';
 import {Log} from '../logger/logger';
 import {Animal} from './animal.entity';
+import {configProviders} from '../config/config.providers';
+import {ANIMAL_REPOSITORY_TOKEN} from './constants';
 
 describe('animal service', () => {
   let animalService: AnimalService;
+  let animalRepository: Repository<Animal>;
 
   /**
    * Can't be beforeEach here, or else you'll get error since JEST runs in parallel:
@@ -16,60 +20,71 @@ describe('animal service', () => {
    */
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      components: [Log, ...databaseProviders, ...animalProviders, AnimalService]
+      components: [Log, ...configProviders, ...databaseProviders, ...animalProviders, AnimalService]
     }).compile();
 
     animalService = module.get<AnimalService>(AnimalService);
+    animalRepository = module.get<Repository<Animal>>(ANIMAL_REPOSITORY_TOKEN);
   });
 
-  it('should be able to create a animal', done => {
-    createRandomAnimal().then(resp => {
-      if (resp.id !== undefined) {
-        done();
-      }
-    });
+  it('should be able to create a animal', async () => {
+    const exampleAnimal = createExampleAnimal(1, 1);
+    jest.spyOn(animalRepository, 'save').mockImplementation(entity => entity);
+
+    const addedAnimal = await animalService.create(exampleAnimal);
+
+    expect(addedAnimal).toEqual(exampleAnimal);
   });
 
-  it('should be able to find all animals', done => {
-    animalService.find().then(resp => {
-      expect(Array.isArray(resp)).toBe(true);
-      done();
-    });
+  it('should be able to find all animals', async () => {
+    const listId = 1;
+    const exampleAnimals = [createExampleAnimal(1, listId), createExampleAnimal(2, listId), createExampleAnimal(3, listId)];
+    jest.spyOn(animalRepository, 'find').mockImplementation(() => exampleAnimals);
+
+    const foundAnimals = await animalService.find(listId);
+
+    expect(foundAnimals).toEqual(exampleAnimals);
   });
 
-  it('should be able to find one animal by id', async done => {
-    const createdAnimal = await createRandomAnimal();
-    const foundAnimal = await animalService.findOneById(createdAnimal.id);
+  it('should be able to find one animal by id', async () => {
+    const listId = 1;
+    const createdAnimal = await createExampleAnimal(1, listId);
+    jest.spyOn(animalRepository, 'findOneById').mockImplementation(id => createExampleAnimal(id, listId));
+
+    const foundAnimal = await animalService.findOneById(createdAnimal.id, listId);
     expect(!!foundAnimal).toBe(true);
     expect(foundAnimal.id).toBe(createdAnimal.id);
-    done();
   });
 
-  it('should be able to update animal', async done => {
-    const createdAnimal = await createRandomAnimal();
-    await animalService.update(createdAnimal.id, {name: 'Elephant'});
-    const updatedAnimal = await animalService.findOneById(createdAnimal.id);
-    expect(updatedAnimal).not.toBeUndefined();
+  it('should be able to update animal', async () => {
+    const listId = 1;
+    const createdAnimal = await createExampleAnimal(1, listId);
+    jest.spyOn(animalRepository, 'findOneById').mockImplementation(id => createExampleAnimal(id, listId));
+
+    const updatedAnimal = await animalService.update(createdAnimal.id, {name: 'Elephant'}, listId);
+    expect(updatedAnimal).toBeDefined();
     expect(updatedAnimal.name).toBe('Elephant');
-    done();
   });
 
-  it('should be able to remove animal', async done => {
-    const createdAnimal = await createRandomAnimal();
+  it('should be able to remove animal', async () => {
+    const listId = 1;
+    let hasRemoved: number;
+    const createdAnimal = await createExampleAnimal(1, listId);
+    jest.spyOn(animalRepository, 'findOneById').mockImplementation(id => createExampleAnimal(id, listId));
+    jest.spyOn(animalRepository, 'removeById').mockImplementation(id => (hasRemoved = id));
+
     await animalService.remove(createdAnimal.id);
-    const deletedAnimal = await animalService.findOneById(createdAnimal.id);
-    expect(deletedAnimal).toBeUndefined();
-    done();
+    expect(hasRemoved).toEqual(createdAnimal.id);
   });
 
-  let counter = 0;
-  function createRandomAnimal(): Promise<Animal> {
-    // TODO: find out how to drop table in typeorm...
-    const email = Math.random() + (counter++).toString() + '@gmail.com';
-    const animal: Animal = {
+  function createExampleAnimal(id: number, listId?: number): Animal {
+    return {
+      id,
       name: 'Mouse',
-      pic: 'none'
-    };
-    return animalService.create(animal);
+      pic: 'none',
+      list: {
+        id: listId || 1
+      }
+    } as Animal;
   }
 });
