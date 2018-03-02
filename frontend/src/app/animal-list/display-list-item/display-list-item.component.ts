@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CoreUtils} from '@tsmean/utils';
 
 import {AnimalList} from '../animal-list.model';
@@ -12,9 +12,9 @@ import {AnimalListDashboardListStore} from '../animal-list-dashboard-list.store'
   templateUrl: './display-list-item.component.html',
   styleUrls: ['./display-list-item.component.css']
 })
-export class DisplayListItemComponent implements OnChanges, OnInit {
+export class DisplayListItemComponent implements OnInit {
   private activeListId: number;
-  @Input() listId: number;
+  private _listId: number;
   list: AnimalList;
   listCopy: AnimalList;
   listSettings: ListSettings = {
@@ -28,7 +28,7 @@ export class DisplayListItemComponent implements OnChanges, OnInit {
   ) {}
 
   chooseList() {
-    this.dashboardLists.setCurrent(this.listId);
+    this.dashboardLists.setCurrent(this._listId);
   }
 
   ngOnInit() {
@@ -37,9 +37,11 @@ export class DisplayListItemComponent implements OnChanges, OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['listId']) {
-      this.animalListStore.get(this.listId).subscribe(list => {
+  @Input()
+  set listId(listId: number) {
+    if (listId) {
+      this._listId = listId;
+      this.animalListStore.get(listId).subscribe(list => {
         this.list = list;
         this.resetCopy();
       });

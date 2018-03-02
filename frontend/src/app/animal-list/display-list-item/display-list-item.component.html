@@ -1,4 +1,4 @@
-<mat-card class="clickable-card" (click)="chooseList()" [class.public]="list.owner === undefined" [class.active]="activeListId === list.id">
+<mat-card *ngIf="list" class="clickable-card" (click)="chooseList()" [class.public]="list.owner === undefined" [class.active]="activeListId === list.id">
 
   <div style="display: flex; align-items: center">
 

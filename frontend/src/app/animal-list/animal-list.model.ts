@@ -5,4 +5,5 @@ export interface AnimalListWithoutId extends ResourceWithoutId, AnimalListFields
 
 interface AnimalListFields {
   name?: string;
+  owner?: {id: number};
 }

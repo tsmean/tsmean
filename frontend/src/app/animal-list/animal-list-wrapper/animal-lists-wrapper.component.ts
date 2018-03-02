@@ -12,6 +12,7 @@ import {AnimalList} from '../animal-list.model';
 })
 export class AnimalListWrapperComponent implements OnInit {
   listIds: number[] = [];
+  private publicListId: number;
 
   constructor(
     private animalListService: AnimalListService,
@@ -27,8 +28,13 @@ export class AnimalListWrapperComponent implements OnInit {
   private subscribeToAnimalsList() {
     this.animalListService.getAnimalLists().subscribe(
       lists => {
-        this.animalListsStore.addOrUpdateMany(lists);
-        this.dashboardLists.set(lists.map(list => list.id));
+        const publicList = lists.find(list => list.owner === undefined) as AnimalList;
+        this.publicListId = publicList.id;
+        const usersLists = lists.filter(list => list.owner !== undefined).sort((a, b) => b.id - a.id);
+        const animalsLists = [publicList].concat(usersLists);
+        const listIds = animalsLists.map(list => list.id);
+        this.animalListsStore.addOrUpdateMany(animalsLists);
+        this.dashboardLists.set(listIds);
       },
       errorResp => {
         console.error('something went wrong when getting animal lists:', errorResp);
@@ -36,8 +42,9 @@ export class AnimalListWrapperComponent implements OnInit {
     );
 
     // set up listener
-    this.dashboardLists.get().subscribe(newList => {
-      this.listIds = newList;
+    this.dashboardLists.get().subscribe(newListIds => {
+      const usersListsIds = newListIds.filter(listId => listId !== this.publicListId).sort((a, b) => b - a);
+      this.listIds = [this.publicListId].concat(usersListsIds);
     });
   }
 }

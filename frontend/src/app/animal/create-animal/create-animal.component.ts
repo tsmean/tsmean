@@ -21,10 +21,14 @@ export class CreateAnimalComponent implements OnInit {
     private animalService: AnimalService,
     private notifyService: NotifyService,
     private dashboardList: AnimalDashboardListStore,
-    private animalStoreService: AnimalStoreService,
+    private animalStoreService: AnimalStoreService
   ) {}
 
   ngOnInit() {
+    this.resetInput();
+  }
+
+  private resetInput() {
     this.newAnimal = {};
   }
 
@@ -43,6 +47,7 @@ export class CreateAnimalComponent implements OnInit {
     if (this.newAnimal.name) {
       this.animalService.addAnimalPic(this.newAnimal.name, animalObs, this.listId);
     }
+    this.resetInput();
   }
 
   createAnimalOnEnter(e: KeyboardEvent) {

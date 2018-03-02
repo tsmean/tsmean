@@ -10,11 +10,24 @@ import {AnimalListWrapperComponent} from './animal-list-wrapper/animal-lists-wra
 import {AnimalListStoreService} from './animal-list.store';
 import {AnimalListDashboardListStore} from './animal-list-dashboard-list.store';
 import {DeleteAnimalListComponent} from './delete-animal-list/delete-animal-list.component';
+import {CreateAnimalListComponent} from './create-animal-list/create-animal-list.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatMenuModule, MatIconModule],
-  declarations: [DisplayAnimalListsComponent, DisplayListItemComponent, AnimalListWrapperComponent, DeleteAnimalListComponent],
-  exports: [DisplayAnimalListsComponent, DisplayListItemComponent, AnimalListWrapperComponent, DeleteAnimalListComponent]
+  declarations: [
+    DisplayAnimalListsComponent,
+    DisplayListItemComponent,
+    AnimalListWrapperComponent,
+    DeleteAnimalListComponent,
+    CreateAnimalListComponent
+  ],
+  exports: [
+    DisplayAnimalListsComponent,
+    DisplayListItemComponent,
+    AnimalListWrapperComponent,
+    DeleteAnimalListComponent,
+    CreateAnimalListComponent
+  ]
 })
 export class AnimalListModule {
   static forRoot() {

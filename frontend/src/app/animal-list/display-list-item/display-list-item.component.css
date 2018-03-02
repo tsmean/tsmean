@@ -2,7 +2,7 @@
   cursor: pointer;
 }
 .public {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .active {
   border-left: 6px solid rgba(255, 64, 129, 0.75);
