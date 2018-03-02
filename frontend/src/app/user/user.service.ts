@@ -28,10 +28,11 @@ export class UserService {
     return $data.catch(this.handleError);
   }
 
-  getUser(): Observable<User> {
+  getUser(): Observable<User | null> {
     const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'users/current')).map((resp: any) => resp.data);
     return $data.catch(() => {
-      throw new Error('cannot fetch user, since not logged in');
+      // cannot fetch user, since not logged in
+      return Observable.of(null);
     });
   }
 

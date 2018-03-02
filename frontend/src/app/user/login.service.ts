@@ -11,6 +11,7 @@ import 'rxjs/add/operator/catch';
 import {ApiUrl} from './api-url';
 import {TokenStorage} from './token.storage';
 import {UserStore} from './user.store';
+import {AnimalListDashboardListStore} from '../animal-list/animal-list-dashboard-list.store';
 
 @Injectable()
 export class LoginService {
@@ -22,7 +23,8 @@ export class LoginService {
     private http: HttpClient,
     private notifyService: NotifyService,
     private userStore: UserStore,
-    private router: Router
+    private router: Router,
+    private dashboardLists: AnimalListDashboardListStore
   ) {
     this.isLoggedIn = tokenStorage.token !== undefined;
   }
@@ -43,6 +45,7 @@ export class LoginService {
   logOut(): void {
     this.isLoggedIn = false;
     this.tokenStorage.clear();
+    this.dashboardLists.setCurrent(1);
     this.router.navigate(['/']);
   }
 

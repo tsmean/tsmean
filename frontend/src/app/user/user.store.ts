@@ -17,7 +17,9 @@ export class UserStore {
       id: -1
     });
     this.userService.getUser().subscribe(user => {
-      this.setUser(user);
+      if (user) {
+        this.setUser(user);
+      }
     });
   }
 

@@ -54,12 +54,7 @@ export class UserController {
     }
 
     try {
-      const data = await this.userService.create(requestBody.user, requestBody.password);
-      return {
-        message: 'Created',
-        status: 201,
-        data: data
-      };
+      return await this.userService.create(requestBody.user, requestBody.password);
     } catch (err) {
       if (err.message === 'User already exists') {
         throw new ForbiddenException(err.message);

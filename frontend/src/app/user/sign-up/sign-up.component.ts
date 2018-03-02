@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {NotifyService} from 'notify-angular';
 import 'rxjs/operator/catch';
 
@@ -25,7 +24,6 @@ export class SignUpComponent {
   constructor(
     private userService: UserService,
     private notifyService: NotifyService,
-    private router: Router,
     private loginService: LoginService,
     private userStore: UserStore
   ) {}
@@ -35,7 +33,6 @@ export class SignUpComponent {
       this.notifyService.success('User created');
       this.loginService.logIn(user.email, this.password);
       this.userStore.setUser(user);
-      this.router.navigate(['/dashboard']);
     });
   }
 }
