@@ -1,4 +1,4 @@
-<mat-card (click)="chooseList()" class="clickable-card">
+<mat-card class="clickable-card" (click)="chooseList()" [class.public]="list.owner === undefined" [class.active]="activeListId === list.id">
 
   <div style="display: flex; align-items: center">
 
@@ -13,14 +13,14 @@
       <button color="accent" mat-raised-button *ngIf="listSettings.isBeingEdited" (click)="updateAnimalList()">Update List</button>
     </div>
 
-    <div>
+    <div *ngIf="list.owner !== undefined">
       <button mat-icon-button color="primary" (click)="resetCopy(); toggleEditable();">
         <mat-icon *ngIf="!listSettings.isBeingEdited">edit</mat-icon>
         <mat-icon *ngIf="listSettings.isBeingEdited">cancel</mat-icon>
       </button>
     </div>
 
-    <!-- <app-animal-delete [animal]="animal"></app-animal-delete> -->
+    <app-animal-list-delete *ngIf="list.owner !== undefined" [list]="list"></app-animal-list-delete>
 
   </div>
 

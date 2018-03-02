@@ -1,24 +1,22 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, OnInit} from '@angular/core';
 import {CoreUtils} from '@tsmean/utils';
 
 import {AnimalList} from '../animal-list.model';
 import {ListSettings} from '../list-settings';
 import {AnimalListService} from '../animal-list.service';
 import {AnimalListStoreService} from '../animal-list.store';
-import { AnimalListDashboardListStore } from '../animal-list-dashboard-list.store';
+import {AnimalListDashboardListStore} from '../animal-list-dashboard-list.store';
 
 @Component({
   selector: 'app-animal-list-display',
   templateUrl: './display-list-item.component.html',
   styleUrls: ['./display-list-item.component.css']
 })
-export class DisplayListItemComponent implements OnChanges {
+export class DisplayListItemComponent implements OnChanges, OnInit {
+  private activeListId: number;
   @Input() listId: number;
-
   list: AnimalList;
-
   listCopy: AnimalList;
-
   listSettings: ListSettings = {
     isBeingEdited: false
   };
@@ -31,6 +29,12 @@ export class DisplayListItemComponent implements OnChanges {
 
   chooseList() {
     this.dashboardLists.setCurrent(this.listId);
+  }
+
+  ngOnInit() {
+    this.dashboardLists.getCurrent().subscribe(activeListId => {
+      this.activeListId = activeListId;
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

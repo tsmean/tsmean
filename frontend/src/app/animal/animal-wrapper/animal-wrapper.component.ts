@@ -31,7 +31,6 @@ export class AnimalWrapperComponent implements OnInit {
 
   private subscribeToCurrentList() {
     this.dashboardLists.getCurrent().subscribe(currentListId => {
-      console.log('subscribeToCurrentList', currentListId);
       this.currentListId = currentListId;
       this.reSubscribeToAnimals();
     });

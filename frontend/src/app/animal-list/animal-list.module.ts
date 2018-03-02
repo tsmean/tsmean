@@ -9,11 +9,12 @@ import {DisplayListItemComponent} from './display-list-item/display-list-item.co
 import {AnimalListWrapperComponent} from './animal-list-wrapper/animal-lists-wrapper.component';
 import {AnimalListStoreService} from './animal-list.store';
 import {AnimalListDashboardListStore} from './animal-list-dashboard-list.store';
+import {DeleteAnimalListComponent} from './delete-animal-list/delete-animal-list.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatMenuModule, MatIconModule],
-  declarations: [DisplayAnimalListsComponent, DisplayListItemComponent, AnimalListWrapperComponent],
-  exports: [DisplayAnimalListsComponent, DisplayListItemComponent, AnimalListWrapperComponent]
+  declarations: [DisplayAnimalListsComponent, DisplayListItemComponent, AnimalListWrapperComponent, DeleteAnimalListComponent],
+  exports: [DisplayAnimalListsComponent, DisplayListItemComponent, AnimalListWrapperComponent, DeleteAnimalListComponent]
 })
 export class AnimalListModule {
   static forRoot() {
