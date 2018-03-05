@@ -20,6 +20,7 @@ import {
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
+import {ApiOperation, ApiResponse, ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
 
 import {UserService} from './user.service';
 import {Authorized} from '../common/decorators/authorized.decorator';
@@ -33,8 +34,9 @@ import {UserRole} from './user.role';
 import {CurrentUser} from './user.decorator';
 import {PasswordValidatorImpl} from '../validation/password/password-validator.component';
 
-@Controller(apiPath(1, 'users'))
+@ApiUseTags('Users')
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
+@Controller(apiPath(1, 'users'))
 export class UserController {
   constructor(
     private readonly userService: UserService,
@@ -42,6 +44,13 @@ export class UserController {
     private readonly passwordValidator: PasswordValidatorImpl
   ) {}
 
+  @ApiOperation({title: 'Register new account'})
+  @ApiResponse({
+    status: 200,
+    description: 'Credentials are ok, returning new user data.',
+    type: User
+  })
+  @ApiResponse({status: 400, description: 'Email or password are not valid!'})
   @Post()
   async create(@Body() requestBody: CreateUserDto) {
     const emailValidation = await this.emailValidator.validateEmail(requestBody.user.email);
@@ -75,8 +84,16 @@ export class UserController {
     return this.userService.find(options);
   }
 
-  @Get('current')
+  @ApiBearerAuth()
+  @ApiOperation({title: 'Get the current user info (check JWT validity)'})
+  @ApiResponse({
+    status: 200,
+    description: 'JWT is ok, returning user data.',
+    type: User
+  })
+  @ApiResponse({status: 401, description: 'JWT is no longer valid!'})
   @Authorized()
+  @Get('current')
   async getCurrent(@CurrentUser() currentUser: User): Promise<User> {
     return await this.userService.findOneById(currentUser.id);
   }

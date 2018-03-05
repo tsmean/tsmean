@@ -1,4 +1,5 @@
 import {Body, Controller, HttpStatus, Post, Res, UseGuards, UseInterceptors, Inject, BadRequestException} from '@nestjs/common';
+import {ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 import {classToPlain} from 'class-transformer';
 
 import {UserService} from '../user/user.service';
@@ -12,8 +13,9 @@ import {PasswordCryptographerService} from './password-cryptographer/password-cr
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
 import {PasswordValidatorImpl} from '../validation/password/password-validator.component';
 
-@Controller(apiPath(1, 'auth'))
+@ApiUseTags('Users')
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
+@Controller(apiPath(1, 'auth'))
 export class AuthController {
   constructor(
     private readonly userService: UserService,
@@ -23,6 +25,12 @@ export class AuthController {
     private readonly passwordValidator: PasswordValidatorImpl
   ) {}
 
+  @ApiOperation({title: 'Authorize'})
+  @ApiResponse({
+    status: 200,
+    description: 'Credentials are ok, returning JWT.'
+  })
+  @ApiResponse({status: 400, description: 'The email or password is incorrect!'})
   @Post()
   async login(@Body() req: LoginDto) {
     const emailValidation = await this.emailValidator.validateEmail(req.email);

@@ -1,4 +1,5 @@
 import {NestFactory} from '@nestjs/core';
+import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
 import {ValidationPipe, INestApplication} from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -6,6 +7,7 @@ import * as cors from 'cors';
 import {AppModule} from './app.module';
 import {AuthGuard} from './auth/auth.guard';
 import {AuthModule} from './auth/auth.module';
+import {apiPath} from './api';
 
 async function bootstrap() {
   const app: INestApplication = await NestFactory.create(AppModule);
@@ -18,6 +20,19 @@ async function bootstrap() {
 
   // Allow CORS since frontend is served completely independently
   app.use(cors());
+
+  const swaggerConfig = new DocumentBuilder()
+    .addBearerAuth()
+    .setTitle('tsmean sample api')
+    .setBasePath(apiPath(1, ''))
+    .addTag('Animals')
+    .addTag('Animal lists')
+    .addTag('Users')
+    .setDescription('Sample REST API that allows to manage list of animals')
+    .setVersion('1.0')
+    .build();
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('/api/swagger', app, swaggerDocument);
 
   const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4242;
   await app.listen(port);

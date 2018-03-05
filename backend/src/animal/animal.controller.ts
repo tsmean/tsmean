@@ -17,6 +17,7 @@ import {
   ParseIntPipe,
   NotFoundException
 } from '@nestjs/common';
+import {ApiUseTags} from '@nestjs/swagger';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
@@ -30,6 +31,7 @@ import {CurrentUser} from '../user/user.decorator';
 import {User} from '../user/user.entity';
 import {AnimalDto} from '../../../shared/src/dto/animal/animal.dto';
 
+@ApiUseTags('Animals')
 @Controller(apiPath(1, 'animal-lists/:listId/animals'))
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {

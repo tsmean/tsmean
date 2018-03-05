@@ -11,7 +11,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "class-validator": "^0.8.1"
+    "@nestjs/common": "^4.6.5",
+    "@nestjs/core": "^4.6.5",
+    "@nestjs/swagger": "^1.1.4",
+    "class-validator": "^0.8.1",
+    "express": "^4.16.2",
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "@types/jest": "^21.1.4",
