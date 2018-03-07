@@ -7,4 +7,9 @@ export interface AppProperties {
     dbpassword: string;
     testsMayDropDb: boolean;
   };
+  token: {
+    secret: string;
+    algorithm?: string;
+    expiresIn?: string;
+  }
 }

@@ -1,12 +1,14 @@
 import {Test} from '@nestjs/testing';
+
 import {UserService} from './user.service';
 import {userProviders} from './user.providers';
 import {databaseProviders} from '../database/database.providers';
 import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';
+import {configProviders} from '../config/config.providers';
+import {authProviders} from '../auth/auth.providers';
 
 describe('user service', () => {
-
   let userService: UserService;
 
   /**
@@ -16,17 +18,13 @@ describe('user service', () => {
    */
   beforeAll(async () => {
     const module = await Test.createTestingModule({
-      components: [
-        Log,
-        ...databaseProviders,
-        ...userProviders,
-        UserService],
+      components: [Log, ...configProviders, ...databaseProviders, ...authProviders, ...userProviders, UserService]
     }).compile();
 
     userService = module.get<UserService>(UserService);
   });
 
-  it('should be able to create a user', (done) => {
+  it('should be able to create a user', done => {
     createRandomUser().then(resp => {
       if (resp.id !== undefined) {
         done();
@@ -34,14 +32,14 @@ describe('user service', () => {
     });
   });
 
-  it('should be able to find all users', (done) => {
+  it('should be able to find all users', done => {
     userService.find().then(resp => {
       expect(Array.isArray(resp)).toBe(true);
       done();
     });
   });
 
-  it('should be able to find one user by email', async (done) => {
+  it('should be able to find one user by email', async done => {
     const createdUser = await createRandomUser();
     const foundUser = await userService.findOneByEmail(createdUser.email);
     expect(!!foundUser).toBe(true);
@@ -49,7 +47,7 @@ describe('user service', () => {
     done();
   });
 
-  it('should be able to find one user by id', async (done) => {
+  it('should be able to find one user by id', async done => {
     const createdUser = await createRandomUser();
     const foundUser = await userService.findOneById(createdUser.id);
     expect(!!foundUser).toBe(true);
@@ -57,20 +55,20 @@ describe('user service', () => {
     done();
   });
 
-  it('should be able to check if email is taken', async (done) => {
+  it('should be able to check if email is taken', async done => {
     const createdUser = await createRandomUser();
     const emailIsTaken = await userService.emailIsTaken(createdUser.email);
     expect(emailIsTaken).toBe(true);
     done();
   });
 
-  it('should be able to check if email is untaken', async (done) => {
+  it('should be able to check if email is untaken', async done => {
     const emailIsTaken = await userService.emailIsTaken('bladi@blub.com');
     expect(emailIsTaken).toBe(false);
     done();
   });
 
-  it('should be able to update user', async (done) => {
+  it('should be able to update user', async done => {
     const createdUser = await createRandomUser();
     await userService.update(createdUser.id, {firstName: 'Bernhard'});
     const updatedUser = await userService.findOneById(createdUser.id);
@@ -79,7 +77,7 @@ describe('user service', () => {
     done();
   });
 
-  it('should be able to remove user', async (done) => {
+  it('should be able to remove user', async done => {
     const createdUser = await createRandomUser();
     await userService.remove(createdUser.id);
     const deletedUser = await userService.findOneById(createdUser.id);
@@ -88,7 +86,7 @@ describe('user service', () => {
   });
 
   let counter = 0;
-  function createRandomUser (): Promise<IUser> {
+  function createRandomUser(): Promise<IUser> {
     // TODO: find out how to drop table in typeorm...
     const email = Math.random() + (counter++).toString() + '@gmail.com';
     const user: IUser = {
@@ -98,5 +96,4 @@ describe('user service', () => {
     };
     return userService.create(user, 'mySuperSecurePasswordIXJAJA');
   }
-
 });

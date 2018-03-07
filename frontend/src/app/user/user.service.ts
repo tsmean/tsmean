@@ -1,52 +1,39 @@
 import {Inject, Injectable} from '@angular/core';
-import {User, UserWithoutId} from './user';
-import {Observable} from 'rxjs/Observable';
-import {WebUtils} from '@tsmean/utils';
-import {Http} from '@angular/http';
-import {ApiUrl} from './api-url';
+import {HttpClient} from '@angular/common/http';
 import {NotifyService} from 'notify-angular';
-import {LoginService} from './login.service';
-
+import {WebUtils} from '@tsmean/utils';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+
+import {User, UserWithoutId} from './user';
+import {ApiUrl} from './api-url';
 import {ResourceService} from '../resource/resource.service';
 
 @Injectable()
 export class UserService {
-
   constructor(
     @Inject(ApiUrl) private apiUrl: string,
-    private http: Http,
+    private http: HttpClient,
     private notifyService: NotifyService,
-    private resourceService: ResourceService,
-    private loginService: LoginService
+    private resourceService: ResourceService
   ) {}
 
   createUser(user: UserWithoutId, password: string): Observable<User> {
-    const $data = this.http.post(this.usersApi, {
-      user: user,
-      password: password
-    }).map(resp => resp.json().data);
+    const $data = this.http
+      .post(this.usersApi, {
+        user: user,
+        password: password
+      })
+      .map((resp: any) => resp.data);
     return $data.catch(this.handleError);
   }
 
-  getUser(): Observable<User> {
-    if (this.loginService.loggedIn()) {
-
-      const fakeUser: User = {
-        id: 1,
-        email: 'hans@gmail.com',
-        firstName: 'Hans',
-        lastName: 'Mueller'
-      };
-      const fakeObservable = Observable.of(fakeUser);
-
-      // const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'user')).map(resp => resp.json().data);
-      const $data = fakeObservable;
-
-      return $data.catch(this.handleError);
-    } else {
-      throw new Error('cannot fetch user, since not logged in');
-    }
+  getUser(): Observable<User | null> {
+    const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'users/current')).map((resp: any) => resp.data);
+    return $data.catch(() => {
+      // cannot fetch user, since not logged in
+      return Observable.of(null);
+    });
   }
 
   getUserById(id: number): Observable<User> {
@@ -61,7 +48,6 @@ export class UserService {
     return <Observable<User>>this.resourceService.updateResource(user, 'users');
   }
 
-
   private get usersApi(): string {
     return WebUtils.urlJoin(this.apiUrl, 'users');
   }
@@ -70,5 +56,4 @@ export class UserService {
     this.notifyService.error(errorResp.statusText);
     return Promise.reject(errorResp.statusText || errorResp);
   }
-
 }

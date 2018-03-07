@@ -3,7 +3,6 @@ import {Component} from '@nestjs/common';
 
 @Component()
 export class Log {
-
   readonly info;
   readonly warn;
   readonly debug;
@@ -24,7 +23,5 @@ export class Log {
     this.warn = logger.warn.bind(logger);
     this.debug = logger.debug.bind(logger);
     this.error = logger.error.bind(logger);
-
   }
-
 }

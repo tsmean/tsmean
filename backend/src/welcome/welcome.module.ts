@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common';
+import {Module} from '@nestjs/common';
+
 import {WelcomeHtmlController} from './welcome-html-router';
 
 @Module({
-  controllers: [WelcomeHtmlController],
+  controllers: [WelcomeHtmlController]
 })
 export class WelcomeModule {}

@@ -1,20 +1,29 @@
-import { createConnection } from 'typeorm';
-import {DB_CONNECTION_TOKEN} from '../user/constants';
+import {createConnection} from 'typeorm';
+import {ComponentMetatype} from '@nestjs/core/injector/module';
 
-export const databaseProviders = [
+import {CONFIG_TOKEN} from '../config/constants';
+import {AppProperties} from '../config/app-properties.model';
+import {DB_CONNECTION_TOKEN} from './constants';
+
+type Provider = Partial<ComponentMetatype>;
+const nodeEnv = process.env.NODE_ENV;
+
+export const databaseProviders: Array<Provider> = [
   {
     provide: DB_CONNECTION_TOKEN,
-    useFactory: async () => await createConnection({
-      type: 'mysql',
-      host: 'mysql.cn32tstd6wqk.eu-central-1.rds.amazonaws.com',
-      port: 3306,
-      username: 'tsmean',
-      password: 'jdj2198fjj1jjf9j1jwjd',
-      database: 'testdb',
-      entities: [
-        __dirname + '/../**/*.entity{.ts,.js}'
-      ],
-      autoSchemaSync: true,
-    })
+    inject: [CONFIG_TOKEN],
+    useFactory: async ({db}: AppProperties) =>
+      await createConnection({
+        type: 'mysql',
+        host: db.host,
+        port: db.port,
+        username: db.dbuser,
+        password: db.dbpassword,
+        database: db.dbname,
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        synchronize: true,
+        logger: 'advanced-console',
+        logging: nodeEnv !== 'test' ? 'all' : false
+      })
   }
 ];

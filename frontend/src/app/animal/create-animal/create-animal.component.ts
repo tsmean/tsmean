@@ -1,45 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {Animal, AnimalWithoutId} from '../animal.model';
-import {AnimalService} from '../animal.service';
+import {Component, OnInit, Input} from '@angular/core';
 import {NotifyService} from 'notify-angular';
-import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
-import {AnimalStoreService} from '../animal.store';
-import {Http} from '@angular/http';
 import {WebUtils} from '@tsmean/utils';
 
+import {Animal, AnimalWithoutId} from '../animal.model';
+import {AnimalService} from '../animal.service';
+import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
+import {AnimalStoreService} from '../animal.store';
+
 @Component({
-  selector: 'animal-create',
+  selector: 'app-animal-create',
   templateUrl: './create-animal.component.html',
   styleUrls: ['./create-animal.component.css']
 })
 export class CreateAnimalComponent implements OnInit {
-
   public newAnimal: AnimalWithoutId;
 
+  @Input() listId: number;
+
   constructor(
-      private animalService: AnimalService,
-      private notifyService: NotifyService,
-      private dashboardList: AnimalDashboardListStore,
-      private animalStoreService: AnimalStoreService,
-      private http: Http
-  ) { }
+    private animalService: AnimalService,
+    private notifyService: NotifyService,
+    private dashboardList: AnimalDashboardListStore,
+    private animalStoreService: AnimalStoreService
+  ) {}
 
   ngOnInit() {
+    this.resetInput();
+  }
+
+  private resetInput() {
     this.newAnimal = {};
   }
 
   public createAnimal() {
-    const animalObs = this.animalService.createAnimal(this.newAnimal);
-    animalObs.subscribe(newAnimal => {
-      this.animalStoreService.addOrUpdate(newAnimal);
-      this.notifyService.success('Animal Created');
-      this.dashboardList.add(newAnimal.id);
-    }, errorResp => {
-      this.notifyService.error(errorResp.statusText);
-    });
+    const animalObs = this.animalService.createAnimal(this.newAnimal, this.listId);
+    animalObs.subscribe(
+      newAnimal => {
+        this.animalStoreService.addOrUpdate(newAnimal);
+        this.notifyService.success('Animal Created');
+        this.dashboardList.add(newAnimal.id);
+      },
+      errorResp => {
+        this.notifyService.error(errorResp.statusText);
+      }
+    );
     if (this.newAnimal.name) {
-      this.animalService.addAnimalPic(this.newAnimal.name, animalObs);
+      this.animalService.addAnimalPic(this.newAnimal.name, animalObs, this.listId);
     }
+    this.resetInput();
   }
 
   createAnimalOnEnter(e: KeyboardEvent) {
@@ -47,5 +55,4 @@ export class CreateAnimalComponent implements OnInit {
       this.createAnimal();
     }
   }
-
 }

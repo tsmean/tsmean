@@ -2,11 +2,9 @@ import {Controller, Get, HttpStatus, Req, Res} from '@nestjs/common';
 
 @Controller('')
 export class WelcomeHtmlController {
-
   @Get()
-  public welcome(@Res() res) {
-    res.status(HttpStatus.OK)
-        .send(`
+  public welcome() {
+    return `
 <html>
 <head>
 <title>Welcome</title>
@@ -20,7 +18,6 @@ export class WelcomeHtmlController {
   </p>
   <!-- Would be cool if Nest could automatically generate API Docs, which could be displayed here... -->
 </body>
-</html>`);
+</html>`;
   }
-
 }

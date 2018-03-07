@@ -1,0 +1,27 @@
+<mat-card *ngIf="list" class="clickable-card" (click)="chooseList()" [class.public]="list.owner === undefined" [class.active]="activeListId === list.id">
+
+  <div style="display: flex; align-items: center">
+
+    <!-- Display or Edit list -->
+    <div style="padding: 5px; flex: 1">
+      <div *ngIf="!listSettings.isBeingEdited">
+        {{list.name}}
+      </div>
+      <mat-form-field *ngIf="listSettings.isBeingEdited">
+        <input matInput placeholder="List's Name" [(ngModel)]="listCopy.name">
+      </mat-form-field>
+      <button color="accent" mat-raised-button *ngIf="listSettings.isBeingEdited" (click)="updateAnimalList()">Update List</button>
+    </div>
+
+    <div *ngIf="list.owner !== undefined">
+      <button mat-icon-button color="primary" (click)="resetCopy(); toggleEditable();">
+        <mat-icon *ngIf="!listSettings.isBeingEdited">edit</mat-icon>
+        <mat-icon *ngIf="listSettings.isBeingEdited">cancel</mat-icon>
+      </button>
+    </div>
+
+    <app-animal-list-delete *ngIf="list.owner !== undefined" [list]="list"></app-animal-list-delete>
+
+  </div>
+
+</mat-card>

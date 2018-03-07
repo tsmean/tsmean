@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - "8"
-  - "6"
-before_script:
-  - npm install -g ts-node
+  - stable
+  - 8
+  - 6

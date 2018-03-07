@@ -34,7 +34,7 @@ function handleCommandResult(result: SpawnSyncReturns<string>) {
   if (result.error) {
     console.error('ERROR in process:', result.error);
     process.exit();
-  } else if (result.stderr !== undefined && result.stderr !== "") {
+  } else if (result.stderr !== undefined && result.stderr !== '') {
     console.error('stderr not empty:', result.stderr);
     process.exit();
   } else {
@@ -42,7 +42,7 @@ function handleCommandResult(result: SpawnSyncReturns<string>) {
   }
 }
 
-function changeToDirectory (dir) {
+function changeToDirectory(dir) {
   try {
     process.chdir(dir);
   } catch (err) {

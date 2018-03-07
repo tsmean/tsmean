@@ -1,53 +1,47 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import {Animal, AnimalWithoutId} from './animal.model';
 
-import {Http} from '@angular/http';
+import {Animal, AnimalWithoutId} from './animal.model';
 import {AnimalStoreService} from './animal.store';
 import {ResourceService} from '../resource/resource.service';
 
 @Injectable()
 export class AnimalService {
+  constructor(private resourceService: ResourceService, private http: HttpClient, private animalStoreService: AnimalStoreService) {}
 
-  constructor(
-      private resourceService: ResourceService,
-      private http: Http,
-      private animalStoreService: AnimalStoreService
-  ) { }
-
-  private get resourceName (): string {
-    return 'animals';
+  private getResourceName(listId: number = -999): string {
+    return `animal-lists/${listId}/animals`;
   }
 
-  getAnimals(): Observable<Animal[]> {
-    return this.resourceService.getResources(this.resourceName);
+  getAnimals(listId: number): Observable<Animal[]> {
+    return this.resourceService.getResources(this.getResourceName(listId));
   }
 
-  createAnimal(animal: AnimalWithoutId): Observable<Animal> {
-    const animalObs = this.resourceService.createResource(animal, this.resourceName);
+  createAnimal(animal: AnimalWithoutId, listId: number): Observable<Animal> {
+    const animalObs = this.resourceService.createResource(animal, this.getResourceName(listId));
     return animalObs;
   }
 
-  deleteAnimal(animalId: number): Observable<void> {
-    return this.resourceService.deleteResource(animalId, this.resourceName);
+  deleteAnimal(animalId: number, listId: number): Observable<void> {
+    return this.resourceService.deleteResource(animalId, this.getResourceName(listId));
   }
 
-  updateAnimal(animal: Animal): Observable<Animal> {
-    return this.resourceService.updateResource(animal, this.resourceName);
+  updateAnimal(animal: Animal, listId: number): Observable<Animal> {
+    return this.resourceService.updateResource(animal, this.getResourceName(listId));
   }
 
   // small extra: add a picture to the animal
   // works with observable to achieve best user experience
-  addAnimalPic (animalName: string, animalObs: Observable<Animal>) {
+  addAnimalPic(animalName: string, animalObs: Observable<Animal>, listId: number) {
     const animalImageObs = this.http.get(`https://animal-images.herokuapp.com/find?q=${animalName.toLowerCase()}`);
     animalObs.subscribe(animalResp => {
-      animalImageObs.subscribe(animal => {
-        animalResp.pic = animal.json().urlEncodedPath;
-        this.updateAnimal(animalResp).subscribe(updatedAnimal => {
+      animalImageObs.subscribe((animal: any) => {
+        animalResp.pic = animal.urlEncodedPath;
+        this.updateAnimal(animalResp, listId).subscribe(updatedAnimal => {
           this.animalStoreService.addOrUpdate(updatedAnimal);
         });
       });
     });
   }
-
 }

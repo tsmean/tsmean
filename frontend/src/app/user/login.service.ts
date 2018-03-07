@@ -1,57 +1,59 @@
 import {Inject, Injectable} from '@angular/core';
-import { Http } from '@angular/http';
-import {NotifyService} from 'notify-angular';
-import {Cookies} from '@tsmean/cookies';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {User} from './user';
+import {NotifyService} from 'notify-angular';
 import {WebUtils} from '@tsmean/utils';
-import {ApiUrl} from './api-url';
-
-import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
-
+import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+import {ApiUrl} from './api-url';
+import {TokenStorage} from './token.storage';
+import {UserStore} from './user.store';
+import {AnimalListDashboardListStore} from '../animal-list/animal-list-dashboard-list.store';
+
 @Injectable()
 export class LoginService {
-
-  private user: User;
+  private isLoggedIn = false;
 
   constructor(
     @Inject(ApiUrl) private apiUrl: string,
-    private http: Http,
+    private tokenStorage: TokenStorage,
+    private http: HttpClient,
     private notifyService: NotifyService,
-    private router: Router
-  ) { }
-
-  logIn(email: string, password: string): void {
-    const $data = this.http.post(this.loginApi, {email: email, password: password})
-      .map(resp => resp.json().data);
-
-    $data.subscribe(resp => {
-      this.notifyService.success('logged in');
-      Cookies.setCookie('username', email);
-      this.router.navigate(['/dashboard']);
-    });
+    private userStore: UserStore,
+    private router: Router,
+    private dashboardLists: AnimalListDashboardListStore
+  ) {
+    this.isLoggedIn = tokenStorage.token !== undefined;
   }
 
-  logInAfterSignUp(email: string) {
-    Cookies.setCookie('username', email);
+  logIn(email: string, password: string): void {
+    this.http
+      .post(this.loginApi, {email: email, password: password})
+      .map((resp: any) => resp.data)
+      .subscribe((resp: any) => {
+        this.isLoggedIn = true;
+        this.tokenStorage.set(resp.token);
+        this.userStore.setUser(resp.user);
+        this.notifyService.success('logged in');
+        this.router.navigate(['/dashboard']);
+      });
   }
 
   logOut(): void {
-    Cookies.setUserCookie('');
+    this.isLoggedIn = false;
+    this.tokenStorage.clear();
+    this.dashboardLists.setCurrent(1);
     this.router.navigate(['/']);
   }
 
   loggedIn(): boolean {
-    return Cookies.userCookiePresent();
+    return this.isLoggedIn;
   }
 
   private get loginApi(): string {
-    return WebUtils.urlJoin(this.apiUrl, 'login');
+    return WebUtils.urlJoin(this.apiUrl, 'auth');
   }
-
-
 }

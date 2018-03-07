@@ -1,21 +1,20 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {CoreUtils} from '@tsmean/utils';
+
 import {Animal} from '../animal.model';
 import {AnimalSettings} from '../animal-settings';
 import {AnimalService} from '../animal.service';
-
-import {CoreUtils} from '@tsmean/utils';
 import {AnimalStoreService} from '../animal.store';
 import {ResourceStoreService} from '../../resource/resource.store';
 
 @Component({
-  selector: 'animal-display',
+  selector: 'app-animal-display',
   templateUrl: './display-animal.component.html',
   styleUrls: ['./display-animal.component.css']
 })
 export class DisplayAnimalComponent implements OnChanges {
-
-  @Input()
-  animalId: number;
+  @Input() animalId: number;
+  @Input() listId: number;
 
   animal: Animal;
 
@@ -25,11 +24,7 @@ export class DisplayAnimalComponent implements OnChanges {
     isBeingEdited: false
   };
 
-  constructor(
-    private resourceStore: ResourceStoreService,
-      private animalService: AnimalService,
-      private animalStore: AnimalStoreService
-  ) { }
+  constructor(private resourceStore: ResourceStoreService, private animalService: AnimalService, private animalStore: AnimalStoreService) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['animalId']) {
@@ -44,19 +39,18 @@ export class DisplayAnimalComponent implements OnChanges {
     return 'https://animal-images.herokuapp.com/animals?path=' + picPath;
   }
 
-
   toggleEditable() {
     this.animalSettings.isBeingEdited = !this.animalSettings.isBeingEdited;
   }
 
   updateAnimal() {
-    const animalObs = this.animalService.updateAnimal(this.animalCopy);
+    const animalObs = this.animalService.updateAnimal(this.animalCopy, this.listId);
     animalObs.subscribe(animal => {
       this.animalStore.addOrUpdate(animal);
       this.toggleEditable();
     });
     if (this.animalCopy.name) {
-      this.animalService.addAnimalPic(this.animalCopy.name, animalObs);
+      this.animalService.addAnimalPic(this.animalCopy.name, animalObs, this.listId);
     }
   }
 
@@ -65,5 +59,4 @@ export class DisplayAnimalComponent implements OnChanges {
       this.animalCopy = CoreUtils.deepCopy(this.animal);
     }
   }
-
 }

@@ -1,86 +1,158 @@
-import {Controller, Get, Post, Body, UseGuards, UseInterceptors, Param, Res, Put, Delete, Patch} from '@nestjs/common';
-import { UserService } from './user.service';
-import { RolesGuard } from '../common/guards/roles.guard';
-import { Roles } from '../common/decorators/roles.decorator';
-import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
-import { TransformInterceptor } from '../common/interceptors/transform.interceptor';
-import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  UseInterceptors,
+  Param,
+  Res,
+  Put,
+  Delete,
+  Patch,
+  InternalServerErrorException,
+  ForbiddenException,
+  ParseIntPipe,
+  Query,
+  UnauthorizedException,
+  NotFoundException,
+  BadRequestException
+} from '@nestjs/common';
+import {FindManyOptions} from 'typeorm';
+import {DeepPartial} from 'typeorm/common/DeepPartial';
+import {ApiOperation, ApiResponse, ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
+
+import {UserService} from './user.service';
+import {Authorized} from '../common/decorators/authorized.decorator';
+import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
+import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {User} from './user.entity';
 import {CreateUserDto} from '@tsmean/shared';
-import {FindManyOptions} from 'typeorm';
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
-import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {apiPath} from '../api';
+import {UserRole} from './user.role';
+import {CurrentUser} from './user.decorator';
+import {PasswordValidatorImpl} from '../validation/password/password-validator.component';
 
-@Controller(apiPath(1, 'users'))
-@UseGuards(RolesGuard)
+@ApiUseTags('Users')
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
+@Controller(apiPath(1, 'users'))
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly emailValidator: EmailValidatorImpl
+    private readonly emailValidator: EmailValidatorImpl,
+    private readonly passwordValidator: PasswordValidatorImpl
   ) {}
 
+  @ApiOperation({title: 'Register new account'})
+  @ApiResponse({
+    status: 200,
+    description: 'Credentials are ok, returning new user data.',
+    type: User
+  })
+  @ApiResponse({status: 400, description: 'Email or password are not valid!'})
   @Post()
-  // @Roles('admin')
-  async create(@Body() requestBody: CreateUserDto, @Res() res) {
+  async create(@Body() requestBody: CreateUserDto) {
+    const emailValidation = await this.emailValidator.validateEmail(requestBody.user.email);
+    if (!emailValidation.isValid) {
+      throw new BadRequestException('Invalid email!');
+    }
+    const passwordValidation = await this.passwordValidator.validatePassword(requestBody.password);
+    if (!emailValidation.isValid) {
+      throw new BadRequestException('Invalid password!');
+    }
 
-    this.userService.create(requestBody.user, requestBody.password)
-      .then(data => {
-        res.status(200).send({
-          message: 'Success',
-          status: res.status,
-          data: data
-        });
-      })
-      .catch(err => {
-        if (err.message === 'User already exists') {
-          res.statusMessage = err.message;
-          res.status(403).send();
-        } else {
-          res.statusMessage = err.message;
-          res.status(500).send(err.message);
-        }
-      });
+    try {
+      return await this.userService.create(requestBody.user, requestBody.password);
+    } catch (err) {
+      if (err.message === 'User already exists') {
+        throw new ForbiddenException(err.message);
+      } else {
+        throw new InternalServerErrorException(err.message);
+      }
+    }
   }
 
   @Get()
-  // TODO: Only user can get info on himself or maybe admin
-  async find(options?: FindManyOptions<User>): Promise<User[]> {
-    const defaultOptions = {
+  @Authorized(UserRole.Admin)
+  async find(@Query() findOptions?: FindManyOptions<User>): Promise<User[]> {
+    const options = {
       take: 100,
-      skip: 0
+      skip: 0,
+      ...findOptions // overwrite default ones
     };
-    return this.userService.find(options || defaultOptions);
+    return this.userService.find(options);
+  }
+
+  @ApiBearerAuth()
+  @ApiOperation({title: 'Get the current user info (check JWT validity)'})
+  @ApiResponse({
+    status: 200,
+    description: 'JWT is ok, returning user data.',
+    type: User
+  })
+  @ApiResponse({status: 401, description: 'JWT is no longer valid!'})
+  @Authorized()
+  @Get('current')
+  async getCurrent(@CurrentUser() currentUser: User): Promise<User> {
+    return await this.userService.findOneById(currentUser.id);
   }
 
   /**
    * Duck-Typed Input: could either be an integer for the id or the e-mail address of the user
    */
   @Get(':idOrEmail')
-  // TODO: Only user can get info on himself or maybe admin
-  findOne(@Param('idOrEmail') idOrEmail): Promise<User> {
+  @Authorized()
+  async findOne(@Param('idOrEmail') idOrEmail, @CurrentUser() currentUser: User): Promise<User> {
     const isEmail = this.emailValidator.simpleCheck(idOrEmail);
-    return isEmail ?
-      this.userService.findOneByEmail(idOrEmail) :
-      this.userService.findOneById(parseInt(idOrEmail, 10));
+    const foundUser = isEmail
+      ? await this.userService.findOneByEmail(idOrEmail)
+      : await this.userService.findOneById(parseInt(idOrEmail, 10));
+
+    if ((!foundUser || foundUser.id !== currentUser.id) && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can get info of himself (or admin)!');
+    }
+
+    if (!foundUser) {
+      throw new NotFoundException(`User '${idOrEmail}' has not been found`);
+    }
+
+    return foundUser;
   }
 
   @Put()
-  // TODO: Only user can update himself or maybe admin
-  async fullUpdate(@Body() user: User) {
+  @Authorized()
+  async fullUpdate(@Body() user: User, @CurrentUser() currentUser: User) {
+    if (user.id !== currentUser.id && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can update himself (or admin)!');
+    }
     return this.userService.update(user.id, user);
   }
 
   @Patch(':id')
-  async partialUpdate(@Param('id', new ParseIntPipe()) id, partialEntry: DeepPartial<User>) {
-    return this.userService.update(id, partialEntry);
+  @Authorized()
+  async partialUpdate(
+    @Param('id', new ParseIntPipe())
+    userId: number,
+    @Body() partialEntry: DeepPartial<User>,
+    @CurrentUser() currentUser: User
+  ) {
+    if (userId !== currentUser.id && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can update himself (or admin)!');
+    }
+    return this.userService.update(userId, partialEntry);
   }
 
   @Delete(':id')
-  // TODO: Only user can delete himself or maybe admin
-  async remove(@Param('id', new ParseIntPipe()) id) {
-    return this.userService.remove(id);
+  @Authorized()
+  async remove(
+    @Param('id', new ParseIntPipe())
+    userId: number,
+    @CurrentUser() currentUser: User
+  ) {
+    if (userId !== currentUser.id && currentUser.role !== UserRole.Admin) {
+      throw new ForbiddenException('Only user can delete himself (or admin)!');
+    }
+    return this.userService.remove(userId);
   }
-
 }

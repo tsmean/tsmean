@@ -27,6 +27,7 @@
     "@tsmean/cookies": "^1.0.0",
     "@tsmean/shared": "0.0.9",
     "@tsmean/utils": "x.x.x",
+    "class-validator": "^0.8.1",
     "core-js": "^2.5.3",
     "hammerjs": "^2.0.8",
     "notify-angular": "^3.0.1",

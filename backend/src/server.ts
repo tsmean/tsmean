@@ -1,38 +1,41 @@
-import {appConfig} from './config/app-config';
 import {NestFactory} from '@nestjs/core';
-import {AppModule} from './app.module';
+import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
+import {ValidationPipe, INestApplication} from '@nestjs/common';
 import * as bodyParser from 'body-parser';
-import {ValidationPipe} from './common/pipes/validation.pipe';
+import * as cors from 'cors';
 
-export function main() {
+import {AppModule} from './app.module';
+import {AuthGuard} from './auth/auth.guard';
+import {AuthModule} from './auth/auth.module';
+import {apiPath} from './api';
 
-  appConfig.setAppConfig(process.argv[2] || 'local');
+async function bootstrap() {
+  const app: INestApplication = await NestFactory.create(AppModule);
 
-  async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+  app.use(bodyParser.json());
+  app.useGlobalPipes(new ValidationPipe());
 
-    app.use(bodyParser.json());
-    app.useGlobalPipes(new ValidationPipe());
+  const authGuard = app.select(AuthModule).get(AuthGuard);
+  app.useGlobalGuards(authGuard);
 
-    // Allow CORS since frontend is served completely independently
-    app.use(function (req, res, next) {
-      const allowedOrigins = ['http://localhost:4242', 'https://www.tsmean.com'];
-      const origin = req.headers.origin;
-      if (allowedOrigins.indexOf(origin) > -1) {
-        res.setHeader('Access-Control-Allow-Origin', origin);
-      }
-      res.header('Access-Control-Allow-Origin', '*');
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT ,DELETE, PATCH');
-      res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-      next();
-    });
+  // Allow CORS since frontend is served completely independently
+  app.use(cors());
 
-    const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4242;
-    await app.listen(port);
-  }
+  const swaggerConfig = new DocumentBuilder()
+    .addBearerAuth()
+    .setTitle('tsmean sample api')
+    .setBasePath(apiPath(1, ''))
+    .addTag('Animals')
+    .addTag('Animal lists')
+    .addTag('Users')
+    .setDescription('Sample REST API that allows to manage list of animals')
+    .setVersion('1.0')
+    .build();
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('/api/swagger', app, swaggerDocument);
 
-  bootstrap();
+  const port: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4242;
+  await app.listen(port);
+}
 
-};
-
-main();
+bootstrap();
