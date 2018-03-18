@@ -12,7 +12,6 @@
     "typescript": "^2.4.2"
   },
   "scripts": {
-    "preinstall": "cd backend && npm install && cd ..",
     "start": "cd backend && node index.js && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
