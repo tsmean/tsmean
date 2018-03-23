@@ -13,7 +13,6 @@ import {User} from '../user/user.entity';
 @Component()
 export class AnimalListService {
   constructor(
-    // @Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>,
     @Inject(ANIMAL_LIST_REPOSITORY_TOKEN) private readonly animalListRepository: Repository<AnimalList>,
     private log: Log
   ) {
