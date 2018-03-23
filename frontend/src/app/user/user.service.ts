@@ -52,8 +52,9 @@ export class UserService {
     return WebUtils.urlJoin(this.apiUrl, 'users');
   }
 
-  private handleError(errorResp: any): Promise<any> {
-    this.notifyService.error(errorResp.statusText);
-    return Promise.reject(errorResp.statusText || errorResp);
-  }
+  private handleError = (errorResp: any): Promise<any> => {
+    const error = errorResp.error ? errorResp.error.message : errorResp.statusText || 'An error ocurred';
+    this.notifyService.error(error);
+    return Promise.reject(error);
+  };
 }
