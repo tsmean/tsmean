@@ -24,7 +24,6 @@ async function bootstrap() {
   const swaggerConfig = new DocumentBuilder()
     .addBearerAuth()
     .setTitle('tsmean sample api')
-    .setBasePath(apiPath(1, ''))
     .addTag('Animals')
     .addTag('Animal lists')
     .addTag('Users')
