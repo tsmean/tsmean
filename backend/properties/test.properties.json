@@ -1,0 +1,13 @@
+{
+  "db": {
+    "host": "local-tsmean.cn32tstd6wqk.eu-central-1.rds.amazonaws.com",
+    "dbuser": "publicuser",
+    "dbpassword": "dd3yf71FgYQYgCY",
+    "port": 3306,
+    "dbname": "test_tsmean",
+    "testsMayDropDb": "true"
+  },
+  "token": {
+    "secret": "tsmean"
+  }
+}

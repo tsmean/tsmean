@@ -1,3 +1,5 @@
 # config properties
 properties/*
 !properties/properties.template.json
+!properties/development.properties.json
+!properties/test.properties.json

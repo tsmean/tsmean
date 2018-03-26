@@ -22,3 +22,9 @@ Create you own properties.json like:
 Where `development`, `production` or `test` are the value of `NODE_ENV` env variable on runtime (default `development`).
 
 They are added to .gitignore so they won't be pushed to the repository.
+
+You can set up a user with e.g.:
+```
+CREATE USER 'publicuser'@'%';
+GRANT ALL PRIVILEGES ON test_tsmean.* To 'publicuser'@'%' IDENTIFIED BY 'dd3yf71FgYQYgCY';
+```
