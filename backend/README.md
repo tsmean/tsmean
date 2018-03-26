@@ -4,7 +4,9 @@
 
 This is the backend for the TSMEAN stack.
 I have expanded the definition of the "M" in MEAN,
-to mean "MySQL". 
+to mean "MySQL" instead of "MongoDB".
+TSMEAN use TypeORM as an ORM for MySQL
+so you can operate on objects like with document database.
 
 # Installation
 
@@ -23,12 +25,29 @@ npm install
 You need to have git and npm or yarn installed to make this work.
 It will work on linux, mac and windows.
 
+## Configuration
+When you first run this project,
+it will connect to a public remote MySQL instance 
+I have setup so this project can be run with minimal overhead.
+However, I advise you to change the properties data with your own credentials
+in `<project>/properties/development.properties.json` and `<project>/properties/test.properties.json`,
+since the remote MySQL instance is cleaned on a regular basis.
+
+You can find out more about the `properties` files in [properties docs](./properties/README.md).
+
 # Run
 Type in the terminal:
 ```
 npm start
 ```
 By default, a server at port 4242 (localhost:4242) is started.
+
+For development I recommend you to run:
+```
+npm run dev
+```
+It launches the server in dev mode, so when you change some files,
+it will automatically restart the app.
 
 # Test
 ```
@@ -45,7 +64,7 @@ Code that is shared between backend and frontend is located in the [shared folde
 You have now two options:
 1) Switch out all the absolute
 package references with relative references.
- 2) Follow the same pattern
+2) Follow the same pattern
 with publish / pull on npm. To do so, I would recommend that you register an
 organization on npm (could be `yourname`) and switch out `@tsmean`
 with `@yourorganizationname` in the package.json in all modules.
@@ -77,10 +96,3 @@ executing all unit tests remotely.
 You can test the interface at https://fir-tsmean.firebaseapp.com/
 
 
-# Database
-
-When you first run this project,
-it will connect to a remote MySQL instance I have setup so this project can be run with minimal overhead.
-However, I advise you to create your own `<project>/properties/development.properties.json`
-and `<project>/properties/test.properties.json`,
-since the remote MySQL instance is cleaned on a regular basis.
