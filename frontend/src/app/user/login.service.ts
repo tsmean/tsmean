@@ -33,6 +33,7 @@ export class LoginService {
     this.http
       .post(this.loginApi, {email: email, password: password})
       .map((resp: any) => resp.data)
+      .catch(this.handleError)
       .subscribe((resp: any) => {
         this.isLoggedIn = true;
         this.tokenStorage.set(resp.token);
@@ -56,4 +57,10 @@ export class LoginService {
   private get loginApi(): string {
     return WebUtils.urlJoin(this.apiUrl, 'auth');
   }
+
+  private handleError = (errorResp: any): Promise<any> => {
+    const error = errorResp.error ? errorResp.error.message : errorResp.statusText || 'An error ocurred';
+    this.notifyService.error(error);
+    return Promise.reject(error);
+  };
 }

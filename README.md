@@ -31,7 +31,6 @@ through consistency. Read more about it here: www.tsmean.com.
 
 - node (v6 or v8) & npm (v3 or v5)
 - git
-- ts-node (`npm install -g ts-node`)
 - angular-cli (see https://github.com/angular/angular-cli)
 
 
@@ -53,6 +52,8 @@ First `cd backend`, then:
 - to spin up a REST-API server `npm start`. Check it out at http://localhost:4242
 - To run the tests `npm test`
 
+More info available in [backend docs](./backend/README.md).
+
 # Frontend
 First `cd frontend`, then:
 
@@ -61,6 +62,7 @@ First `cd frontend`, then:
 This launches a minimal app only displaying the user module (i.e. without login etc).
 You can test all modules using `ng test`.
 
+More info available in [frontend docs](./frontend/README.md).
 
 # Live Demo
 https://fir-tsmean.firebaseapp.com/

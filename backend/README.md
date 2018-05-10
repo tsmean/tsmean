@@ -4,23 +4,9 @@
 
 This is the backend for the TSMEAN stack.
 I have expanded the definition of the "M" in MEAN,
-to mean either "Mongo" or "MySQL". The backend has
-an implementation for both databases. Which one is used
-is determined in `properties/..properties.json` file as the
-type property, default is Mongo.
-
-The backend is built in a fully modular manner. Currently there are:
-
-- Mongo Module (independent)
-- MySQL Module (independent)
-- Db-Adapter Module (builds on mongo and mysql modules)
-- Auth Module (builds on db-adapter module)
-- Router Module (builds on auth-module and db-adapter module)
-- Main Module (straps everything together)
-
-The modules are packaged via npm and access each other via the
-npm registry.
-
+to mean "MySQL" instead of "MongoDB".
+TSMEAN use TypeORM as an ORM for MySQL
+so you can operate on objects like with document database.
 
 # Installation
 
@@ -28,7 +14,6 @@ npm registry.
 
 - node (v6 or v8) & npm (v3 or v5)
 - git
-- ts-node (`npm install -g ts-node`)
 
 ## Setup
 ```
@@ -37,24 +22,37 @@ cd project-name-backend
 npm install
 ```
 
-This will execute `install.sh`.
-You need to have git, npm and yarn installed to make this work and
-it will only work on linux / mac.
+You need to have git and npm or yarn installed to make this work.
+It will work on linux, mac and windows.
+
+## Configuration
+When you first run this project,
+it will connect to a public remote MySQL instance 
+I have setup so this project can be run with minimal overhead.
+However, I advise you to change the properties data with your own credentials
+in `<project>/properties/development.properties.json` and `<project>/properties/test.properties.json`,
+since the remote MySQL instance is cleaned on a regular basis.
+
+You can find out more about the `properties` files in [properties docs](./properties/README.md).
 
 # Run
-Make sure you have typescript installed, then run:
+Type in the terminal:
 ```
 npm start
 ```
 By default, a server at port 4242 (localhost:4242) is started.
 
+For development I recommend you to run:
+```
+npm run dev
+```
+It launches the server in dev mode, so when you change some files,
+it will automatically restart the app.
+
 # Test
 ```
 npm test
 ```
-
-You can also run the tests of the modules independently by
-`cd module-name` and `npm test`.
 
 Note: If you're using an IDE such as IntelliJ, you can also run single files
 directly from the IDE! See https://www.jetbrains.com/help/idea/2017.1/run-debug-configuration-mocha.html
@@ -62,9 +60,11 @@ directly from the IDE! See https://www.jetbrains.com/help/idea/2017.1/run-debug-
 
 # Development
 
-As mentioned, the seed has a modular design and the modules access each
-other via npm. You have now two options: 1) Switch out all the absolute
-package references with relative references. 2) Follow the same pattern
+Code that is shared between backend and frontend is located in the [shared folder](../shared).
+You have now two options:
+1) Switch out all the absolute
+package references with relative references.
+2) Follow the same pattern
 with publish / pull on npm. To do so, I would recommend that you register an
 organization on npm (could be `yourname`) and switch out `@tsmean`
 with `@yourorganizationname` in the package.json in all modules.
@@ -87,9 +87,8 @@ I have configured a small `deploy.sh` script
 (doing it with typescript was horrible, so I switched back to a good old shell script).
 That way you should be able to deploy on any remote (ubuntu) instance easily.
 Just change the `server` variable in the script
-and run
-`./deploy.sh` or `./deploy.sh test` for a dry run
-executing all unit tests reomtely.
+and run `./deploy.sh` or `./deploy.sh test` for a dry run
+executing all unit tests remotely.
 
 
 # See it in action
@@ -97,9 +96,3 @@ executing all unit tests reomtely.
 You can test the interface at https://fir-tsmean.firebaseapp.com/
 
 
-# Database
-When you first run this project,
-it will connect to a remote Mongo instance I have setup so this project can be run with minimal overhead.
-However, I advise you to create your own `<project>/properties/local.properties.json`
-and `<project>/properties/test.properties.json`,
-since the remote mongo instance is cleaned on a regular basis.

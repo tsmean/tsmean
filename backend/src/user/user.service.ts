@@ -24,6 +24,11 @@ export class UserService {
   async create(userDto: IUser, password: string): Promise<User> {
     this.log.debug('trying to create user...');
 
+    const existingUser = await this.userRepository.findOne({where: {email: userDto.email}});
+    if (existingUser) {
+      throw new Error('User already exists');
+    }
+
     const user = this.userRepository.create(userDto);
     user.role = UserRole.Regular;
     user.password = {
