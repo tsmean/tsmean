@@ -5,12 +5,12 @@ services:
 
 install:
   - docker build -t tsmean/server -f docker/server.dockerfile .
+  - docker run tsmean/server npm test
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push tsmean/server
 
 script:
-  - echo "everything a ok"
-  - docker swarm join --token "$SWARM_TOKEN" 172.31.31.235:2377
-  - docker stack deploy -c docker/docker-compose.yml tsmean
-  - docker swarm leave
+  - echo "to deploy, login to your swarm and run:"
+  - echo "wget https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"
+  - echo "rm docker-compose.yml"
 
