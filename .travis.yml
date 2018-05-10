@@ -7,17 +7,25 @@ language: node_js
 node_js:
   - 8
 
-
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+  # install aws
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
 
   # get credentials
   - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
 
   # BACKEND
+  ## build
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
-  # - docker run tsmean/server npm test
   - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
+  ## test
+  # - docker run tsmean/server npm test
+  ## deploy
+  -
+  - aws ssm send-command --instance-ids "i-0a6a74cf7be5c3bad" --document-name "AWS-RunPowerShellScript" --parameters commands=["echo helloWorld", "rm docker-compose.yml", "wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml", "docker stack deploy -c docker-compose.yml tsmean"]
 
   # FRONTEND
   ## build
@@ -28,17 +36,14 @@ install:
   - npm run build:prod
   - cd ..
 
-
   ## deploy
-  - pip install --user awscli
-  - export PATH=$PATH:$HOME/.local/bin
   - aws configure set default.region eu-central-1
   - aws configure set preview.cloudfront true
   - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
   - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
 
 script:
-  - echo "to deploy, login to your swarm and run:"
+  - echo "everything a ok"
   - echo "wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"
   - echo "rm docker-compose.yml"
 
