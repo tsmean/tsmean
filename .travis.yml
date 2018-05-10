@@ -4,6 +4,9 @@ services:
   - docker
 
 language: node_js
+node_js:
+  - 8
+
 
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
