@@ -1,17 +1,12 @@
 sudo: required
 
-language: node_js
-node_js:
-  - stable
-  - 8
-  - 6
-
 services:
   - docker
 
-deploy:
-  provider: script
-  script: bash docker/server.dockerfile
-  on:
-    branch: deploy
+install:
+  - docker build -t tsmean/server -f docker/server.dockerfile .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push tsmean/server
 
+script:
+  - echo "everything a ok"
