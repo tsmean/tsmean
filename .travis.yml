@@ -25,16 +25,7 @@ install:
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
   - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
   ## test
-  # - docker run tsmean/server npm test
-  ## deploy
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands=ifconfig --output text
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=ifconfig --output text
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["echo hello"]
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["rm docker-compose.yml"]
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml"]
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["docker stack deploy -c docker-compose.yml tsmean"]
-
-
+  - docker swarm join --token "$SWARM_TOKEN" 172.31.31.235:2377
 
 
   # FRONTEND
