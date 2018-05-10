@@ -18,6 +18,7 @@ install:
   # get credentials
   - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
 
+
   # BACKEND
   ## build
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
@@ -26,10 +27,10 @@ install:
   # - docker run tsmean/server npm test
   ## deploy
   -
-  - aws ssm send-command --instance-ids "i-0a6a74cf7be5c3bad" --document-name "AWS-RunShellScript" --parameters commands=["echo hello"]
-  - aws ssm send-command --instance-ids "i-0a6a74cf7be5c3bad" --document-name "AWS-RunShellScript" --parameters commands=["rm docker-compose.yml"]
-  - aws ssm send-command --instance-ids "i-0a6a74cf7be5c3bad" --document-name "AWS-RunShellScript" --parameters commands=["wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml"]
-  - aws ssm send-command --instance-ids "i-0a6a74cf7be5c3bad" --document-name "AWS-RunShellScript" --parameters commands=["docker stack deploy -c docker-compose.yml tsmean"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["echo hello"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["rm docker-compose.yml"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["docker stack deploy -c docker-compose.yml tsmean"]
 
 
   # FRONTEND
