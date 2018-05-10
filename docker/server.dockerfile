@@ -11,7 +11,7 @@ RUN npm install
 WORKDIR /code/backend
 RUN npm install
 RUN npm run build:prod
-ENV NODE_ENV production
+# ENV NODE_ENV production
 
 EXPOSE 50500
 
