@@ -3,22 +3,45 @@ sudo: required
 services:
   - docker
 
+language: node_js
+
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
   # get credentials
   - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
 
-  - ls backend/properties
-
+  # BACKEND
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
   # - docker run tsmean/server npm test
   - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
-  - docker build -t tsmean/client:"$TRAVIS_BUILD_NUMBER" -f docker/client.dockerfile .
-  - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
 
+  # FRONTEND
+  ## build
+  - cd shared
+  - npm install
+  - cd ../frontend
+  - npm install
+  - npm run build:prod
+  - cd ..
+
+  ## deploy
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - aws configure set default.region eu-central-1
+  - aws configure set preview.cloudfront true
+  - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
+  - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
 
 script:
   - echo "to deploy, login to your swarm and run:"
   - echo "wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"
   - echo "rm docker-compose.yml"
+
+
+# Former frontend build
+#  - docker build -t tsmean/client:"$TRAVIS_BUILD_NUMBER" -f docker/client.dockerfile .
+#  - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
+#  - id=$(docker create tsmean/client:"$TRAVIS_BUILD_NUMBER")
+#  - docker cp $id:/code/frontend/dist frontend/dist
+#  - docker rm -v $id

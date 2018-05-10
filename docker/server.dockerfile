@@ -17,5 +17,4 @@ EXPOSE 3306:3306
 
 EXPOSE 50500
 
-## Run
 CMD ["npm", "run", "start:prod"]
