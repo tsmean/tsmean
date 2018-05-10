@@ -35,6 +35,8 @@ install:
   - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["docker stack deploy -c docker-compose.yml tsmean"]
 
 
+
+
   # FRONTEND
   ## build
   - cd shared
