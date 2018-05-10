@@ -13,6 +13,7 @@ install:
   # install aws
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
+  - aws configure set default.region eu-central-1
 
   # get credentials
   - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
@@ -41,7 +42,6 @@ install:
   - cd ..
 
   ## deploy
-  - aws configure set default.region eu-central-1
   - aws configure set preview.cloudfront true
   - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
   - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
