@@ -27,7 +27,8 @@ install:
   ## test
   ## deploy
   - aws ssm describe-instance-information
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["rm docker-compose.yml && wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"]
+  - echo $TRAVIS_BRANCH
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["rm docker-compose.yml && wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/"$TRAVIS_BRANCH"/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"]
 
   # FRONTEND
   ## build
