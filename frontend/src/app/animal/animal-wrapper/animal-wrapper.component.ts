@@ -13,7 +13,7 @@ import {AnimalListDashboardListStore} from '../../animal-list/animal-list-dashbo
   styleUrls: ['./animal-wrapper.component.css']
 })
 export class AnimalWrapperComponent implements OnInit {
-  private currentListId = 1;
+  currentListId = 1;
   private animalsSubscription: Subscription;
   animalIds: number[] = [];
 

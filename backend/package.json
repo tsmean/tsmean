@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development tsc && node dist/backend/src/server.js",
     "prestart:prod": "tsc",
+    "build:prod": "tsc",
     "start:prod": "cross-env NODE_ENV=production node dist/backend/src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "test": "cross-env NODE_ENV=test jest --config=jest.json --coverage --runInBand --forceExit",

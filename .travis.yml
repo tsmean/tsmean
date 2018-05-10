@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+
+deploy:
+  provider: script
+  script: bash docker/server.dockerfile
+  on:
+    branch: deploy
+

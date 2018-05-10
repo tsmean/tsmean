@@ -1,0 +1,7 @@
+version: '3.5'
+services:
+  tsmean-client:
+    image: tsmean/tsmean-client
+  tsmean-server:
+    image: tsmean/tsmean-server
+
