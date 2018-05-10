@@ -16,8 +16,8 @@ install:
   - aws configure set default.region eu-central-1
 
   # get credentials
-  - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
-
+  - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".json backend/properties/production.properties.json
+#  - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
 
 
   # BACKEND
@@ -25,7 +25,8 @@ install:
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
   - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
   ## test
-  - docker swarm join --token "$SWARM_TOKEN" 172.31.31.235:2377
+  ## deploy
+  - aws ssm describe-instance-information --output text
 
 
   # FRONTEND
