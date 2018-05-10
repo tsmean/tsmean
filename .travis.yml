@@ -13,3 +13,4 @@ script:
   - docker swarm join --token "$SWARM_TOKEN" 172.31.31.235:2377
   - docker stack deploy -c docker/docker-compose.yml tsmean
   - docker swarm leave
+
