@@ -19,6 +19,14 @@ install:
   - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
 #  - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
 
+  - aws ssm describe-instance-information
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --comment "IP config" --parameters commands=ifconfig --output text
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=ifconfig --output text
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["echo hello"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["rm docker-compose.yml"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml"]
+  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["docker stack deploy -c docker-compose.yml tsmean"]
+
 
   # BACKEND
   ## build
@@ -26,7 +34,7 @@ install:
   - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
   ## test
   ## deploy
-  - aws ssm describe-instance-information --output text
+  # ... TODO ... do something with aws ssm ...
 
 
   # FRONTEND
