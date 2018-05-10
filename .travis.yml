@@ -19,6 +19,7 @@ install:
   - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
 
 
+
   # BACKEND
   ## build
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
