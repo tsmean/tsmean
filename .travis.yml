@@ -7,7 +7,7 @@ install:
   - docker build -t tsmean/server -f docker/server.dockerfile .
   # - docker run tsmean/server npm test
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push tsmean/server
+  - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
 
 script:
   - echo "to deploy, login to your swarm and run:"
