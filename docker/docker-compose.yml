@@ -7,7 +7,7 @@ services:
       labels:
         - "traefik.frontend.rule=Host:demoserver.tsmean.com"
         - "traefik.domain=tsmean.com"
-        - "traefik.docker.network=web"
+        - "traefik.docker.network=traefik"
     networks:
       - traefik
 networks:
