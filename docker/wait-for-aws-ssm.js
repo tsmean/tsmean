@@ -14,6 +14,12 @@ const getStatus = (commandId) => {
         if (details.Status === 'Pending' || details.Status === 'InProgress') {
             setTimeout(getDetails(), 100)
         } else {
+
+console.log('===========')
+console.log('details')
+console.log(details)
+console.log('=============')
+
             resolve({
                 status: details.Status,
                 output: details.CommandInvocations[0].CommandPlugins[0].Output
