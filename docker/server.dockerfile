@@ -13,8 +13,6 @@ RUN npm install
 RUN npm run build:prod
 ENV NODE_ENV production
 
-EXPOSE 3306:3306
-
-EXPOSE 50500
+EXPOSE 4242
 
 CMD ["npm", "run", "start:prod"]

@@ -6,8 +6,10 @@ services:
       replicas: 1
       labels:
         - "traefik.frontend.rule=Host:demoserver.tsmean.com"
-        - "traefik.domain=tsmean.com"
+        - "traefik.port=58275"
         - "traefik.docker.network=traefik"
+    ports:
+      - "58275:4242"
     networks:
       - traefik
 networks:
