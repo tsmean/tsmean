@@ -11,7 +11,8 @@ const getStatus = (commandId) => {
     };
     return new Promise((resolve, reject) => {
         const details = getDetails();
-        if (details.Status === 'Pending' || details.Status === 'InProgress') {
+        const status = details.CommandInvocations[0].Status;
+        if (status === 'Pending' || status === 'InProgress') {
             setTimeout(getDetails(), 100)
         } else {
 
@@ -21,7 +22,7 @@ console.log(details)
 console.log('=============')
 
             resolve({
-                status: details.Status,
+                status: status,
                 output: details.CommandInvocations[0].CommandPlugins[0].Output
             });
         }
