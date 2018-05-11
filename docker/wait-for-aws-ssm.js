@@ -13,7 +13,7 @@ const getStatus = (commandId) => {
         const details = getDetails();
         const status = details.CommandInvocations[0].Status;
         if (status === 'Pending' || status === 'InProgress') {
-            setTimeout(getDetails(), 100)
+            setTimeout(getDetails, 100)
         } else {
 
 console.log('===========')
