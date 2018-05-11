@@ -31,7 +31,9 @@ if (commandOutput != null) {
             console.error(resp.output);
             process.exit(1);
         } else {
-            console.log('state not handled');
+            console.error('state not handled');
+            console.error(resp.status);
+            console.error(resp.output);
             process.exit(1);
         }
     });
