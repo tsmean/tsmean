@@ -15,12 +15,10 @@ const getStatus = (commandId) => {
                 setTimeout(getDetails, 100)
                 iterations++;
             } else {
-    
-    console.log('===========')
-    console.log('details')
-    console.log(details)
-    console.log('=============')
-    
+                console.log('===========')
+                console.log('details')
+                console.log(details)
+                console.log('=============')
                 resolve({
                     status: status,
                     output: details.CommandInvocations[0].CommandPlugins[0].Output

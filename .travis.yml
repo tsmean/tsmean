@@ -18,8 +18,6 @@ install:
   # get credentials
   - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
   - ls backend/properties
-#  - wget --no-cache https://s3.eu-central-1.amazonaws.com/tsmean-credentials/production."$PROD_CREDENTIALS".properties.json -O backend/properties/production.properties.json
-
 
   # BACKEND
   ## build
@@ -40,7 +38,6 @@ install:
   - npm install
   - npm run build:prod
   - cd ..
-
   ## deploy
   - aws configure set preview.cloudfront true
   - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
@@ -50,11 +47,3 @@ script:
   - echo "everything a ok"
   - echo "wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"
   - echo "rm docker-compose.yml"
-
-
-# Former frontend build
-#  - docker build -t tsmean/client:"$TRAVIS_BUILD_NUMBER" -f docker/client.dockerfile .
-#  - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
-#  - id=$(docker create tsmean/client:"$TRAVIS_BUILD_NUMBER")
-#  - docker cp $id:/code/frontend/dist frontend/dist
-#  - docker rm -v $id
