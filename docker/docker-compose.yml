@@ -1,4 +1,15 @@
 version: '3.5'
 services:
-  server:
+  demoserver:
     image: tsmean/server:${TRAVIS_BUILD_NUMBER}
+    deploy:
+      replicas: 1
+      labels:
+        - "traefik.frontend.rule=Host:demoserver.tsmean.com"
+        - "traefik.domain=tsmean.com"
+        - "traefik.docker.network=web"
+    networks:
+      - web
+networks:
+  web:
+    external: true
