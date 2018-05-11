@@ -48,3 +48,4 @@ if (commandOutput != null) {
     console.error("needs command output");
     process.exit(1);
 }
+
