@@ -11,11 +11,11 @@ const getStatus = (commandId) => {
     };
     return new Promise((resolve, reject) => {
         const details = getDetails();
-        if (details.Status === 'Pending') {
+        if (details.Status === 'Pending' || details.Status === 'InProgress') {
             setTimeout(getDetails(), 100)
         } else {
             resolve({
-                status: details.CommandInvocations[0].CommandPlugins[0].Status,
+                status: details.Status,
                 output: details.CommandInvocations[0].CommandPlugins[0].Output
             });
         }
