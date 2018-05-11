@@ -9,7 +9,7 @@ services:
         - "traefik.domain=tsmean.com"
         - "traefik.docker.network=web"
     networks:
-      - web
+      - traefik
 networks:
-  web:
+  traefik:
     external: true
