@@ -1,7 +1,7 @@
 const {execSync} = require('child_process');
 const commandOutput = require('./last-command.json');
 
-const getStatus = () => {
+const getStatus = (commandId) => {
     const getDetails  = () => {
         const detailsBuffer = execSync(`aws ssm list-command-invocations --command-id ${commandId} --details`);
         const detailsStr = detailsBuffer.toString();
@@ -15,8 +15,8 @@ const getStatus = () => {
             setTimeout(getDetails(), 100)
         } else {
             resolve({
-                status: details.CommandInvokations[0].CommandPlugins[0].Status,
-                output: details.CommandInvokations[0].CommandPlugins[0].Output
+                status: details.CommandInvocations[0].CommandPlugins[0].Status,
+                output: details.CommandInvocations[0].CommandPlugins[0].Output
             });
         }
     });
@@ -24,7 +24,7 @@ const getStatus = () => {
 
 if (commandOutput != null) {
     const commandId = commandOutput.Command.CommandId;
-    getStatus().then(resp => {
+    getStatus(commandId).then(resp => {
         if (resp.status === 'Success') {
             console.log('success');
         } else if (resp.status === 'Failed') {
