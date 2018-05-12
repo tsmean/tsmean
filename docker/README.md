@@ -1,11 +1,6 @@
 # Deployment
 
-Deployment is done via docker swarm.
-
-Docker Swarm helps you to scale your application.
-
-## .dockerfile extension
-Usually Dockerfiles are just named "Dockerfile", but that means you can just have one of them in a directory. I find it more practical to name them <name>.dockerfile, that way it's also easier to search for them in the IDE.
+This is how we deploy the tsmean project. You don't have to use this part of tsmean, unless you are interested in learning about ways to deploy your project.
 
 ## Monolithic vs Service Oriented Deployment
 
@@ -25,4 +20,17 @@ Separating them:
 - You can guarantee higher availability for the frontend.
 - Scales well: You can also divide the backend further into individual microservices, then you'll need a process to orchestrate anyways
 
-In this project, I will go with the approach of deploying two separate services. However, I'll not set up a too complicated deployment process, that exactly coordinates that the deployment.
+In this project, we will go with the approach of deploying two separate services. However, we'll not set up a too complicated deployment process, that exactly coordinates the deployment. In an important production project you'd want to take this a step further and make sure all your services are always in sync.
+
+## Frontend
+The frontend is hosted with AWS cloudfront. Here is a writeup about that https://www.bersling.com/2017/09/18/host-websites-with-high-availability-and-low-latency-for-less-than-1month-ssl-included/
+
+## Backend
+Deployment is done via docker swarm. Docker Swarm helps you to scale your application. An alternative is something like heroku, but I felt with docker Swarm I had better control over server costs in the long run.
+
+Here's a short writup about deploying nodejs apps:
+https://www.tsmean.com/articles/nodejs/deploy-nodejs-at-scale/
+
+
+## .dockerfile extension
+Usually Dockerfiles are just named "Dockerfile", but that means you can just have one of them in a directory. I find it more practical to name them <name>.dockerfile, that way it's also easier to search for them in the IDE.
