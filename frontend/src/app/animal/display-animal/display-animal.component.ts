@@ -36,7 +36,7 @@ export class DisplayAnimalComponent implements OnChanges {
   }
 
   picUrl(picPath: string) {
-    return 'https://animal-images.herokuapp.com/animals?path=' + picPath;
+    return 'https://animals2.tsmean.com/animals?path=' + picPath;
   }
 
   toggleEditable() {

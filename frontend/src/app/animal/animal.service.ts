@@ -34,7 +34,7 @@ export class AnimalService {
   // small extra: add a picture to the animal
   // works with observable to achieve best user experience
   addAnimalPic(animalName: string, animalObs: Observable<Animal>, listId: number) {
-    const animalImageObs = this.http.get(`https://animal-images.herokuapp.com/find?q=${animalName.toLowerCase()}`);
+    const animalImageObs = this.http.get(`https://animals2.tsmean.com/find?q=${animalName.toLowerCase()}`);
     animalObs.subscribe(animalResp => {
       animalImageObs.subscribe((animal: any) => {
         animalResp.pic = animal.urlEncodedPath;
