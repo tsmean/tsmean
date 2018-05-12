@@ -45,5 +45,3 @@ install:
 
 script:
   - echo "everything a ok"
-  - echo "wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/deploy/docker/docker-compose.yml && docker stack deploy -c docker-compose.yml tsmean"
-  - echo "rm docker-compose.yml"
