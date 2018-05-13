@@ -7,6 +7,10 @@ language: node_js
 node_js:
   - 8
 
+branches:
+  only:
+  - master
+
 install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
