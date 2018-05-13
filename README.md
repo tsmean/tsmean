@@ -22,7 +22,7 @@ The starter kit is using the following technologies:
 on the client **and** the server! This leads to efficiency
 through consistency. Read more about it here: www.tsmean.com.
 
-&#42;I know most would expect Mongo instead of MySql as the "M" part. But in the past we've made again and again the experience that MySql is the better base for your webapp. [Read more](https://www.tsmean.com/articles/vs/mongo-vs-mysql-for-webapps/).
+&#42;I know most would expect Mongo instead of MySQL as the "M" part. However, in the past, we've made the experience again and again, that MySQL is the better foundation for your webapp. [Read more](https://www.tsmean.com/articles/vs/mongo-vs-mysql-for-webapps/).
 
 # Installation
 
