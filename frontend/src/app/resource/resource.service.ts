@@ -56,7 +56,7 @@ export class ResourceService {
   // TODO: what do you get back?
   deleteResource(resourceId: number, resourceName: string): Observable<void> {
     const $data = this.http
-      .delete(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
+      .delete(this.resourcesUrl(resourceName) + '/' + resourceId)
       .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
