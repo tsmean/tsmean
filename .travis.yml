@@ -33,7 +33,7 @@ jobs:
         ## build
         - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
         - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
-
+      script: echo "everything a ok with backend build"
 
     - stage: test
       script: echo "no backend tests yet"
