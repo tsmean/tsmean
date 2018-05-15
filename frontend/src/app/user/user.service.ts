@@ -52,6 +52,7 @@ export class UserService {
   }
 
   private handleError = (errorResp: any): Promise<any> => {
+    // TODO: don't propagete errors, e.g. post user...
     const error = errorResp.error ? errorResp.error.message : errorResp.statusText || 'An error ocurred';
     this.notifyService.error(error);
     return Promise.reject(error);
