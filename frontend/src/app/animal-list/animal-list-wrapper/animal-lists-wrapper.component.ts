@@ -8,7 +8,7 @@ import {AnimalList} from '../animal-list.model';
 @Component({
   selector: 'app-animal-lists-wrapper',
   templateUrl: './animal-lists-wrapper.component.html',
-  styleUrls: ['./animal-lists-wrapper.component.css']
+  styleUrls: ['./animal-lists-wrapper.component.scss']
 })
 export class AnimalListWrapperComponent implements OnInit {
   listIds: number[] = [];

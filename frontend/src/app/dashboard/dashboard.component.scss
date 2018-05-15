@@ -1,8 +1,19 @@
-:host {
-  .lists {
-    margin-top: 10px;
-    display: flex;
+.lists {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+
+  @media(min-width: 768px) {
+
+    .animal-list-nav {
+      flex-basis: 33.33%;
+    }
+    .animals {
+      flex-basis: 66.66%;
+    }
+
     flex-direction: row;
-    position: relative;
   }
 }

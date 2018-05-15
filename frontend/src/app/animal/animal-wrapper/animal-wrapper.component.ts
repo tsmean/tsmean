@@ -1,28 +1,26 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
-import {Animal} from '../animal.model';
 import {Subscription} from 'rxjs/Subscription';
 import {AnimalListDashboardListStore} from '../../animal-list/animal-list-dashboard-list.store';
 
 @Component({
   selector: 'app-animal-wrapper',
   templateUrl: './animal-wrapper.component.html',
-  styleUrls: ['./animal-wrapper.component.css']
+  styleUrls: ['./animal-wrapper.component.scss']
 })
 export class AnimalWrapperComponent implements OnInit {
   currentListId = 1;
   private animalsSubscription: Subscription;
   animalIds: number[] = [];
 
-  constructor(
-    private animalService: AnimalService,
-    private dashboardAnimals: AnimalDashboardListStore,
-    private dashboardLists: AnimalListDashboardListStore,
-    private animalStore: AnimalStoreService
-  ) {}
+  constructor(private animalService: AnimalService,
+              private dashboardAnimals: AnimalDashboardListStore,
+              private dashboardLists: AnimalListDashboardListStore,
+              private animalStore: AnimalStoreService) {
+  }
 
   ngOnInit() {
     // get animals and initialize dashboard list
