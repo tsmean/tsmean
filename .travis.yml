@@ -7,45 +7,67 @@ language: node_js
 node_js:
   - 8
 
+
+jobs:
+  include:
+    - stage: build
+      install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+        # install aws
+        - pip install --user awscli
+        - export PATH=$PATH:$HOME/.local/bin
+        - aws configure set default.region eu-central-1
+
+        # get credentials
+        - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
+        - ls backend/properties
+
+        # BACKEND
+        ## build
+        - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
+        - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
+        ## test
+
+        # FRONTEND
+        ## build
+        - cd shared
+        - npm install
+        - cd ../frontend
+        - npm install
+        - npm run build:prod
+        - cd ..
+
+
+
+
+#          ## deploy
+#          ## backend
+#          - aws ssm describe-instance-information
+#          - echo $TRAVIS_BRANCH
+#          - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["export TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER && wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/"$TRAVIS_BRANCH"/docker/docker-compose.yml && docker stack deploy --compose-file docker-compose.yml tsmean && rm docker-compose.yml"] > docker/last-command.json
+#          - node docker/wait-for-aws-ssm.js
+#
+#
+#          ## deploy
+#          ## frontend
+#          - aws configure set preview.cloudfront true
+#          - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
+#          - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
+
+      script:
+        - echo "everything a ok"
+
+    - stage: test
+      script: echo "testing mucho"
+    - stage: deploy
+      script: echo "deploying mucho"
+
 branches:
   only:
   - master
 
-install:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-  # install aws
-  - pip install --user awscli
-  - export PATH=$PATH:$HOME/.local/bin
-  - aws configure set default.region eu-central-1
 
-  # get credentials
-  - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
-  - ls backend/properties
 
-  # BACKEND
-  ## build
-  - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
-  - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
-  ## test
-  ## deploy
-  - aws ssm describe-instance-information
-  - echo $TRAVIS_BRANCH
-  - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["export TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER && wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/"$TRAVIS_BRANCH"/docker/docker-compose.yml && docker stack deploy --compose-file docker-compose.yml tsmean && rm docker-compose.yml"] > docker/last-command.json
-  - node docker/wait-for-aws-ssm.js
 
-  # FRONTEND
-  ## build
-  - cd shared
-  - npm install
-  - cd ../frontend
-  - npm install
-  - npm run build:prod
-  - cd ..
-  ## deploy
-  - aws configure set preview.cloudfront true
-  - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
-  - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
-
-script:
-  - echo "everything a ok"
