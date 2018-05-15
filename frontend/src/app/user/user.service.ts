@@ -1,7 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {NotifyService} from 'notify-angular';
-import {WebUtils} from '@tsmean/utils';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
@@ -29,7 +28,7 @@ export class UserService {
   }
 
   getUser(): Observable<User | null> {
-    const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'users/current')).map((resp: any) => resp.data);
+    const $data = this.http.get(this.apiUrl + '/users/current').map((resp: any) => resp.data);
     return $data.catch(() => {
       // cannot fetch user, since not logged in
       return Observable.of(null);
@@ -49,12 +48,12 @@ export class UserService {
   }
 
   private get usersApi(): string {
-    return WebUtils.urlJoin(this.apiUrl, 'users');
+    return this.apiUrl + 'users';
   }
 
   private handleError = (errorResp: any): Promise<any> => {
     const error = errorResp.error ? errorResp.error.message : errorResp.statusText || 'An error ocurred';
     this.notifyService.error(error);
     return Promise.reject(error);
-  };
+  }
 }

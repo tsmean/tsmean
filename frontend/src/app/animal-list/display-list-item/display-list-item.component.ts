@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CoreUtils} from '@tsmean/utils';
 
 import {AnimalList} from '../animal-list.model';
 import {ListSettings} from '../list-settings';
@@ -62,7 +61,7 @@ export class DisplayListItemComponent implements OnInit {
 
   resetCopy() {
     if (this.list) {
-      this.listCopy = CoreUtils.deepCopy(this.list);
+      this.listCopy = JSON.parse(JSON.stringify(this.list));
     }
   }
 }

@@ -1,8 +1,7 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NotifyService} from 'notify-angular';
-import {WebUtils} from '@tsmean/utils';
 
-import {AnimalList, AnimalListWithoutId} from '../animal-list.model';
+import {AnimalListWithoutId} from '../animal-list.model';
 import {AnimalListService} from '../animal-list.service';
 import {AnimalListDashboardListStore} from '../animal-list-dashboard-list.store';
 import {AnimalListStoreService} from '../animal-list.store';
@@ -47,7 +46,8 @@ export class CreateAnimalListComponent implements OnInit {
   }
 
   createListOnEnter(e: KeyboardEvent) {
-    if (WebUtils.isEnter(e)) {
+    const enterKey = 13;
+    if (e.which === enterKey || e.keyCode === enterKey) {
       this.createList();
     }
   }

@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {CoreUtils} from '@tsmean/utils';
 
 import {Animal} from '../animal.model';
 import {AnimalSettings} from '../animal-settings';
@@ -56,7 +55,7 @@ export class DisplayAnimalComponent implements OnChanges {
 
   resetCopy() {
     if (this.animal) {
-      this.animalCopy = CoreUtils.deepCopy(this.animal);
+      this.animalCopy = JSON.parse(JSON.stringify(this.animal));
     }
   }
 }

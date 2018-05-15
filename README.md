@@ -15,7 +15,7 @@ The starter kit is using the following technologies:
 
 - **M**ySQL
 - **E**xpressJS
-- **A**ngular4
+- **A**ngular (
 - **N**odeJs
 
 ... and that's why it's called tsmean!&#42; We've carefully elected those technologies to be the best suit for building web apps with TypeScript. You get to use TypeScript now
@@ -28,7 +28,7 @@ through consistency. Read more about it here: www.tsmean.com.
 
 ## Prerequisits ##
 
-- node (v6 or v8) & npm (v3 or v5)
+- node (v6, v8 or v10) and npm
 - git
 - angular-cli (see https://github.com/angular/angular-cli)
 

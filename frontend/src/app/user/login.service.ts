@@ -2,7 +2,6 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {NotifyService} from 'notify-angular';
-import {WebUtils} from '@tsmean/utils';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -55,7 +54,7 @@ export class LoginService {
   }
 
   private get loginApi(): string {
-    return WebUtils.urlJoin(this.apiUrl, 'auth');
+    return this.apiUrl + '/auth';
   }
 
   private handleError = (errorResp: any): Promise<any> => {

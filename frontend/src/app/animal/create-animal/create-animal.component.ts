@@ -1,8 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {NotifyService} from 'notify-angular';
-import {WebUtils} from '@tsmean/utils';
-
-import {Animal, AnimalWithoutId} from '../animal.model';
+import {AnimalWithoutId} from '../animal.model';
 import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
@@ -17,12 +15,11 @@ export class CreateAnimalComponent implements OnInit {
 
   @Input() listId: number;
 
-  constructor(
-    private animalService: AnimalService,
-    private notifyService: NotifyService,
-    private dashboardList: AnimalDashboardListStore,
-    private animalStoreService: AnimalStoreService
-  ) {}
+  constructor(private animalService: AnimalService,
+              private notifyService: NotifyService,
+              private dashboardList: AnimalDashboardListStore,
+              private animalStoreService: AnimalStoreService) {
+  }
 
   ngOnInit() {
     this.resetInput();
@@ -51,8 +48,9 @@ export class CreateAnimalComponent implements OnInit {
   }
 
   createAnimalOnEnter(e: KeyboardEvent) {
-    if (WebUtils.isEnter(e)) {
+    if (e.which === 13 || e.keyCode === 13) {
       this.createAnimal();
     }
   }
+
 }

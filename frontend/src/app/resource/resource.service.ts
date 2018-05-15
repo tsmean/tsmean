@@ -1,4 +1,4 @@
-import {forwardRef, Inject, Injectable, InjectionToken} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
@@ -6,7 +6,6 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/catch';
 import {Observable} from 'rxjs/Observable';
 import {Resource, ResourceWithoutId} from '@tsmean/shared';
-import {WebUtils} from '@tsmean/utils';
 
 import {ApiUrl} from './api-url-injection-token';
 
@@ -19,7 +18,7 @@ export class ResourceService {
    * yields e.g http://myserver/api/v1/users
    */
   resourcesUrl(resourceName: string) {
-    return WebUtils.urlJoin(this.apiUrl, resourceName);
+    return this.apiUrl + resourceName;
   }
 
   getResources(resourceName: string): Observable<Resource[]> {
@@ -32,7 +31,7 @@ export class ResourceService {
 
   getResource(resourceId: number, resourceName: string): Observable<Resource> {
     const $data = this.http
-      .get(WebUtils.urlJoin(this.resourcesUrl(resourceName), resourceId))
+      .get(this.resourcesUrl(resourceName) + '/' + resourceId)
       .map((resp: any) => resp.data)
       .share();
     return $data.catch(this.handleError);
