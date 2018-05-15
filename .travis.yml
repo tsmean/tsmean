@@ -63,11 +63,3 @@ jobs:
     - stage: deploy
       script: echo "deploying mucho"
 
-branches:
-  only:
-  - master
-
-
-
-
-
