@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
@@ -7,7 +6,8 @@ export class AnimalListDashboardListStore {
   private animalsLists = new BehaviorSubject<number[]>([]);
   private currentList = new BehaviorSubject<number>(1);
 
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Adds a resourceId to the list. If no position is provided, appends it to the end.

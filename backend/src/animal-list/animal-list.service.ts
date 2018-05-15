@@ -1,21 +1,15 @@
 import {Component, Inject} from '@nestjs/common';
-import {FindManyOptions, Repository, ObjectLiteral} from 'typeorm';
+import {FindManyOptions, Repository} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
-
-import {Animal} from '../animal/animal.entity';
-import {ANIMAL_REPOSITORY_TOKEN} from '../animal/constants';
 import {Log} from '../logger/logger';
 import {ANIMAL_LIST_REPOSITORY_TOKEN} from './constants';
 import {AnimalList} from './animal-list.entity';
-import {AnimalListDto} from '../../../shared/src/dto/animal-list/animal-list.dto';
 import {User} from '../user/user.entity';
 
 @Component()
 export class AnimalListService {
-  constructor(
-    @Inject(ANIMAL_LIST_REPOSITORY_TOKEN) private readonly animalListRepository: Repository<AnimalList>,
-    private log: Log
-  ) {
+  constructor(@Inject(ANIMAL_LIST_REPOSITORY_TOKEN) private readonly animalListRepository: Repository<AnimalList>,
+              private log: Log) {
     this.ensurePublicList();
   }
 
