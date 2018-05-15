@@ -48,7 +48,7 @@ export class UserService {
   }
 
   private get usersApi(): string {
-    return this.apiUrl + 'users';
+    return this.apiUrl + '/users';
   }
 
   private handleError = (errorResp: any): Promise<any> => {
