@@ -10,6 +10,8 @@ node_js:
 
 jobs:
   include:
+
+    # backend
     - stage: build
       install:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -23,13 +25,16 @@ jobs:
         - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
         - ls backend/properties
 
-        # BACKEND
         ## build
         - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
         - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
-        ## test
 
-        # FRONTEND
+    - stage: test
+      script: echo "no backend tests yet"
+
+    # frontend
+    - stage: build
+      install:
         ## build
         - cd shared
         - npm install
@@ -37,7 +42,10 @@ jobs:
         - npm install
         - npm run build:prod
         - cd ..
+      script: echo "everything ok with frontend build"
 
+    - stage: test
+      script: echo "no frontend tests yet"
 
 
 
@@ -55,11 +63,4 @@ jobs:
 #          - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
 #          - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
 
-      script:
-        - echo "everything a ok"
-
-    - stage: test
-      script: echo "testing mucho"
-    - stage: deploy
-      script: echo "deploying mucho"
 
