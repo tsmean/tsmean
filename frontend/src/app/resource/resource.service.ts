@@ -18,7 +18,7 @@ export class ResourceService {
    * yields e.g http://myserver/api/v1/users
    */
   resourcesUrl(resourceName: string) {
-    return this.apiUrl + resourceName;
+    return this.apiUrl + '/' + resourceName;
   }
 
   getResources(resourceName: string): Observable<Resource[]> {
