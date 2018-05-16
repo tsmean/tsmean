@@ -67,6 +67,8 @@ jobs:
 
     - stage: deploy
       install:
+        # - docker run --rm -v $(pwd)/tmp:/tmp tsmean/client:"$TRAVIS_BUILD_NUMBER" sh -c "cp -r /code/frontend/dist /tmp"
+
         # TODO: GET DIST FOLDER FROM DOCKER IMAGE
 #        - ./docker/install-aws.sh
 #        - aws configure set preview.cloudfront true
