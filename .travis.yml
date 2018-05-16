@@ -33,7 +33,6 @@ jobs:
       install:
         - ./docker/install-aws.sh
         - aws ssm describe-instance-information
-        - echo $TRAVIS_BRANCH
         - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["export TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER && wget --no-cache https://raw.githubusercontent.com/tsmean/tsmean/"$TRAVIS_BRANCH"/docker/docker-compose.yml && docker stack deploy --compose-file docker-compose.yml tsmean && rm docker-compose.yml"] > docker/last-command.json
         - node docker/wait-for-aws-ssm.js
       script:
@@ -42,12 +41,21 @@ jobs:
     # frontend
     - stage: build
       install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t tsmean/client:"$TRAVIS_BUILD_NUMBER" -f docker/client.dockerfile .
+        - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
+
+        # TODO: REMOVE WHEN DOCKERIZED BUILD READY
         - cd shared
         - npm install
         - cd ../frontend
         - npm install
         - npm run build:prod
         - cd ..
+        - ./docker/install-aws.sh
+        - aws configure set preview.cloudfront true
+        - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
+        - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
       script:
       - echo "everything ok with frontend build"
 
@@ -57,14 +65,11 @@ jobs:
 
     - stage: deploy
       install:
-        - ./docker/install-aws.sh
-        - aws configure set preview.cloudfront true
-        - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
-        - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
+        # TODO: GET DIST FOLDER FROM DOCKER IMAGE
+#        - ./docker/install-aws.sh
+#        - aws configure set preview.cloudfront true
+#        - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
+#        - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
+        - echo "temp disabled"
       script:
       - echo "frontent deployment a-ok"
-
-
-
-
-
