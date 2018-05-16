@@ -3,6 +3,9 @@ services:
   demoserver:
     image: tsmean/server:${TRAVIS_BUILD_NUMBER}
     deploy:
+      restart_policy:
+        condition: always
+        max_attempts: 3
       replicas: 1
       labels:
         - "traefik.frontend.rule=Host:demoserver.tsmean.com"
