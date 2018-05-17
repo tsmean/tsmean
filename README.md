@@ -15,7 +15,7 @@ The starter kit is using the following technologies:
 
 - **M**ySQL
 - **E**xpressJS
-- **A**ngular (
+- **A**ngular (the new one)
 - **N**odeJs
 
 ... and that's why it's called tsmean!&#42; We've carefully elected those technologies to be the best suit for building web apps with TypeScript. You get to use TypeScript now
