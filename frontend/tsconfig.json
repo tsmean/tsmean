@@ -19,8 +19,7 @@
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "node_modules/notify-angular/index.ts",
-    "node_modules/@tsmean/shared/index.ts"
+    "src/**/*",
+    "node_modules/notify-angular/**/*"
   ]
 }
