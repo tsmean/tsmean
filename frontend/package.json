@@ -56,6 +56,7 @@
     "tslint": "5.7.0",
     "typescript": "2.7.2",
     "@angular-devkit/build-angular": "0.6.0",
-    "webpack": "^4.8.3"
+    "@angular-devkit/build-optimizer": "^0.6.3",
+    "webpack": "4.8.3"
   }
 }
