@@ -28,7 +28,7 @@ The frontend is hosted with AWS cloudfront. Here is a writeup about that https:/
 ## Backend
 Deployment is done via docker swarm. Docker Swarm helps you to scale your application. An alternative is something like heroku, but I felt with docker Swarm I had better control over server costs in the long run.
 
-Here's a short writup about deploying nodejs apps:
+Here's a short writeup about deploying nodejs apps:
 https://www.tsmean.com/articles/nodejs/deploy-nodejs-at-scale/
 
 
