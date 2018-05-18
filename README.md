@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tsmean/tsmean.svg?branch=master)](https://travis-ci.org/tsmean/tsmean)
+
 # Disclaimer
 
 **Note that this project is still in furious development (currently it's pre-alpha) and only a glimpse of it’s full potential is publicly visible today. To get notified when the next major public release is ready, [sign up to the mailing list for releases](http://eepurl.com/cXa2aP). To apply for alpha testing, visit [www.tsmean.com/alpha](http://www.tsmean.com/alpha?utm_source=github&utm_medium=banner&utm_campaign=alpha_testing). To read more about the project, visit [www.tsmean.com](http://www.tsmean.com/?utm_source=github&utm_medium=banner&utm_campaign=project_info).**
