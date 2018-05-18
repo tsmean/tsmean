@@ -15,9 +15,12 @@
     "polyfills.ts"
   ],
   "include": [
-    "../node_modules/notify-angular/index.ts",
+    "../node_modules/notify-angular/**/*.ts",
     "../node_modules/@tsmean/shared/index.ts",
     "**/*.spec.ts",
     "**/*.d.ts"
+  ],
+  "exclude": [
+    "../node_modules/notify-angular/**/**spec.ts"
   ]
 }

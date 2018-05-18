@@ -1,18 +1,24 @@
-import {TestBed, inject} from '@angular/core/testing';
-import {RouterModule, Router} from '@angular/router';
-import {APP_BASE_HREF} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {NotifyModule} from 'notify-angular';
+import {inject, TestBed} from '@angular/core/testing';
+import {Router, RouterModule} from '@angular/router';
 
 import {AuthGuardService} from './auth-guard.service';
 import {LoginService} from './login.service';
-import {ApiUrl} from './api-url';
-import {TokenStorage} from './token.storage';
-import {UserStore} from './user.store';
-import {UserModule} from './user.module';
-import {UserService} from './user.service';
-import {ResourceService} from '../resource/resource.service';
+
+class LoginServiceMock {
+  private _loggedIn = false;
+
+  logIn(email, password) {
+    this._loggedIn = true;
+  }
+
+  logOut() {
+    this._loggedIn = false;
+  }
+
+  loggedIn() {
+    return this._loggedIn;
+  }
+}
 
 describe('AuthGuardService', () => {
   beforeEach(() => {
@@ -22,18 +28,13 @@ describe('AuthGuardService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        // FIXME: No provider for InjectionToken Resource.ApiUrl!
-        {provide: ApiUrl, useValue: 'bla'},
         {provide: Router, useValue: router},
-        {provide: APP_BASE_HREF, useValue: '/'},
-        UserStore,
-        UserService,
-        ResourceService,
-        TokenStorage,
-        LoginService,
+        {provide: LoginService, useClass: LoginServiceMock},
         AuthGuardService
       ],
-      imports: [RouterModule.forRoot([]), NotifyModule.forRoot(), HttpClientModule, HttpClientTestingModule]
+      imports: [
+        RouterModule.forRoot([])
+      ]
     });
   });
 
@@ -47,14 +48,14 @@ describe('AuthGuardService', () => {
   it(
     'should handle states correctly',
     inject(
-      [AuthGuardService, LoginService, HttpTestingController],
-      (service: AuthGuardService, loginService: LoginService, mockBackend: HttpTestingController) => {
+      [AuthGuardService, LoginService],
+      (service: AuthGuardService, loginService: LoginServiceMock) => {
         loginService.logOut();
         expect(service.isAllowedOnState('/dashboard')).toBeFalsy();
-        mockBackend.expectOne('').flush({email: 'hans@gmail.com'}, {status: 200});
         loginService.logIn('hans', 'meier');
         expect(service.isAllowedOnState('/dashboard')).toBeTruthy();
       }
     )
   );
+
 });
