@@ -1,9 +1,9 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany} from 'typeorm';
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 
 import {UserPassword} from './user-password.entity';
 import {UserRole} from './user.role';
 import {AnimalList} from '../animal-list/animal-list.entity';
-import { ApiModelProperty } from '@nestjs/swagger';
+import {ApiModelProperty} from '@nestjs/swagger';
 
 @Entity()
 export class User {

@@ -7,7 +7,6 @@ import {databaseProviders} from '../database/database.providers';
 import {animalProviders} from './animal.providers';
 import {Log} from '../logger/logger';
 import {configProviders} from '../config/config.providers';
-import {AnimalListModule} from '../animal-list/animal-list.module';
 import {AnimalListService} from '../animal-list/animal-list.service';
 import {animalListProviders} from '../animal-list/animal-list.providers';
 import {AnimalList} from '../animal-list/animal-list.entity';

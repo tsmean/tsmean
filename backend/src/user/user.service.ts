@@ -5,7 +5,6 @@ import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {User} from './user.entity';
 import {USER_REPOSITORY_TOKEN} from './constants';
 import {HASHING_ALGORITHM, PASSWORD_CRYPTOGRAPHER_TOKEN} from '../auth/constants';
-import {UserPassword} from './user-password.entity';
 import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';
 import {UserRole} from './user.role';

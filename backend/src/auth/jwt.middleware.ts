@@ -1,4 +1,4 @@
-import {Middleware, NestMiddleware, ExpressMiddleware, RequestMethod} from '@nestjs/common';
+import {ExpressMiddleware, Middleware, NestMiddleware} from '@nestjs/common';
 import * as passport from 'passport';
 
 interface Route {

@@ -1,25 +1,21 @@
 import {
+  Body,
   Controller,
+  Delete,
+  ForbiddenException,
   Get,
+  InternalServerErrorException,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
   Put,
-  Delete,
-  Patch,
-  Body,
-  UseGuards,
-  UseInterceptors,
-  Param,
-  Res,
   Query,
-  Inject,
-  ForbiddenException,
-  InternalServerErrorException,
-  ParseIntPipe,
-  BadRequestException
+  UseInterceptors
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
-import {ApiOperation, ApiResponse, ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 
 import {AnimalListService} from './animal-list.service';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';

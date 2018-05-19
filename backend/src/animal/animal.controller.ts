@@ -1,21 +1,17 @@
 import {
+  Body,
   Controller,
+  Delete,
+  ForbiddenException,
   Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
   Put,
-  Delete,
-  Patch,
-  Body,
-  UseGuards,
-  UseInterceptors,
-  Param,
-  Res,
   Query,
-  Inject,
-  ForbiddenException,
-  InternalServerErrorException,
-  ParseIntPipe,
-  NotFoundException
+  UseInterceptors
 } from '@nestjs/common';
 import {ApiUseTags} from '@nestjs/swagger';
 import {FindManyOptions} from 'typeorm';

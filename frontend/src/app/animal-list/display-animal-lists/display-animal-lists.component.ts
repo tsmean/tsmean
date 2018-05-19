@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {AnimalList} from '../animal-list.model';
-
 @Component({
   selector: 'app-display-animal-lists',
   templateUrl: './display-animal-lists.component.html',

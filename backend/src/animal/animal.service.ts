@@ -1,5 +1,5 @@
 import {Component, Inject} from '@nestjs/common';
-import {FindManyOptions, Repository, ObjectLiteral} from 'typeorm';
+import {FindManyOptions, ObjectLiteral, Repository} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {Animal} from './animal.entity';

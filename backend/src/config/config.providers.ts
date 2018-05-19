@@ -1,4 +1,3 @@
-import {createConnection} from 'typeorm';
 import * as path from 'path';
 
 import {CONFIG_TOKEN} from './constants';
