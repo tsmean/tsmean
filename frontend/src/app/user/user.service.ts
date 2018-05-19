@@ -10,12 +10,11 @@ import {ResourceService} from '../resource/resource.service';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @Inject(ApiUrl) private apiUrl: string,
-    private http: HttpClient,
-    private notifyService: NotifyService,
-    private resourceService: ResourceService
-  ) {}
+  constructor(@Inject(ApiUrl) private apiUrl: string,
+              private http: HttpClient,
+              private notifyService: NotifyService,
+              private resourceService: ResourceService) {
+  }
 
   createUser(user: UserWithoutId, password: string): Observable<User> {
     const $data = this.http
@@ -56,5 +55,5 @@ export class UserService {
     const error = errorResp.error ? errorResp.error.message : errorResp.statusText || 'An error ocurred';
     this.notifyService.error(error);
     return Promise.reject(error);
-  }
+  };
 }

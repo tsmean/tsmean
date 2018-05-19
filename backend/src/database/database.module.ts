@@ -8,4 +8,5 @@ import {ConfigModule} from '../config/config.module';
   components: [...databaseProviders],
   exports: [...databaseProviders]
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+}

@@ -1,5 +1,5 @@
 import {Component, Inject} from '@nestjs/common';
-import {FindManyOptions, Repository, ObjectLiteral} from 'typeorm';
+import {FindManyOptions, ObjectLiteral, Repository} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
 
 import {Animal} from './animal.entity';
@@ -8,7 +8,8 @@ import {Log} from '../logger/logger';
 
 @Component()
 export class AnimalService {
-  constructor(@Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>, private log: Log) {}
+  constructor(@Inject(ANIMAL_REPOSITORY_TOKEN) private readonly animalRepository: Repository<Animal>, private log: Log) {
+  }
 
   // Create
   async create(animalEntry: DeepPartial<Animal>): Promise<Animal> {

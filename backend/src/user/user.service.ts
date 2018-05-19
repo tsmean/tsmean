@@ -5,7 +5,6 @@ import {DeepPartial} from 'typeorm/common/DeepPartial';
 import {User} from './user.entity';
 import {USER_REPOSITORY_TOKEN} from './constants';
 import {HASHING_ALGORITHM, PASSWORD_CRYPTOGRAPHER_TOKEN} from '../auth/constants';
-import {UserPassword} from './user-password.entity';
 import {IUser} from '@tsmean/shared';
 import {Log} from '../logger/logger';
 import {UserRole} from './user.role';
@@ -13,11 +12,10 @@ import {PasswordCryptographerService} from '../auth/password-cryptographer/passw
 
 @Component()
 export class UserService {
-  constructor(
-    @Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: Repository<User>,
-    private readonly log: Log,
-    @Inject(PASSWORD_CRYPTOGRAPHER_TOKEN) private readonly passwordCryptographerService: PasswordCryptographerService
-  ) {}
+  constructor(@Inject(USER_REPOSITORY_TOKEN) private readonly userRepository: Repository<User>,
+              private readonly log: Log,
+              @Inject(PASSWORD_CRYPTOGRAPHER_TOKEN) private readonly passwordCryptographerService: PasswordCryptographerService) {
+  }
 
   // Create
   // Precondition: the user needs to have a unique email address

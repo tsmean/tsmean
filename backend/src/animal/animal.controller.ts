@@ -1,21 +1,17 @@
 import {
+  Body,
   Controller,
+  Delete,
+  ForbiddenException,
   Get,
+  NotFoundException,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
   Put,
-  Delete,
-  Patch,
-  Body,
-  UseGuards,
-  UseInterceptors,
-  Param,
-  Res,
   Query,
-  Inject,
-  ForbiddenException,
-  InternalServerErrorException,
-  ParseIntPipe,
-  NotFoundException
+  UseInterceptors
 } from '@nestjs/common';
 import {ApiUseTags} from '@nestjs/swagger';
 import {FindManyOptions} from 'typeorm';
@@ -35,15 +31,14 @@ import {AnimalDto} from '../../../shared/src/dto/animal/animal.dto';
 @Controller(apiPath(1, 'animal-lists/:listId/animals'))
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 export class AnimalController {
-  constructor(private readonly animalService: AnimalService, private readonly animalListService: AnimalListService) {}
+  constructor(private readonly animalService: AnimalService, private readonly animalListService: AnimalListService) {
+  }
 
   @Post()
-  async create(
-    @Param('listId', new ParseIntPipe())
-    listId: number,
-    @Body() requestBody: AnimalDto,
-    @CurrentUser() currentUser?: User
-  ) {
+  async create(@Param('listId', new ParseIntPipe())
+                 listId: number,
+               @Body() requestBody: AnimalDto,
+               @CurrentUser() currentUser?: User) {
     const animalsList = await this.getAnimalsList(listId, currentUser);
 
     return await this.animalService.create({
@@ -53,12 +48,10 @@ export class AnimalController {
   }
 
   @Get()
-  async find(
-    @Param('listId', new ParseIntPipe())
-    listId: number,
-    @CurrentUser() currentUser?: User,
-    @Query() findOptions?: FindManyOptions<Animal>
-  ): Promise<Animal[]> {
+  async find(@Param('listId', new ParseIntPipe())
+               listId: number,
+             @CurrentUser() currentUser?: User,
+             @Query() findOptions?: FindManyOptions<Animal>): Promise<Animal[]> {
     const options = {
       take: 100,
       skip: 0,
@@ -69,13 +62,11 @@ export class AnimalController {
   }
 
   @Get(':id')
-  async findOne(
-    @Param('listId', new ParseIntPipe())
-    listId: number,
-    @Param('id', new ParseIntPipe())
-    id: number,
-    @CurrentUser() currentUser?: User
-  ): Promise<Animal> {
+  async findOne(@Param('listId', new ParseIntPipe())
+                  listId: number,
+                @Param('id', new ParseIntPipe())
+                  id: number,
+                @CurrentUser() currentUser?: User): Promise<Animal> {
     await this.getAnimalsList(listId, currentUser);
     try {
       return await this.animalService.findOneById(id, listId);
@@ -85,12 +76,10 @@ export class AnimalController {
   }
 
   @Put()
-  async fullUpdate(
-    @Param('listId', new ParseIntPipe())
-    listId: number,
-    @Body() requestBody: Animal,
-    @CurrentUser() currentUser?: User
-  ) {
+  async fullUpdate(@Param('listId', new ParseIntPipe())
+                     listId: number,
+                   @Body() requestBody: Animal,
+                   @CurrentUser() currentUser?: User) {
     await this.getAnimalsList(listId, currentUser);
     try {
       return await this.animalService.update(requestBody.id, requestBody, listId);
@@ -100,14 +89,12 @@ export class AnimalController {
   }
 
   @Patch(':id')
-  async partialUpdate(
-    @Param('id', new ParseIntPipe())
-    id: number,
-    @Body() partialEntry: DeepPartial<Animal>,
-    @Param('listId', new ParseIntPipe())
-    listId: number,
-    @CurrentUser() currentUser?: User
-  ) {
+  async partialUpdate(@Param('id', new ParseIntPipe())
+                        id: number,
+                      @Body() partialEntry: DeepPartial<Animal>,
+                      @Param('listId', new ParseIntPipe())
+                        listId: number,
+                      @CurrentUser() currentUser?: User) {
     await this.getAnimalsList(listId, currentUser);
     try {
       return await this.animalService.update(id, partialEntry, listId);
@@ -117,13 +104,11 @@ export class AnimalController {
   }
 
   @Delete(':id')
-  async remove(
-    @Param('id', new ParseIntPipe())
-    id: number,
-    @Param('listId', new ParseIntPipe())
-    listId: number,
-    @CurrentUser() currentUser?: User
-  ) {
+  async remove(@Param('id', new ParseIntPipe())
+                 id: number,
+               @Param('listId', new ParseIntPipe())
+                 listId: number,
+               @CurrentUser() currentUser?: User) {
     await this.getAnimalsList(listId, currentUser);
     return this.animalService.remove(id);
   }

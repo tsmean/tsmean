@@ -6,4 +6,5 @@ import {Log} from './logger';
   components: [Log],
   exports: [Log]
 })
-export class LoggerModule {}
+export class LoggerModule {
+}

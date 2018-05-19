@@ -23,7 +23,8 @@ export class DisplayAnimalComponent implements OnChanges {
     isBeingEdited: false
   };
 
-  constructor(private resourceStore: ResourceStoreService, private animalService: AnimalService, private animalStore: AnimalStoreService) {}
+  constructor(private resourceStore: ResourceStoreService, private animalService: AnimalService, private animalStore: AnimalStoreService) {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['animalId']) {

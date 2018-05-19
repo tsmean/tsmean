@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {AnimalListService} from '../animal-list.service';
 import {AnimalListDashboardListStore} from '../animal-list-dashboard-list.store';
@@ -14,11 +14,10 @@ export class AnimalListWrapperComponent implements OnInit {
   listIds: number[] = [];
   private publicListId: number;
 
-  constructor(
-    private animalListService: AnimalListService,
-    private dashboardLists: AnimalListDashboardListStore,
-    private animalListsStore: AnimalListStoreService
-  ) {}
+  constructor(private animalListService: AnimalListService,
+              private dashboardLists: AnimalListDashboardListStore,
+              private animalListsStore: AnimalListStoreService) {
+  }
 
   ngOnInit() {
     // get animals and initialize dashboard list

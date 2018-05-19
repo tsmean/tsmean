@@ -1,4 +1,4 @@
-import {Controller, Get, HttpStatus, Req, Res} from '@nestjs/common';
+import {Controller, Get} from '@nestjs/common';
 
 @Controller('')
 export class WelcomeHtmlController {

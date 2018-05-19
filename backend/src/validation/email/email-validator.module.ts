@@ -6,4 +6,5 @@ import {EmailValidatorImpl} from './email-validator.component';
   components: [EmailValidatorImpl],
   exports: [EmailValidatorImpl]
 })
-export class EmailValidatorModule {}
+export class EmailValidatorModule {
+}

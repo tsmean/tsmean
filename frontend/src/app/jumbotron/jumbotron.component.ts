@@ -7,9 +7,11 @@ import {NotifyService} from 'notify-angular';
   styleUrls: ['./jumbotron.component.scss']
 })
 export class JumbotronComponent implements OnInit {
-  constructor(private notifyService: NotifyService) {}
+  constructor(private notifyService: NotifyService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   doStart() {
     const animalInput = document.getElementById('animal-input');

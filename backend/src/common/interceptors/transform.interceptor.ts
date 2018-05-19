@@ -1,4 +1,4 @@
-import {Interceptor, NestInterceptor, ExecutionContext} from '@nestjs/common';
+import {ExecutionContext, Interceptor, NestInterceptor} from '@nestjs/common';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 

@@ -20,11 +20,10 @@ export class DisplayListItemComponent implements OnInit {
     isBeingEdited: false
   };
 
-  constructor(
-    private animalListService: AnimalListService,
-    private animalListStore: AnimalListStoreService,
-    private dashboardLists: AnimalListDashboardListStore
-  ) {}
+  constructor(private animalListService: AnimalListService,
+              private animalListStore: AnimalListStoreService,
+              private dashboardLists: AnimalListDashboardListStore) {
+  }
 
   chooseList() {
     this.dashboardLists.setCurrent(this._listId);

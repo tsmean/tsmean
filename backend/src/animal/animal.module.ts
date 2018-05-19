@@ -12,4 +12,5 @@ import {AnimalListModule} from '../animal-list/animal-list.module';
   components: [...animalProviders, AnimalService],
   modules: [DatabaseModule, LoggerModule, AnimalListModule]
 })
-export class AnimalModule {}
+export class AnimalModule {
+}

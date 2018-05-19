@@ -19,8 +19,8 @@ export class AuthService {
     this.secret = config.token.secret;
     this.signOptions = {
       algorithm: config.token.algorithm || AuthService.DEFAULT_SIGN_OPTIONS.algorithm,
-      expiresIn: config.token.expiresIn || AuthService.DEFAULT_SIGN_OPTIONS.expiresIn,
-    }
+      expiresIn: config.token.expiresIn || AuthService.DEFAULT_SIGN_OPTIONS.expiresIn
+    };
   }
 
   createToken(payload: object): string {

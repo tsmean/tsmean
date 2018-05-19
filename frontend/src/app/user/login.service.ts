@@ -2,7 +2,6 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {NotifyService} from 'notify-angular';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,15 +15,13 @@ import {AnimalListDashboardListStore} from '../animal-list/animal-list-dashboard
 export class LoginService {
   private isLoggedIn = false;
 
-  constructor(
-    @Inject(ApiUrl) private apiUrl: string,
-    private tokenStorage: TokenStorage,
-    private http: HttpClient,
-    private notifyService: NotifyService,
-    private userStore: UserStore,
-    private router: Router,
-    private dashboardLists: AnimalListDashboardListStore
-  ) {
+  constructor(@Inject(ApiUrl) private apiUrl: string,
+              private tokenStorage: TokenStorage,
+              private http: HttpClient,
+              private notifyService: NotifyService,
+              private userStore: UserStore,
+              private router: Router,
+              private dashboardLists: AnimalListDashboardListStore) {
     this.isLoggedIn = tokenStorage.token !== undefined;
   }
 

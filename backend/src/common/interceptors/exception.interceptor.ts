@@ -1,4 +1,4 @@
-import {Interceptor, NestInterceptor, ExecutionContext, HttpStatus} from '@nestjs/common';
+import {ExecutionContext, HttpStatus, Interceptor, NestInterceptor} from '@nestjs/common';
 import {HttpException} from '@nestjs/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';

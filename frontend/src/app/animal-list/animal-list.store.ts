@@ -6,7 +6,8 @@ import {ResourceStoreService} from '../resource/resource.store';
 
 @Injectable()
 export class AnimalListStoreService {
-  constructor(private resourceStore: ResourceStoreService) {}
+  constructor(private resourceStore: ResourceStoreService) {
+  }
 
   private get resourceName() {
     return 'animal-lists';

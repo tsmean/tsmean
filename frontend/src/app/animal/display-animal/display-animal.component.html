@@ -2,7 +2,9 @@
 
   <div style="display: flex; align-items: center">
 
-    <img [src]="picUrl(animal.pic)" style="height: 50px;" *ngIf="animal.pic">
+    <img [src]="picUrl(animal.pic)"
+         style="height: 50px;"
+         *ngIf="animal.pic">
 
     <!-- Display or Edit Animal -->
     <div style="padding: 5px; flex: 1">
@@ -10,19 +12,28 @@
         {{animal.name}}
       </div>
       <mat-form-field *ngIf="animalSettings.isBeingEdited">
-        <input matInput placeholder="Animal's Name" [(ngModel)]="animalCopy.name"/>
+        <input matInput
+               placeholder="Animal's Name"
+               [(ngModel)]="animalCopy.name"/>
       </mat-form-field>
-      <button color="accent" mat-raised-button *ngIf="animalSettings.isBeingEdited" (click)="updateAnimal()">Update Animal</button>
+      <button color="accent"
+              mat-raised-button
+              *ngIf="animalSettings.isBeingEdited"
+              (click)="updateAnimal()">Update Animal
+      </button>
     </div>
 
     <div>
-      <button mat-icon-button color="primary" (click)="resetCopy(); toggleEditable();">
+      <button mat-icon-button
+              color="primary"
+              (click)="resetCopy(); toggleEditable();">
         <mat-icon *ngIf="!animalSettings.isBeingEdited">edit</mat-icon>
         <mat-icon *ngIf="animalSettings.isBeingEdited">cancel</mat-icon>
       </button>
     </div>
 
-    <app-animal-delete [listId]="listId" [animal]="animal"></app-animal-delete>
+    <app-animal-delete [listId]="listId"
+                       [animal]="animal"></app-animal-delete>
 
   </div>
 

@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NotifyService} from 'notify-angular';
 import 'rxjs/operator/catch';
 
 import {LoginService} from '../login.service';
 import {UserService} from '../user.service';
-import {User, UserWithoutId} from '../user';
+import {UserWithoutId} from '../user';
 import {UserStore} from '../user.store';
 
 @Component({
@@ -21,12 +21,11 @@ export class SignUpComponent {
 
   password = '';
 
-  constructor(
-    private userService: UserService,
-    private notifyService: NotifyService,
-    private loginService: LoginService,
-    private userStore: UserStore
-  ) {}
+  constructor(private userService: UserService,
+              private notifyService: NotifyService,
+              private loginService: LoginService,
+              private userStore: UserStore) {
+  }
 
   doSignUp() {
     this.userService.createUser(this.newUser, this.password).subscribe(user => {

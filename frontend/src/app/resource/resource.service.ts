@@ -11,7 +11,8 @@ import {ApiUrl} from './api-url-injection-token';
 
 @Injectable()
 export class ResourceService {
-  constructor(@Inject(ApiUrl) private apiUrl: string, private http: HttpClient) {}
+  constructor(@Inject(ApiUrl) private apiUrl: string, private http: HttpClient) {
+  }
 
   /**
    * Url to web api, appended with resource name

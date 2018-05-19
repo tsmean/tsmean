@@ -14,12 +14,11 @@ import {AnimalListStoreService} from '../animal-list.store';
 export class CreateAnimalListComponent implements OnInit {
   public newList: AnimalListWithoutId;
 
-  constructor(
-    private animalListService: AnimalListService,
-    private notifyService: NotifyService,
-    private dashboardLists: AnimalListDashboardListStore,
-    private animalListStoreService: AnimalListStoreService
-  ) {}
+  constructor(private animalListService: AnimalListService,
+              private notifyService: NotifyService,
+              private dashboardLists: AnimalListDashboardListStore,
+              private animalListStoreService: AnimalListStoreService) {
+  }
 
   ngOnInit() {
     this.resetInput();

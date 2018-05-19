@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, ManyToOne} from 'typeorm';
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from 'typeorm';
 
 import {AnimalList} from '../animal-list/animal-list.entity';
 
@@ -13,6 +13,6 @@ export class Animal {
   @Column({length: 255, nullable: true})
   pic?: string;
 
-  @ManyToOne(type => AnimalList, { eager: true, onDelete: 'CASCADE'})
+  @ManyToOne(type => AnimalList, {eager: true, onDelete: 'CASCADE'})
   list: AnimalList;
 }
