@@ -14,13 +14,13 @@ export class DeleteAnimalComponent implements OnInit {
   @Input() animal: Animal;
   @Input() listId: number;
 
-  constructor(
-    private animalService: AnimalService,
-    private dashboardList: AnimalDashboardListStore,
-    private animalStore: AnimalStoreService
-  ) {}
+  constructor(private animalService: AnimalService,
+              private dashboardList: AnimalDashboardListStore,
+              private animalStore: AnimalStoreService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public deleteAnimal() {
     this.animalService.deleteAnimal(this.animal.id, this.listId).subscribe(() => {

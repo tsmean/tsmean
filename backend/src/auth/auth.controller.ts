@@ -1,4 +1,4 @@
-import {Body, Controller, HttpStatus, Post, Res, UseGuards, UseInterceptors, Inject, BadRequestException} from '@nestjs/common';
+import {BadRequestException, Body, Controller, Inject, Post, UseInterceptors} from '@nestjs/common';
 import {ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 import {classToPlain} from 'class-transformer';
 
@@ -17,13 +17,12 @@ import {PasswordValidatorImpl} from '../validation/password/password-validator.c
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 @Controller(apiPath(1, 'auth'))
 export class AuthController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly authService: AuthService,
-    @Inject(PASSWORD_CRYPTOGRAPHER_TOKEN) private readonly passwordCryptographerService: PasswordCryptographerService,
-    private readonly emailValidator: EmailValidatorImpl,
-    private readonly passwordValidator: PasswordValidatorImpl
-  ) {}
+  constructor(private readonly userService: UserService,
+              private readonly authService: AuthService,
+              @Inject(PASSWORD_CRYPTOGRAPHER_TOKEN) private readonly passwordCryptographerService: PasswordCryptographerService,
+              private readonly emailValidator: EmailValidatorImpl,
+              private readonly passwordValidator: PasswordValidatorImpl) {
+  }
 
   @ApiOperation({title: 'Authorize'})
   @ApiResponse({

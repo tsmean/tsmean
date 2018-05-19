@@ -8,7 +8,8 @@ import {ResourceService} from '../resource/resource.service';
 
 @Injectable()
 export class AnimalService {
-  constructor(private resourceService: ResourceService, private http: HttpClient, private animalStoreService: AnimalStoreService) {}
+  constructor(private resourceService: ResourceService, private http: HttpClient, private animalStoreService: AnimalStoreService) {
+  }
 
   private getResourceName(listId: number = -999): string {
     return `animal-lists/${listId}/animals`;

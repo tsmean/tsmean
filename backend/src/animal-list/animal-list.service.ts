@@ -26,7 +26,7 @@ export class AnimalListService {
   async find(findOptions?: FindManyOptions<AnimalList>, owner?: User): Promise<AnimalList[]> {
     const options: FindManyOptions<AnimalList> = {
       take: 100,
-      skip: 0,
+      skip: 0
       ...findOptions // overwrite default ones
     };
     // user's lists + public or only the public one

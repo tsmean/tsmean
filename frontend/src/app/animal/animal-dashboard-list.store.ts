@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AnimalDashboardListStore {
   private dashboardList: BehaviorSubject<number[]> = new BehaviorSubject([]);
 
-  constructor() {}
+  constructor() {
+  }
 
   /**
    * Adds a resourceId to the list. If no position is provided, appends it to the end.

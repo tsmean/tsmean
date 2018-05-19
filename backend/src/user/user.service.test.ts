@@ -86,6 +86,7 @@ describe('user service', () => {
   });
 
   let counter = 0;
+
   function createRandomUser(): Promise<IUser> {
     // TODO: find out how to drop table in typeorm...
     const email = Math.random() + (counter++).toString() + '@gmail.com';

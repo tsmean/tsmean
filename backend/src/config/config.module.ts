@@ -6,4 +6,5 @@ import {configProviders} from './config.providers';
   components: [...configProviders],
   exports: [...configProviders]
 })
-export class ConfigModule {}
+export class ConfigModule {
+}

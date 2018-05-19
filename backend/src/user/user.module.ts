@@ -23,4 +23,5 @@ import {PasswordValidatorModule} from '../validation/password/password-validator
   exports: [UserService],
   modules: [PasswordValidatorModule, EmailValidatorModule, DatabaseModule, LoggerModule]
 })
-export class UserModule {}
+export class UserModule {
+}

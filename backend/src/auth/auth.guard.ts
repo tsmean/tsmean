@@ -1,13 +1,13 @@
-import {Guard, CanActivate, ExecutionContext} from '@nestjs/common';
+import {CanActivate, ExecutionContext, Guard} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
-import {Observable} from 'rxjs/Observable';
 
 import {UserRole} from '../user/user.role';
 import {User} from '../user/user.entity';
 
 @Guard()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(private readonly reflector: Reflector) {
+  }
 
   canActivate(req, context: ExecutionContext): boolean {
     const roles = this.reflector.get<UserRole[]>('roles', context.handler);

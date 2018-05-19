@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {AnimalList} from '../animal-list.model';
-
 @Component({
   selector: 'app-display-animal-lists',
   templateUrl: './display-animal-lists.component.html',
@@ -10,7 +8,9 @@ import {AnimalList} from '../animal-list.model';
 export class DisplayAnimalListsComponent implements OnInit {
   @Input() listIds: string[];
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

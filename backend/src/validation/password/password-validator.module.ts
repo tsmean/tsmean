@@ -6,4 +6,5 @@ import {PasswordValidatorImpl} from './password-validator.component';
   components: [PasswordValidatorImpl],
   exports: [PasswordValidatorImpl]
 })
-export class PasswordValidatorModule {}
+export class PasswordValidatorModule {
+}

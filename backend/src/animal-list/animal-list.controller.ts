@@ -1,25 +1,21 @@
 import {
+  Body,
   Controller,
+  Delete,
+  ForbiddenException,
   Get,
+  InternalServerErrorException,
+  Param,
+  ParseIntPipe,
+  Patch,
   Post,
   Put,
-  Delete,
-  Patch,
-  Body,
-  UseGuards,
-  UseInterceptors,
-  Param,
-  Res,
   Query,
-  Inject,
-  ForbiddenException,
-  InternalServerErrorException,
-  ParseIntPipe,
-  BadRequestException
+  UseInterceptors
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
-import {ApiOperation, ApiResponse, ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 
 import {AnimalListService} from './animal-list.service';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
@@ -36,7 +32,8 @@ import {Authorized} from '../common/decorators/authorized.decorator';
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 @Controller(apiPath(1, 'animal-lists'))
 export class AnimalListController {
-  constructor(private readonly animalListService: AnimalListService) {}
+  constructor(private readonly animalListService: AnimalListService) {
+  }
 
   @ApiBearerAuth()
   @ApiOperation({title: 'Create animals list'})
@@ -74,7 +71,7 @@ export class AnimalListController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({title: "Get animals list's details"})
+  @ApiOperation({title: 'Get animals list\'s details'})
   @ApiResponse({
     status: 200,
     description: 'The list details.',
@@ -83,11 +80,9 @@ export class AnimalListController {
   @ApiResponse({status: 401, description: 'You have to be logged to get the list!'})
   @ApiResponse({status: 403, description: 'You need to be an owner for the list to get it!'})
   @Get(':id')
-  async findOne(
-    @Param('id', new ParseIntPipe())
-    id: number,
-    @CurrentUser() currentUser?: User
-  ): Promise<AnimalList> {
+  async findOne(@Param('id', new ParseIntPipe())
+                  id: number,
+                @CurrentUser() currentUser?: User): Promise<AnimalList> {
     const animalList = await this.animalListService.findOneById(id);
 
     if (animalList.owner && (!currentUser || animalList.owner.id !== currentUser.id)) {
@@ -126,12 +121,10 @@ export class AnimalListController {
   @ApiResponse({status: 403, description: 'You need to be an owner for the list to update it!'})
   @Authorized()
   @Patch(':id')
-  async partialUpdate(
-    @Param('id', new ParseIntPipe())
-    id: number,
-    @Body() partialEntry: DeepPartial<Animal>,
-    @CurrentUser() currentUser: User
-  ) {
+  async partialUpdate(@Param('id', new ParseIntPipe())
+                        id: number,
+                      @Body() partialEntry: DeepPartial<Animal>,
+                      @CurrentUser() currentUser: User) {
     const animalList = await this.animalListService.findOneById(id);
     if (!animalList.owner || animalList.owner.id !== currentUser.id) {
       throw new ForbiddenException('Access denied!');
@@ -149,11 +142,9 @@ export class AnimalListController {
   @ApiResponse({status: 403, description: 'You need to be an owner for the list to delete it!'})
   @Authorized()
   @Delete(':id')
-  async remove(
-    @Param('id', new ParseIntPipe())
-    id: number,
-    @CurrentUser() currentUser: User
-  ) {
+  async remove(@Param('id', new ParseIntPipe())
+                 id: number,
+               @CurrentUser() currentUser: User) {
     const animalList = await this.animalListService.findOneById(id);
     if (!animalList.owner || animalList.owner.id !== currentUser.id) {
       throw new ForbiddenException('Access denied!');

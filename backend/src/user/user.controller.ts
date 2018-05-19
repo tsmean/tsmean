@@ -1,26 +1,23 @@
 import {
-  Controller,
-  Get,
-  Post,
+  BadRequestException,
   Body,
-  UseGuards,
-  UseInterceptors,
-  Param,
-  Res,
-  Put,
+  Controller,
   Delete,
-  Patch,
-  InternalServerErrorException,
   ForbiddenException,
-  ParseIntPipe,
-  Query,
-  UnauthorizedException,
+  Get,
+  InternalServerErrorException,
   NotFoundException,
-  BadRequestException
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Put,
+  Query,
+  UseInterceptors
 } from '@nestjs/common';
 import {FindManyOptions} from 'typeorm';
 import {DeepPartial} from 'typeorm/common/DeepPartial';
-import {ApiOperation, ApiResponse, ApiBearerAuth, ApiUseTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiUseTags} from '@nestjs/swagger';
 
 import {UserService} from './user.service';
 import {Authorized} from '../common/decorators/authorized.decorator';
@@ -38,11 +35,10 @@ import {PasswordValidatorImpl} from '../validation/password/password-validator.c
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
 @Controller(apiPath(1, 'users'))
 export class UserController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly emailValidator: EmailValidatorImpl,
-    private readonly passwordValidator: PasswordValidatorImpl
-  ) {}
+  constructor(private readonly userService: UserService,
+              private readonly emailValidator: EmailValidatorImpl,
+              private readonly passwordValidator: PasswordValidatorImpl) {
+  }
 
   @ApiOperation({title: 'Register new account'})
   @ApiResponse({
@@ -131,12 +127,10 @@ export class UserController {
 
   @Patch(':id')
   @Authorized()
-  async partialUpdate(
-    @Param('id', new ParseIntPipe())
-    userId: number,
-    @Body() partialEntry: DeepPartial<User>,
-    @CurrentUser() currentUser: User
-  ) {
+  async partialUpdate(@Param('id', new ParseIntPipe())
+                        userId: number,
+                      @Body() partialEntry: DeepPartial<User>,
+                      @CurrentUser() currentUser: User) {
     if (userId !== currentUser.id && currentUser.role !== UserRole.Admin) {
       throw new ForbiddenException('Only user can update himself (or admin)!');
     }
@@ -145,11 +139,9 @@ export class UserController {
 
   @Delete(':id')
   @Authorized()
-  async remove(
-    @Param('id', new ParseIntPipe())
-    userId: number,
-    @CurrentUser() currentUser: User
-  ) {
+  async remove(@Param('id', new ParseIntPipe())
+                 userId: number,
+               @CurrentUser() currentUser: User) {
     if (userId !== currentUser.id && currentUser.role !== UserRole.Admin) {
       throw new ForbiddenException('Only user can delete himself (or admin)!');
     }

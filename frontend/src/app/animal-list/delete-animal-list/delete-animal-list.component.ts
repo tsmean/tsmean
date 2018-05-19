@@ -13,13 +13,13 @@ import {AnimalListStoreService} from '../animal-list.store';
 export class DeleteAnimalListComponent implements OnInit {
   @Input() list: AnimalList;
 
-  constructor(
-    private animalListService: AnimalListService,
-    private dashboardLists: AnimalListDashboardListStore,
-    private animalListStore: AnimalListStoreService,
-  ) {}
+  constructor(private animalListService: AnimalListService,
+              private dashboardLists: AnimalListDashboardListStore,
+              private animalListStore: AnimalListStoreService) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   public deleteAnimal() {
     this.animalListService.deleteAnimalList(this.list.id).subscribe(() => {

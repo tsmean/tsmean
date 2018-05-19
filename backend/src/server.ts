@@ -1,13 +1,12 @@
 import {NestFactory} from '@nestjs/core';
-import {SwaggerModule, DocumentBuilder} from '@nestjs/swagger';
-import {ValidationPipe, INestApplication} from '@nestjs/common';
+import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
+import {INestApplication, ValidationPipe} from '@nestjs/common';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 
 import {AppModule} from './app.module';
 import {AuthGuard} from './auth/auth.guard';
 import {AuthModule} from './auth/auth.module';
-import {apiPath} from './api';
 
 async function bootstrap() {
   const app: INestApplication = await NestFactory.create(AppModule);

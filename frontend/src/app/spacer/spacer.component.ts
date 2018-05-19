@@ -8,9 +8,11 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SpacerComponent implements OnInit {
   @Input() height: string | number;
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   get getHeight(): string {
     return this.height ? this.height + 'px' : '10px';

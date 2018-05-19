@@ -1,6 +1,4 @@
-import {TestBed, inject} from '@angular/core/testing';
-import {HttpModule, ResponseOptions, XHRBackend, Response} from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
 import {AnimalListDashboardListStore} from './animal-list-dashboard-list.store';
 

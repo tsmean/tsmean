@@ -12,4 +12,5 @@ import {LoggerModule} from '../logger/logger.module';
   modules: [DatabaseModule, LoggerModule],
   exports: [AnimalListService]
 })
-export class AnimalListModule {}
+export class AnimalListModule {
+}
