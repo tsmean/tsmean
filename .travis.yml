@@ -29,7 +29,8 @@ jobs:
 
     - stage: test
       script:
-      - echo "no backend tests yet"
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker run tsmean/server:"$TRAVIS_BUILD_NUMBER" npm test
 
     - stage: deploy
       install:
