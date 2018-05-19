@@ -1,4 +1,4 @@
-import {TestBed, inject} from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 import {Resource} from '@tsmean/shared';
 
 import {ResourceStoreService} from './resource.store';

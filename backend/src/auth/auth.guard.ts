@@ -1,6 +1,5 @@
-import {Guard, CanActivate, ExecutionContext} from '@nestjs/common';
+import {CanActivate, ExecutionContext, Guard} from '@nestjs/common';
 import {Reflector} from '@nestjs/core';
-import {Observable} from 'rxjs/Observable';
 
 import {UserRole} from '../user/user.role';
 import {User} from '../user/user.entity';

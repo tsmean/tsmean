@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {AnimalListService} from '../animal-list.service';
 import {AnimalListDashboardListStore} from '../animal-list-dashboard-list.store';

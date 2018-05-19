@@ -1,4 +1,4 @@
-import {Connection, Repository} from 'typeorm';
+import {Connection} from 'typeorm';
 
 import {Animal} from './animal.entity';
 import {ANIMAL_REPOSITORY_TOKEN} from './constants';
