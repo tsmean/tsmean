@@ -1,5 +1,5 @@
 # Run this from root of project (tsmean)
-FROM tsmean/clientbase
+FROM tsmean/clientbase:1
 
 COPY . /code
 
