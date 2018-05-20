@@ -1,11 +1,9 @@
-sudo: required
-
-services:
-  - docker
-
 language: node_js
 node_js:
   - 8
+sudo: required
+services:
+  - docker
 
 stages:
   - build
@@ -29,8 +27,8 @@ jobs:
 
     - stage: test
       script:
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker run tsmean/server:"$TRAVIS_BUILD_NUMBER" npm test
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/server:"$TRAVIS_BUILD_NUMBER" npm test
 
     - stage: deploy
       install:
@@ -47,24 +45,13 @@ jobs:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker build -t tsmean/client:"$TRAVIS_BUILD_NUMBER" -f docker/client.dockerfile .
         - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
-
-        # TODO: REMOVE WHEN DOCKERIZED BUILD READY
-        - cd shared
-        - npm install
-        - cd ../frontend
-        - npm install
-        - npm run build:prod
-        - cd ..
-        - ./docker/install-aws.sh
-        - aws configure set preview.cloudfront true
-        - aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
-        - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
       script:
       - echo "everything ok with frontend build"
 
     - stage: test
       script:
-      - echo "no frontend tests yet"
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm test
 
     - stage: deploy
       install:
