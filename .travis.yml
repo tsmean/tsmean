@@ -55,6 +55,8 @@ jobs:
       - echo "everything ok with frontend build"
 
     - stage: test
+      before_install:
+        - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm test
