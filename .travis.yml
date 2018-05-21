@@ -65,5 +65,7 @@ jobs:
 
     # end to end tests
     - stage: test
-    - docker run -d -p 4242:4242 tsmean/server:"$TRAVIS_BUILD_NUMBER" npm start
-    - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm run e2e
+      script:
+        # Currently backend is not needed yet for e2e tests
+        # - docker run -d -p 4242:4242 tsmean/server:"$TRAVIS_BUILD_NUMBER" npm start
+        - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm run e2e
