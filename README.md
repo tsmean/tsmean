@@ -53,7 +53,11 @@ This spins up a mysql database with the database name, username and password mat
 
 To stop the db, run:
 ```
-docker stop mysql && docker rm mysql
+docker stop mysql
+```
+The next time, you can simply start with
+```
+docker start mysql
 ```
 
 ### Installing node modules
