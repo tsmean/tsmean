@@ -20,11 +20,9 @@ The starter kit is using the following technologies:
 - **A**ngular 6
 - **N**odeJs
 
-... and that's why it's called tsmean!&#42; We've carefully elected those technologies to be the best suit for building web apps with TypeScript. You get to use TypeScript now
+... and that's why it's called tsmean! We've carefully elected those technologies to be the best suit for building web apps with TypeScript. You get to use TypeScript now
 on the client **and** the server! This leads to efficiency
 through consistency. Read more about it here: www.tsmean.com.
-
-&#42;I know most would expect Mongo instead of MySQL as the "M" part. However, in the past, we've made the experience again and again, that MySQL is the better foundation for your webapp. [Read more](https://www.tsmean.com/articles/vs/mongo-vs-mysql-for-webapps/).
 
 # Installation
 
