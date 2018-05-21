@@ -9,28 +9,26 @@ cd ../backend
 npm install
 ```
 
-## Configuration
-When you first run this project,
-it will connect to a public remote MySQL instance 
-I have setup so this project can be run with minimal overhead.
-However, I advise you to change the properties data with your own credentials
-in `<project>/properties/development.properties.json` and `<project>/properties/test.properties.json`,
-since the remote MySQL instance is cleaned on a regular basis.
-
-You can find out more about the `properties` files in [properties docs](./properties/README.md).
 
 # Run
+For getting started, simply run:
 ```
 npm start
 ```
-By default, a server at port 4242 (localhost:4242) is started.
+By default, a server at port 4242 (localhost:4242) is started. It launches the server in dev mode, so when you change files, it will automatically restart the app.
 
-For development we recommend you to run:
+When you first run this project, it will connect to a public remote MySQL instance to get you started quickly. However, in order to really work on the backend (changing the schema etc.) you should set up a local MySQL database. The easiest way to do so is by using the docker image we provide:
 ```
-npm run dev
+docker run -p 3306:3306 --name mysql tsmean/mysql:1
 ```
-It launches the server in dev mode, so when you change files,
-it will automatically restart the app.
+Then, in a separate terminal window, run:
+```
+npm run start:local
+```
+To stop the db, run:
+```
+docker stop mysql && docker rm mysql
+```
 
 # Test
 ```
