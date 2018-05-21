@@ -9,6 +9,6 @@ describe('tsmean-frontend App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getJumboH1()).toEqual('This is going to be a cool web-app!');
   });
 });
