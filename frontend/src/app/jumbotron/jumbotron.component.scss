@@ -1,16 +1,26 @@
-@import '../../variables';
+@import 'variables';
 
 .app-jumbotron {
-    min-height: 100vh;
-    background: $primary-color; //linear-gradient(90deg,#3F51B5 0,#7986CB);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    text-align: center;
-    padding: 10px;
+  min-height: 100vh;
+  background: $primary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 10px;
+  .jumbo-col-right {
+    max-width: 500px;
+    h1 {
+      color: white;
+    }
+    .get-started-button {
+      padding: 10px 15px;
+      font-size: 20px;
+    }
+  }
 }
 
 .jumbo-image {
-    padding: 20px;
+  padding: 20px;
 }
