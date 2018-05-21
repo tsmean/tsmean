@@ -9,6 +9,7 @@ import {AuthGuard} from './auth/auth.guard';
 import {AuthModule} from './auth/auth.module';
 
 async function bootstrap() {
+
   const app: INestApplication = await NestFactory.create(AppModule);
 
   app.use(bodyParser.json());
