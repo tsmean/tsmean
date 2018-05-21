@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getJumboH1() {
-    return element(by.css('app-jumbotron h1')).getText();
+    return element(by.id('jumbo-title')).getText();
   }
 }
