@@ -28,7 +28,9 @@ jobs:
     - stage: test
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker run tsmean/server:"$TRAVIS_BUILD_NUMBER" npm test
+        - sudo service mysql stop # stop default mysql, that travis starts for some reason
+        - docker run -d --name mysql tsmean/mysql:2
+        - docker run --network container:mysql tsmean/server:"$TRAVIS_BUILD_NUMBER" npm test
 
     - stage: deploy
       install:

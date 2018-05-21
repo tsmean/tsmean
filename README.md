@@ -9,7 +9,7 @@
 
 ![tsmean logo](https://s3.eu-central-1.amazonaws.com/bersling/images/tsmean-logo.png)
 
-# Pre-Alpha Release
+# Current State
 
 This is a **starter kit** for webapps **completely written in TypeScript**.
 
@@ -20,11 +20,9 @@ The starter kit is using the following technologies:
 - **A**ngular 6
 - **N**odeJs
 
-... and that's why it's called tsmean!&#42; We've carefully elected those technologies to be the best suit for building web apps with TypeScript. You get to use TypeScript now
+... and that's why it's called tsmean! We've carefully elected those technologies to be the best suit for building web apps with TypeScript. You get to use TypeScript now
 on the client **and** the server! This leads to efficiency
 through consistency. Read more about it here: www.tsmean.com.
-
-&#42;I know most would expect Mongo instead of MySQL as the "M" part. However, in the past, we've made the experience again and again, that MySQL is the better foundation for your webapp. [Read more](https://www.tsmean.com/articles/vs/mongo-vs-mysql-for-webapps/).
 
 # Installation
 
@@ -33,16 +31,37 @@ through consistency. Read more about it here: www.tsmean.com.
 - node (v6, v8 or v10) and npm
 - git
 - angular-cli (see https://github.com/angular/angular-cli)
-
+- Docker (optional)
 
 ## Install ##
-If the prerequisits are met, run:
 
+### Cloning the project
 ```
 git clone https://github.com/tsmean/tsmean your-project-name
 cd your-project-name
-cd backend && npm install
-cd ../shared && npm install
+```
+
+### Setting up the database
+
+The easiest way to set up the MySQL database is to run:
+```
+docker run -p 3306:3306 --name mysql tsmean/mysql:2
+```
+This spins up a mysql database with the database name, username and password matching the backend settings. Alternatively you can configure `backend/local.properties.json` to match a database you've set up, for example a remote database.
+
+To stop the db, run:
+```
+docker stop mysql
+```
+The next time, you can simply start with
+```
+docker start mysql
+```
+
+### Installing node modules
+```
+cd shared && npm install
+cd ../backend && npm install
 cd ../frontend && npm install
 ```
 
@@ -53,7 +72,6 @@ First `cd backend`, then:
 - to spin up a REST-API server `npm start`. Check it out at http://localhost:4242
 - To run the tests `npm test`
 
-More info available in [backend docs](./backend/README.md).
 
 # Frontend
 First `cd frontend`, then:
