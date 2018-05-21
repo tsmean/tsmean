@@ -9,7 +9,7 @@
 
 ![tsmean logo](https://s3.eu-central-1.amazonaws.com/bersling/images/tsmean-logo.png)
 
-# Pre-Alpha Release
+# Current State
 
 This is a **starter kit** for webapps **completely written in TypeScript**.
 
@@ -33,16 +33,33 @@ through consistency. Read more about it here: www.tsmean.com.
 - node (v6, v8 or v10) and npm
 - git
 - angular-cli (see https://github.com/angular/angular-cli)
-
+- Docker (optional)
 
 ## Install ##
-If the prerequisits are met, run:
 
+### Cloning the project
 ```
 git clone https://github.com/tsmean/tsmean your-project-name
 cd your-project-name
-cd backend && npm install
-cd ../shared && npm install
+```
+
+### Setting up the database
+
+The easiest way to set up the MySQL database is to run:
+```
+docker run -p 3306:3306 --name mysql tsmean/mysql:2
+```
+This spins up a mysql database with the database name, username and password matching the backend settings. Alternatively you can configure `backend/local.properties.json` to match a database you've set up, for example a remote database.
+
+To stop the db, run:
+```
+docker stop mysql && docker rm mysql
+```
+
+### Installing node modules
+```
+cd shared && npm install
+cd ../backend && npm install
 cd ../frontend && npm install
 ```
 
@@ -53,7 +70,6 @@ First `cd backend`, then:
 - to spin up a REST-API server `npm start`. Check it out at http://localhost:4242
 - To run the tests `npm test`
 
-More info available in [backend docs](./backend/README.md).
 
 # Frontend
 First `cd frontend`, then:

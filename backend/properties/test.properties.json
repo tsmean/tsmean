@@ -1,8 +1,8 @@
 {
   "db": {
-    "host": "local-tsmean.cn32tstd6wqk.eu-central-1.rds.amazonaws.com",
-    "dbuser": "publicuser",
-    "dbpassword": "dd3yf71FgYQYgCY",
+    "host": "127.0.0.1",
+    "dbuser": "root",
+    "dbpassword": "1234",
     "port": 3306,
     "dbname": "test_tsmean",
     "testsMayDropDb": "true"

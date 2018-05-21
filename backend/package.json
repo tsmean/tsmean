@@ -8,7 +8,6 @@
     "prestart:prod": "tsc",
     "build:prod": "tsc",
     "start:prod": "cross-env NODE_ENV=production node dist/backend/src/server.js",
-    "start:local": "cross-env NODE_ENV=local nodemon",
     "test": "cross-env NODE_ENV=test jest --config=jest.json --coverage --runInBand --forceExit",
     "test:watch": "cross-env NODE_ENV=test jest --watch --config=jest.json",
     "test:coverage": "cross-env NODE_ENV=test jest --config=jest.json --coverage --coverageDirectory=coverage",
