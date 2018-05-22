@@ -43,20 +43,12 @@ cd your-project-name
 
 ### Setting up the database
 
-The easiest way to set up the MySQL database is to run:
+The easiest way to set up the MySQL database is to use docker and run:
 ```
 docker run -p 3306:3306 --name mysql tsmean/mysql:2
 ```
-This spins up a mysql database with the database name, username and password matching the backend settings. Alternatively you can configure `backend/local.properties.json` to match a database you've set up, for example a remote database.
+This spins up a docker container with a MySQL instance that has matching settings with the backend. [Read more about the "MySQL in docker" option here](./docker/mysql/docker-mysql.readme.md). You can also set up MySQL directly on your system and create the databases with settings like you find them in `backend/properties/development.properties` and `backend/properties/test.properties` manually. Of course, you can also change the settings you find there to match your needs (for example setting a different user or password or database name).
 
-To stop the db, run:
-```
-docker stop mysql
-```
-The next time, you can simply start with
-```
-docker start mysql
-```
 
 ### Installing node modules
 ```
