@@ -37,3 +37,4 @@ To start the container in the background, add the `-d` flag:
 ```
 docker start -d mysql
 ```
+
