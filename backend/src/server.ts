@@ -7,6 +7,9 @@ import * as cors from 'cors';
 import {AppModule} from './app.module';
 import {AuthGuard} from './auth/auth.guard';
 import {AuthModule} from './auth/auth.module';
+import {ConfigModule} from './config/config.module';
+import {CONFIG_TOKEN} from './config/constants';
+import {AppProperties} from './config/app-properties.model';
 
 async function bootstrap() {
 
@@ -18,8 +21,8 @@ async function bootstrap() {
   const authGuard = app.select(AuthModule).get(AuthGuard);
   app.useGlobalGuards(authGuard);
 
-  // Allow CORS since frontend is served completely independently
-  app.use(cors());
+  const props: AppProperties = app.select(ConfigModule).get(CONFIG_TOKEN);
+  app.use(cors(props.cors));
 
   const swaggerConfig = new DocumentBuilder()
     .addBearerAuth()

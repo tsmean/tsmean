@@ -7,6 +7,9 @@ export interface AppProperties {
     dbpassword: string;
     testsMayDropDb: boolean;
   };
+  cors: {
+    origin: string | string[];
+  };
   token: {
     secret: string;
     algorithm?: string;
