@@ -1,30 +1,9 @@
-# Configuration properties
+## Properties Files
 
-Based on `properties.template.json` file:
-```json
-{
-  "db": {
-    "host": "yourdatabase.com",
-    "dbuser": "dbuser",
-    "dbpassword": "secretpassword",
-    "port": 12345,
-    "dbname": "yourDbName",
-    "testsMayDropDb": "true"
-  }
-}
-```
+The purpose of the `.properties` files is to provide different settings depending on the environment. For example, a different database is used for local development, testing and production. This is reflected in the `.properties` files.
 
-Create you own properties.json like:
-- development.properties.json
-- production.properties.json
-- test.properties.json
+You can customize all files to your needs. A corresponding interface is found in the `app-properties.model.ts`.
 
-Where `development`, `production` or `test` are the value of `NODE_ENV` env variable on runtime (default `development`).
+Which properties file is used is determined by `config.providers.ts`. The default is `development`, but if a `NODE_ENV` is present, the name of the node env is used. For example, if `process.env.NODE_ENV === test`, then `test.properties.json` is used.
 
-They are added to .gitignore so they won't be pushed to the repository.
-
-You can set up a user with e.g.:
-```
-CREATE USER 'publicuser'@'%';
-GRANT ALL PRIVILEGES ON test_tsmean.* To 'publicuser'@'%' IDENTIFIED BY 'dd3yf71FgYQYgCY';
-```
+If you add confidential properties, remember to ignore the files from git.

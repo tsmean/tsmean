@@ -7,6 +7,9 @@
     "dbname": "local_tsmean",
     "testsMayDropDb": "true"
   },
+  "cors": {
+    "origin": ["http://localhost:4200"]
+  },
   "token": {
     "secret": "tsmean"
   }
