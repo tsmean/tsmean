@@ -9,7 +9,7 @@ import {ResourceStoreService} from '../../resource/resource.store';
 @Component({
   selector: 'app-animal-display',
   templateUrl: './display-animal.component.html',
-  styleUrls: ['./display-animal.component.css']
+  styleUrls: ['./display-animal.component.scss']
 })
 export class DisplayAnimalComponent implements OnChanges {
   @Input() animalId: number;

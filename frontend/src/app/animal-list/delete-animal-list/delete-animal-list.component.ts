@@ -8,7 +8,7 @@ import {AnimalListStoreService} from '../animal-list.store';
 @Component({
   selector: 'app-animal-list-delete',
   templateUrl: './delete-animal-list.component.html',
-  styleUrls: ['./delete-animal-list.component.css']
+  styleUrls: ['./delete-animal-list.component.scss']
 })
 export class DeleteAnimalListComponent implements OnInit {
   @Input() list: AnimalList;

@@ -8,7 +8,7 @@ import {UserStore} from '../user.store';
 @Component({
   selector: 'app-user-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
   user: User;
