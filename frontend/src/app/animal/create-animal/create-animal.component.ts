@@ -14,6 +14,7 @@ export class CreateAnimalComponent implements OnInit {
   public newAnimal: AnimalWithoutId;
 
   @Input() listId: number;
+  isCreatingAnimal = false;
 
   constructor(private animalService: AnimalService,
               private notifyService: NotifyService,
@@ -30,6 +31,7 @@ export class CreateAnimalComponent implements OnInit {
   }
 
   public createAnimal() {
+    this.isCreatingAnimal = true;
     const animalObs = this.animalService.createAnimal(this.newAnimal, this.listId);
     animalObs.subscribe(
       newAnimal => {
@@ -39,6 +41,9 @@ export class CreateAnimalComponent implements OnInit {
       },
       errorResp => {
         this.notifyService.error(errorResp.statusText);
+      },
+      () => {
+        this.isCreatingAnimal = false;
       }
     );
     if (this.newAnimal.name) {

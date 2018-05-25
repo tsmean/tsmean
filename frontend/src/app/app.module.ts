@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 import 'hammerjs';
 import {NotifyModule} from 'notify-angular';
-import {SpinnerModule} from 'spinner-angular';
+import {SpinnerModule} from '@tsmean/spinner';
 
 import {AppRoutingModule} from './app-routing.module';
 import {TopnavComponent} from './topnav/topnav.component';

@@ -26,13 +26,13 @@
     "@angular/router": "6.0.2",
     "@tsmean/cookies": "1.0.0",
     "@tsmean/shared": "0.0.9",
+    "@tsmean/spinner": "0.0.1",
     "class-validator": "0.8.1",
     "core-js": "2.5.3",
     "hammerjs": "2.0.8",
     "notify-angular": "3.0.1",
     "rxjs": "6.1.0",
     "rxjs-compat": "6.0.0-rc.0",
-    "spinner-angular": "2.0.6",
     "zone.js": "0.8.26"
   },
   "devDependencies": {
