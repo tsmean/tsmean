@@ -10,7 +10,7 @@ import {UserStore} from '../user.store';
 @Component({
   selector: 'app-user-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
   newUser: UserWithoutId = {

@@ -5,7 +5,7 @@ import {LoginService} from '../user/login.service';
 @Component({
   selector: 'app-topnav',
   templateUrl: './topnav.component.html',
-  styleUrls: ['./topnav.component.css']
+  styleUrls: ['./topnav.component.scss']
 })
 export class TopnavComponent implements OnInit {
   constructor(private loginService: LoginService) {}

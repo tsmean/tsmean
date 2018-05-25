@@ -9,7 +9,7 @@ import {AnimalListStoreService} from '../animal-list.store';
 @Component({
   selector: 'app-animal-list-create',
   templateUrl: './create-animal-list.component.html',
-  styleUrls: ['./create-animal-list.component.css']
+  styleUrls: ['./create-animal-list.component.scss']
 })
 export class CreateAnimalListComponent implements OnInit {
   public newList: AnimalListWithoutId;

@@ -8,7 +8,7 @@ import {AnimalStoreService} from '../animal.store';
 @Component({
   selector: 'app-animal-create',
   templateUrl: './create-animal.component.html',
-  styleUrls: ['./create-animal.component.css']
+  styleUrls: ['./create-animal.component.scss']
 })
 export class CreateAnimalComponent implements OnInit {
   public newAnimal: AnimalWithoutId;

@@ -9,7 +9,7 @@ import {AnimalListDashboardListStore} from '../animal-list-dashboard-list.store'
 @Component({
   selector: 'app-animal-list-display',
   templateUrl: './display-list-item.component.html',
-  styleUrls: ['./display-list-item.component.css']
+  styleUrls: ['./display-list-item.component.scss']
 })
 export class DisplayListItemComponent implements OnInit {
   private activeListId: number;
