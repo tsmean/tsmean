@@ -12,9 +12,8 @@ import {
   MatToolbarModule
 } from '@angular/material';
 import 'hammerjs';
-import {NotifyModule} from 'notify-angular';
 import {SpinnerModule} from '@tsmean/spinner';
-
+import {NotifyModule} from '@tsmean/toast';
 import {AppRoutingModule} from './app-routing.module';
 import {TopnavComponent} from './topnav/topnav.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';

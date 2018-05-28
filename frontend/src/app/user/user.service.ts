@@ -1,12 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {NotifyService} from 'notify-angular';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import {NotifyService} from '@tsmean/toast';
+import {Observable} from 'rxjs';
+
 
 import {User, UserWithoutId} from './user';
 import {ApiUrl} from './api-url';
 import {ResourceService} from '../resource/resource.service';
+import {map, catchError} from 'rxjs/operators';
+import {of} from 'rxjs/internal/observable/of';
 
 @Injectable()
 export class UserService {
@@ -22,17 +24,23 @@ export class UserService {
       .post(this.usersApi, {
         user: user,
         password: password
-      })
-      .map((resp: any) => resp.data);
-    return $data.catch(this.handleError);
+      }).pipe(
+        map((resp: any) => resp.data)
+      );
+    return $data.pipe(catchError(this.handleError));
   }
 
   getUser(): Observable<User | null> {
-    const $data = this.http.get(this.apiUrl + '/users/current').map((resp: any) => resp.data);
-    return $data.catch(() => {
-      // cannot fetch user, since not logged in
-      return Observable.of(null);
-    });
+    const $data = this.http.get(this.apiUrl + '/users/current')
+      .pipe(
+        map((resp: any) => resp.data)
+      );
+    return $data.pipe(
+      catchError(() => {
+        // cannot fetch user, since not logged in
+        return of(null);
+      })
+    );
   }
 
   getUserById(id: number): Observable<User> {

@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {NotifyService} from 'notify-angular';
-import 'rxjs/operator/catch';
+import {NotifyService} from '@tsmean/toast';
 
 import {LoginService} from '../login.service';
 import {UserService} from '../user.service';

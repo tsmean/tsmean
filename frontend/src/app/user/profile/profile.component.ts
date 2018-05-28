@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NotifyService} from 'notify-angular';
+import {NotifyService} from '@tsmean/toast';
 
 import {UserService} from '../user.service';
 import {User} from '../user';

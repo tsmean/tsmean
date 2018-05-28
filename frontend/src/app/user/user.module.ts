@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {MatButtonModule, MatCardModule, MatInputModule} from '@angular/material';
-import {NotifyModule} from 'notify-angular';
+import {NotifyModule} from '@tsmean/toast';
 
 import {LoginService} from './login.service';
 import {ApiUrl} from './api-url';
