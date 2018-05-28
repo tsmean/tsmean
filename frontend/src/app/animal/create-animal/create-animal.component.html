@@ -12,7 +12,9 @@
       </mat-form-field>
     </div>
     <div>
-      <button mat-raised-button color="accent" (click)="createAnimal()">Create</button>
+      <button mat-raised-button [disabled]="isCreatingAnimal" color="accent" (click)="createAnimal()">
+        Create <spinner display="inline" *ngIf="isCreatingAnimal"></spinner>
+      </button>
     </div>
   </div>
 </mat-card>

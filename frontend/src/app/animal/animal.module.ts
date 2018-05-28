@@ -18,9 +18,20 @@ import {AnimalService} from './animal.service';
 import {AnimalWrapperComponent} from './animal-wrapper/animal-wrapper.component';
 import {AnimalDashboardListStore} from './animal-dashboard-list.store';
 import {AnimalStoreService} from './animal.store';
+import {SpinnerModule} from '@tsmean/spinner';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatMenuModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule,
+    SpinnerModule
+  ],
   declarations: [CreateAnimalComponent, DeleteAnimalComponent, DisplayAnimalComponent, DisplayAnimalListComponent, AnimalWrapperComponent],
   exports: [CreateAnimalComponent, DeleteAnimalComponent, DisplayAnimalListComponent, DisplayAnimalComponent, AnimalWrapperComponent]
 })
