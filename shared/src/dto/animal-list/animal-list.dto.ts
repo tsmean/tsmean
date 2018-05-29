@@ -1,11 +1,11 @@
-import {ApiModelProperty, ApiModelPropertyOptional} from '@nestjs/swagger';
+// import {ApiModelProperty, ApiModelPropertyOptional} from '@nestjs/swagger';
 
 import {ResourceWithoutId} from '../../models/resource.model';
 
 export class AnimalListDto implements ResourceWithoutId {
-  @ApiModelPropertyOptional()
+  // @ApiModelPropertyOptional()
   id?: number;
 
-  @ApiModelProperty({description: 'The name of the animals list'})
+  // @ApiModelProperty({description: 'The name of the animals list'})
   name: string;
 }

@@ -3,13 +3,11 @@ FROM node:8
 
 COPY . /code
 
-# Setup Shared
-WORKDIR /code/shared
-RUN npm install
-
-# Setup Backend
+# Setup all modules
 WORKDIR /code/backend
 RUN npm install
+
+WORKDIR /code/backend
 RUN npm run build:prod
 ENV NODE_ENV production
 

@@ -1,4 +1,4 @@
-import {IsString, IsInt} from 'class-validator';
+// import {IsString, IsInt} from 'class-validator';
 
 import {IUser} from '../../models/user.model';
 

@@ -22,7 +22,7 @@ import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {Animal} from '../animal/animal.entity';
 import {apiPath} from '../api';
-import {AnimalListDto} from '../../../shared/src/dto/animal-list/animal-list.dto';
+import {AnimalListDto} from '@tsmean/shared/src/dto/animal-list/animal-list.dto';
 import {AnimalList} from './animal-list.entity';
 import {User} from '../user/user.entity';
 import {CurrentUser} from '../user/user.decorator';

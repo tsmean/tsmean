@@ -50,12 +50,12 @@ docker run -p 3306:3306 --name mysql tsmean/mysql:2
 This spins up a docker container with a MySQL instance that has matching settings with the backend. [Read more about the "MySQL in docker" option here](./docker/mysql/docker-mysql.readme.md). You can also set up MySQL directly on your system and create the databases with settings like you find them in `backend/properties/development.properties` and `backend/properties/test.properties` manually. Of course, you can also change the settings you find there to match your needs (for example setting a different user or password or database name).
 
 
-### Installing node modules
+### Installing all node modules
 ```
-cd shared && npm install
-cd ../backend && npm install
-cd ../frontend && npm install
+npm install
 ```
+
+Under the hood lerna is used.
 
 # Backend
 

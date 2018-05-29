@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "6.0.3",
     "@angular/router": "6.0.3",
     "@tsmean/cookies": "1.0.0",
-    "@tsmean/shared": "0.0.9",
+    "@tsmean/shared": "0.0.0",
     "@tsmean/spinner": "1.0.1",
     "@tsmean/toast": "0.0.1",
     "class-validator": "0.8.1",

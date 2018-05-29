@@ -6,12 +6,12 @@ import {UserService} from '../user/user.service';
 import {LoggingInterceptor} from '../common/interceptors/logging.interceptor';
 import {TransformInterceptor} from '../common/interceptors/transform.interceptor';
 import {apiPath} from '../api';
-import {LoginDto} from '../../../shared/src/dto/user/login.dto';
 import {AuthService} from './auth.service';
 import {PASSWORD_CRYPTOGRAPHER_TOKEN} from './constants';
 import {PasswordCryptographerService} from './password-cryptographer/password-cryptographer.interface';
 import {EmailValidatorImpl} from '../validation/email/email-validator.component';
 import {PasswordValidatorImpl} from '../validation/password/password-validator.component';
+import {LoginDto} from '@tsmean/shared';
 
 @ApiUseTags('Users')
 @UseInterceptors(LoggingInterceptor, TransformInterceptor)
@@ -23,7 +23,8 @@ export class AuthController {
     @Inject(PASSWORD_CRYPTOGRAPHER_TOKEN) private readonly passwordCryptographerService: PasswordCryptographerService,
     private readonly emailValidator: EmailValidatorImpl,
     private readonly passwordValidator: PasswordValidatorImpl
-  ) {}
+  ) {
+  }
 
   @ApiOperation({title: 'Authorize'})
   @ApiResponse({
