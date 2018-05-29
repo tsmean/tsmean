@@ -78,7 +78,7 @@ More info available in [frontend docs](./frontend/README.md).
 # Live Demo
 https://demo.tsmean.com
 
-[![screenshot](https://s3.eu-central-1.amazonaws.com/bersling/images/animals3.gif)](https://fir-tsmean.firebaseapp.com/)
+[![screenshot](https://s3.eu-central-1.amazonaws.com/bersling/images/animals3.gif)](https://demo.tsmean.com)
 
 
 # Homepage
