@@ -70,7 +70,7 @@ export class AnimalListController {
   }
 
   @ApiBearerAuth()
-  @ApiOperation({title: "Get animals list's details"})
+  @ApiOperation({title: `Get animals list's details`})
   @ApiResponse({
     status: 200,
     description: 'The list details.',

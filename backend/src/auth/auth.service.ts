@@ -20,7 +20,7 @@ export class AuthService {
     this.signOptions = {
       algorithm: config.token.algorithm || AuthService.DEFAULT_SIGN_OPTIONS.algorithm,
       expiresIn: config.token.expiresIn || AuthService.DEFAULT_SIGN_OPTIONS.expiresIn,
-    }
+    };
   }
 
   createToken(payload: object): string {
