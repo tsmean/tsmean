@@ -26,6 +26,11 @@ jobs:
       script:
         - echo "backend build succeeded"
 
+    - stage: lint
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/server:"$TRAVIS_BUILD_NUMBER" npm run lint
+
     - stage: test
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -55,7 +60,6 @@ jobs:
       script:
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm run lint
-
 
     - stage: test
       script:
