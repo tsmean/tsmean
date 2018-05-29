@@ -7,6 +7,7 @@ services:
 
 stages:
   - build
+  - lint
   - test
   - name: deploy
     if: branch = master
@@ -49,6 +50,12 @@ jobs:
         - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
       script:
         - echo "frontend build succeeded"
+
+    - stage: lint
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm run lint
+
 
     - stage: test
       script:

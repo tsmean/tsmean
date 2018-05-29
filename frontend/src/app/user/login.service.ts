@@ -60,5 +60,6 @@ export class LoginService {
     const error = errorResp.error ? errorResp.error.message : errorResp.statusText || 'An error ocurred';
     this.notifyService.error(error);
     return Promise.reject(error);
-  };
+  }
+
 }

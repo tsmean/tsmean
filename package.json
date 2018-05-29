@@ -3,7 +3,10 @@
   "version": "4.0.1",
   "description": "Boilerplate for a TS-MEAN App",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  },
   "scripts": {
     "start": "echo \"Nothing to do\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1"
