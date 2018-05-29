@@ -14,5 +14,5 @@ export interface AppProperties {
     secret: string;
     algorithm?: string;
     expiresIn?: string;
-  }
+  };
 }
