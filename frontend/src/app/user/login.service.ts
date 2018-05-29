@@ -1,15 +1,13 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {NotifyService} from 'notify-angular';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import {NotifyService} from '@tsmean/toast';
 
 import {ApiUrl} from './api-url';
 import {TokenStorage} from './token.storage';
 import {UserStore} from './user.store';
 import {AnimalListDashboardListStore} from '../animal-list/animal-list-dashboard-list.store';
+import {catchError, map} from 'rxjs/operators';
 
 @Injectable()
 export class LoginService {
@@ -30,8 +28,10 @@ export class LoginService {
   logIn(email: string, password: string): void {
     this.http
       .post(this.loginApi, {email: email, password: password})
-      .map((resp: any) => resp.data)
-      .catch(this.handleError)
+      .pipe(
+        map((resp: any) => resp.data),
+        catchError(this.handleError)
+      )
       .subscribe((resp: any) => {
         this.isLoggedIn = true;
         this.tokenStorage.set(resp.token);

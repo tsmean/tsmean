@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 import {AnimalList} from './animal-list.model';
 import {ResourceStoreService} from '../resource/resource.store';

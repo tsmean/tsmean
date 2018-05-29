@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NotifyService} from 'notify-angular';
+import {NotifyService} from '@tsmean/toast';
 import {AnimalWithoutId} from '../animal.model';
 import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';

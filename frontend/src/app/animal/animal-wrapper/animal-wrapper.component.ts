@@ -3,7 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {AnimalService} from '../animal.service';
 import {AnimalDashboardListStore} from '../animal-dashboard-list.store';
 import {AnimalStoreService} from '../animal.store';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 import {AnimalListDashboardListStore} from '../../animal-list/animal-list-dashboard-list.store';
 
 @Component({

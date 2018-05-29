@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {AnimalList, AnimalListWithoutId} from './animal-list.model';
 import {ResourceService} from '../resource/resource.service';

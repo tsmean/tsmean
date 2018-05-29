@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Resource} from '@tsmean/shared';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class ResourceStoreService {

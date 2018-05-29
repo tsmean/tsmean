@@ -8,7 +8,6 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts",
-    "../node_modules/notify-angular/**/*spec.ts"
+    "**/*.spec.ts"
   ]
 }

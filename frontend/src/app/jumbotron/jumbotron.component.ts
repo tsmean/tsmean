@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NotifyService} from 'notify-angular';
+import {NotifyService} from '@tsmean/toast';
 
 @Component({
   selector: 'app-jumbotron',
