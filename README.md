@@ -55,7 +55,7 @@ This spins up a docker container with a MySQL instance that has matching setting
 npm install
 ```
 
-Under the hood lerna is used.
+Under the hood [lerna](https://github.com/lerna/lerna) is used to install the multiple packages in backend, frontend and shared, but you don't need to be concerned with this too much for now.
 
 # Backend
 
