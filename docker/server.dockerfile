@@ -4,8 +4,7 @@ FROM node:8
 COPY . /code
 
 # Setup all modules
-WORKDIR /code/backend
-RUN npm install
+RUN npm install --unsafe-perm
 
 WORKDIR /code/backend
 RUN npm run build:prod

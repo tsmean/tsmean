@@ -5,8 +5,6 @@ COPY . /code
 WORKDIR /code
 
 # Setup all modules
-RUN npm install
+RUN npm install --unsafe-perm
 
 WORKDIR /code/frontend
-ENV NODE_ENV production
-RUN npm run build:prod
