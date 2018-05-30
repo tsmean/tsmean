@@ -8,3 +8,4 @@ WORKDIR /code
 RUN npm install --unsafe-perm
 
 WORKDIR /code/frontend
+RUN npm run build:prod
