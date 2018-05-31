@@ -15,10 +15,11 @@
     "polyfills.ts"
   ],
   "include": [
-    "../node_modules/@tsmean/shared/index.ts",
     "**/*.spec.ts",
     "**/*.d.ts"
   ],
   "exclude": [
+    "node_modules/@tsmean/shared/**/*.spec.ts",
+    "node_modules/@tsmean/shared/**/*.test.ts"
   ]
 }

@@ -2,14 +2,12 @@
 FROM node:8
 
 COPY . /code
+WORKDIR /code
 
-# Setup Shared
-WORKDIR /code/shared
-RUN npm install
+# Setup all modules
+RUN npm install --unsafe-perm
 
-# Setup Backend
 WORKDIR /code/backend
-RUN npm install
 RUN npm run build:prod
 ENV NODE_ENV production
 

@@ -20,6 +20,7 @@
   },
   "include": [
     "src/**/*",
+    "node_modules/@tsmean/shared/**/**.ts",
     "node_modules/notify-angular/**/*.ts"
   ]
 }

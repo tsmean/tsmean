@@ -25,7 +25,7 @@ import {apiPath} from '../api';
 import {AnimalListService} from '../animal-list/animal-list.service';
 import {CurrentUser} from '../user/user.decorator';
 import {User} from '../user/user.entity';
-import {AnimalDto} from '../../../shared/src/dto/animal/animal.dto';
+import {AnimalDto} from '@tsmean/shared';
 
 @ApiUseTags('Animals')
 @Controller(apiPath(1, 'animal-lists/:listId/animals'))

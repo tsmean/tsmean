@@ -1,14 +1,14 @@
-import {IsString, IsInt} from 'class-validator';
-import { ApiModelProperty } from '@nestjs/swagger';
+// import {IsString, IsInt} from 'class-validator';
+// import { ApiModelProperty } from '@nestjs/swagger';
 
 import {IUser} from '../../models/user.model';
 
 export class CreateUserDto {
   // TODO: how can i validate this?
-  @ApiModelProperty()
+  // @ApiModelProperty()
   readonly user: IUser;
 
-  @IsString()
-  @ApiModelProperty()
+  // @IsString()
+  // @ApiModelProperty()
   readonly password: string;
 }

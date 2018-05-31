@@ -2,14 +2,15 @@
   "name": "tsmean",
   "version": "4.0.1",
   "description": "Boilerplate for a TS-MEAN App",
-  "dependencies": {},
   "devDependencies": {
+    "lerna": "^2.11.0",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"
   },
   "scripts": {
     "start": "echo \"Nothing to do\" && exit 1",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "lerna bootstrap"
   },
   "repository": {
     "type": "git",

@@ -8,6 +8,9 @@
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "../node_modules/@tsmean/shared/**/*.spec.ts",
+    "../node_modules/@tsmean/shared/**/*.test.ts"
   ]
 }

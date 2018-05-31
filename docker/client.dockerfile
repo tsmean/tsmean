@@ -2,13 +2,10 @@
 FROM tsmean/clientbase:1
 
 COPY . /code
+WORKDIR /code
 
-# Setup Shared
-WORKDIR /code/shared
-RUN npm install
+# Setup all modules
+RUN npm install --unsafe-perm
 
-# Setup Frontend
 WORKDIR /code/frontend
-RUN npm install
-ENV NODE_ENV production
 RUN npm run build:prod
