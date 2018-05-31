@@ -5,6 +5,8 @@ sudo: required
 services:
   - docker
 
+addons:
+  chrome: stable
 
 install:
   - ./docker/install-aws.sh
