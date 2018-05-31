@@ -37,5 +37,6 @@ script:
 deploy:
   provider: script
   script: deploy.alt.sh
+  skip_cleanup: true
   on:
     branch: fix/deploy
