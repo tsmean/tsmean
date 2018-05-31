@@ -38,4 +38,4 @@ deploy:
   provider: script
   script: bash deploy.alt.sh
   on:
-    branch: fix/deploy
+    branch: master
