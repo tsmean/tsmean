@@ -1,6 +1,7 @@
 FROM node:8
 
-COPY backend/dist /code
+COPY backend /code
+WORKDIR /code
 ENV NODE_ENV production
 
 EXPOSE 4242

@@ -4,5 +4,5 @@ aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-R
 node docker/wait-for-aws-ssm.js
 # frontend
 aws configure set preview.cloudfront true
-aws s3 cp tmp/dist s3://demo.tsmean.com/ --recursive
+aws s3 cp frontend/dist s3://demo.tsmean.com/ --recursive
 aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
