@@ -28,6 +28,7 @@ script:
 
   # frontend
   - cd frontend
+  - sed -i 's/BUILD_ID/$TRAVIS_BUILD_NUMBER/g' src/index.html
   - npm test
   - npm run e2e
   - npm run build:prod
