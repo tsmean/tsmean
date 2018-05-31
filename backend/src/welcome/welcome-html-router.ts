@@ -28,7 +28,7 @@ body {
   <p>
     <b><a href="/api/swagger">To the API Docs.</a></b>
   </p>
-  <div style="display:none">id:1</div>
+  <p>Build-ID: BUILD_ID</p>
 </body>
 </html>`;
   }
