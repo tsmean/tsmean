@@ -15,7 +15,7 @@ script:
   # backend
   - cd backend
   - sudo service mysql stop # stop default mysql, that travis starts for some reason
-  - docker run -d --name mysql tsmean/mysql:2
+  - docker run -d -p 3306:3306 --name mysql tsmean/mysql:2
   - npm test
   - npm run build:prod
   - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f ../docker/server.alt.dockerfile ..
