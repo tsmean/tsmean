@@ -40,11 +40,13 @@ const checkStatus = (commandId: CommandId) => {
       } else {
         console.error('COMMAND RESULT:');
         console.error(command);
-        console.error(`Result '${status}' was either unhandled or is an error.`)
+        console.error(`Result '${status}' was either unhandled or is an error.`);
+        process.exit(1);
       }
     }).catch(errorResp => {
       console.error('An error occurrd with the promise to listCommandInvocations.');
       console.error(errorResp);
+      process.exit(1);
     });
   };
   getDetails();
@@ -64,7 +66,8 @@ const deployBackend = () => {
     console.log('Successfully Deployed Backend')
   }).catch(errorResp => {
     console.error(errorResp);
-    console.error('Error in deploying backend')
+    console.error('Error in deploying backend');
+    process.exit(1);
   });
 };
 deployBackend();
