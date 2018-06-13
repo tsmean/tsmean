@@ -16,31 +16,21 @@ install:
 script:
   # backend
   - cd backend
-#  - sed -i 's/BUILD_ID/$TRAVIS_BUILD_NUMBER/g' src/welcome/welcome-html-router.ts
-#  - sudo service mysql stop # stop default mysql, that travis starts for some reason
-#  - docker run -d -p 3306:3306 --name mysql tsmean/mysql:2
-#  - npm test
-#  - npm run build:prod
-#  - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f ../docker/server.alt.dockerfile ..
-#  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-#  - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
-#  - cd ..
-#
-#  # frontend
-#  - cd frontend
-#  - sed -i 's/BUILD_ID/$TRAVIS_BUILD_NUMBER/g' src/index.html
-#  - npm test
-#  - npm run e2e
-#  - npm run build:prod
-#  - cd ..
-   - cd ..
-   - ./deployment/deploy.travis.sh
+  - sed -i 's/BUILD_ID/$TRAVIS_BUILD_NUMBER/g' src/welcome/welcome-html-router.ts
+  - sudo service mysql stop # stop default mysql, that travis starts for some reason
+  - docker run -d -p 3306:3306 --name mysql tsmean/mysql:2
+  - npm test
+  - npm run build:prod
+  - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f ../docker/server.alt.dockerfile ..
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
+  - cd ..
 
-
-#deploy:
-#  provider: script
-#  script: bash ./deployment/deploy.travis.sh
-#  on:
-#    branch:
-#      - master
-#      - fix/faster-build
+  # frontend
+  - cd frontend
+  - sed -i 's/BUILD_ID/$TRAVIS_BUILD_NUMBER/g' src/index.html
+  - npm test
+  - npm run e2e
+  - npm run build:prod
+  - cd ..
+  - ./deployment/deploy.travis.sh
