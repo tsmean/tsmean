@@ -15,7 +15,7 @@ install:
 
 script:
   # backend
-#  - cd backend
+  - cd backend
 #  - sed -i 's/BUILD_ID/$TRAVIS_BUILD_NUMBER/g' src/welcome/welcome-html-router.ts
 #  - sudo service mysql stop # stop default mysql, that travis starts for some reason
 #  - docker run -d -p 3306:3306 --name mysql tsmean/mysql:2
@@ -33,7 +33,6 @@ script:
 #  - npm run e2e
 #  - npm run build:prod
 #  - cd ..
-   - echo "everything ok"
 
 deploy:
   provider: script
