@@ -1,0 +1,84 @@
+language: node_js
+node_js:
+  - 8
+sudo: required
+services:
+  - docker
+
+stages:
+  - build
+  - lint
+  - test
+  - name: deploy
+    if: branch = master
+
+jobs:
+  include:
+
+    # backend
+    - stage: build
+      install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - ./docker/install-aws.sh
+        - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
+        - docker build -t tsmean/server:"$TRAVIS_BUILD_NUMBER" -f docker/server.dockerfile .
+        - docker push tsmean/server:"$TRAVIS_BUILD_NUMBER"
+      script:
+        - echo "backend build succeeded"
+
+    - stage: lint
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/server:"$TRAVIS_BUILD_NUMBER" npm run lint
+
+    - stage: test
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - sudo service mysql stop # stop default mysql, that travis starts for some reason
+        - docker run -d --name mysql tsmean/mysql:2
+        - docker run --network container:mysql tsmean/server:"$TRAVIS_BUILD_NUMBER" npm test
+
+    - stage: deploy
+      install:
+        - ./docker/install-aws.sh
+        - aws ssm describe-instance-information
+        - aws ssm send-command --instance-ids "i-0ed7d2d2191c0c2d5" --document-name "AWS-RunShellScript" --parameters commands=["export TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER && wget --no-cache -O docker-compose.yml https://raw.githubusercontent.com/tsmean/tsmean/"$TRAVIS_BRANCH"/docker/docker-compose.yml && docker stack deploy --compose-file docker-compose.yml tsmean && rm docker-compose.yml"] > docker/last-command.json
+        - node docker/wait-for-aws-ssm.js
+      script:
+        - echo "backend deployment succeeded"
+
+    # frontend
+    - stage: build
+      install:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker build -t tsmean/client:"$TRAVIS_BUILD_NUMBER" -f docker/client.dockerfile .
+        - docker push tsmean/client:"$TRAVIS_BUILD_NUMBER"
+      script:
+        - echo "frontend build succeeded"
+
+    - stage: lint
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm run lint
+
+    - stage: test
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm test
+
+    - stage: deploy
+      install:
+        - docker run --rm -v $(pwd)/tmp:/tmp tsmean/client:"$TRAVIS_BUILD_NUMBER" sh -c "cp -r /code/frontend/dist /tmp"
+        - ./docker/install-aws.sh
+        - aws configure set preview.cloudfront true
+        - aws s3 cp tmp/dist s3://demo.tsmean.com/ --recursive
+        - aws cloudfront create-invalidation --distribution-id E194UGLQ78RUJV --paths "/*"
+      script:
+        - echo "frontent deployment succeeded"
+
+    # end to end tests
+    - stage: test
+      script:
+        # Currently backend is not needed yet for e2e tests
+        # - docker run -d -p 4242:4242 tsmean/server:"$TRAVIS_BUILD_NUMBER" npm start
+        - docker run tsmean/client:"$TRAVIS_BUILD_NUMBER" npm run e2e
