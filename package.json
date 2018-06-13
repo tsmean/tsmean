@@ -3,14 +3,18 @@
   "version": "4.0.1",
   "description": "Boilerplate for a TS-MEAN App",
   "devDependencies": {
+    "@types/aws-sdk": "^2.7.0",
+    "aws-sdk": "^2.256.1",
     "lerna": "^2.11.0",
+    "ts-node": "^6.1.1",
     "tslint": "^5.10.0",
-    "typescript": "^2.8.3"
+    "typescript": "^2.9.1"
   },
   "scripts": {
     "start": "echo \"Nothing to do\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install": "lerna bootstrap"
+    "install": "lerna bootstrap",
+    "deploy": "ts-node deploy.ts"
   },
   "repository": {
     "type": "git",
