@@ -15,7 +15,7 @@
     "start": "echo \"Nothing to do\" && exit 1",
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "lerna bootstrap",
-    "deploy": "ts-node deploy.ts"
+    "deploy:backend": "ts-node deployment/deploy-backend.ts"
   },
   "repository": {
     "type": "git",

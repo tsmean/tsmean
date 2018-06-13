@@ -36,7 +36,14 @@ script:
 
 deploy:
   provider: script
-  script: npm run deploy -- $TRAVIS_BUILD_NUMBER
+  script:
+    - ls
+    - pwd
+    - cat package.json
+    - echo $NODE_ENV
+    - npm i
+    - npm run deploy:backend -- $TRAVIS_BUILD_NUMBER
+    - bash ./deployment/deploy-frontend.sh
   on:
     branch:
       - master

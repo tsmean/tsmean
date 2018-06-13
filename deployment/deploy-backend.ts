@@ -34,8 +34,3 @@ const deployBackend = () => {
   });
 };
 deployBackend();
-
-const deployFrontend = () => {
-
-};
-deployFrontend();
