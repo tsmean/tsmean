@@ -37,4 +37,6 @@ script:
 deploy:
   script: deploy.alt.sh
   on:
-    branch: master
+    branch:
+      - master
+      - fix/faster-build
