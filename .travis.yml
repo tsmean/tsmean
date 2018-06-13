@@ -33,11 +33,13 @@ script:
 #  - npm run e2e
 #  - npm run build:prod
 #  - cd ..
+   - ./deployment/deploy.travis.sh
 
-deploy:
-  provider: script
-  script: bash ./deployment/deploy.travis.sh
-  on:
-    branch:
-      - master
-      - fix/faster-build
+
+#deploy:
+#  provider: script
+#  script: bash ./deployment/deploy.travis.sh
+#  on:
+#    branch:
+#      - master
+#      - fix/faster-build
