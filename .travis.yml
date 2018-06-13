@@ -33,7 +33,7 @@ script:
 #  - npm run e2e
 #  - npm run build:prod
 #  - cd ..
-  - cd ..
+   - cd ..
    - ./deployment/deploy.travis.sh
 
 
