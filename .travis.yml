@@ -9,6 +9,9 @@ addons:
   chrome: stable
 
 
+
+
+
 install:
   - ./docker/install-aws.sh
   - aws s3 cp s3://tsmean-credentials/production."$PROD_CREDENTIALS".properties.json backend/properties/production.properties.json
