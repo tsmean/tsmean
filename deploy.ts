@@ -1,6 +1,8 @@
 import * as AWS from 'aws-sdk';
 
-AWS.config.update({region: 'eu-central-1'});
+AWS.config.update({
+  region: 'eu-central-1'
+});
 
 const args = process.argv.slice(2);
 if (args.length < 1) {
