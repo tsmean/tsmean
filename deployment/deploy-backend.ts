@@ -17,6 +17,7 @@ console.log('Deployment Started');
 
 const INSTANCE_ID = "i-0ed7d2d2191c0c2d5";
 const TRAVIS_BRANCH = args[0];
+const TRAVIS_BUILD_NUMBER = args[1];
 
 const ssm = new AWS.SSM();
 
@@ -58,7 +59,7 @@ const deployBackend = () => {
     InstanceIds: [INSTANCE_ID],
     DocumentName: "AWS-RunShellScript",
     Parameters: {
-      commands: [`export TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER && wget --no-cache -O docker-compose.yml https://raw.githubusercontent.com/tsmean/tsmean/"${TRAVIS_BRANCH}"/docker/docker-compose.yml && docker stack deploy --compose-file docker-compose.yml tsmean && rm docker-compose.yml`]
+      commands: [`export TRAVIS_BUILD_NUMBER=${TRAVIS_BUILD_NUMBER} && wget --no-cache -O docker-compose.yml https://raw.githubusercontent.com/tsmean/tsmean/"${TRAVIS_BRANCH}"/docker/docker-compose.yml && docker stack deploy --compose-file docker-compose.yml tsmean && rm docker-compose.yml`]
     }
   }).promise().then(resp => {
     const commandId = resp.Command.CommandId;
