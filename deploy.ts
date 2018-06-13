@@ -2,8 +2,14 @@ import * as AWS from 'aws-sdk';
 
 const args = process.argv.slice(2);
 if (args.length < 1) {
+  console.error(`
+=============================
+Please Provide a Build Number
+=============================`);
   process.exit(1);
 }
+console.log('Deployment Started');
+process.exit(0);
 
 const INSTANCE_ID = "i-0ed7d2d2191c0c2d5";
 const TRAVIS_BRANCH = args[0];
