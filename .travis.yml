@@ -35,6 +35,7 @@ script:
   - cd ..
 
 deploy:
+  provider: script
   script: deploy.alt.sh
   on:
     branch:
