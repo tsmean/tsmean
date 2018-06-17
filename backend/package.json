@@ -8,7 +8,7 @@
     "prestart:prod": "tsc",
     "build:prod": "tsc",
     "lint": "tslint 'src/**/*.ts'",
-    "start:prod": "cross-env NODE_ENV=production node dist/server.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon",
     "test": "cross-env NODE_ENV=test jest --config=jest.json --coverage --runInBand --forceExit",
     "test:watch": "cross-env NODE_ENV=test jest --watch --config=jest.json",
     "test:coverage": "cross-env NODE_ENV=test jest --config=jest.json --coverage --coverageDirectory=coverage",
