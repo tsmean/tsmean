@@ -11,7 +11,7 @@ services:
         - "traefik.port=4242"
         - "traefik.docker.network=traefik"
     ports:
-      - "58275:4242"
+      - "4242:4242"
     networks:
       - traefik
 networks:
