@@ -37,7 +37,7 @@ through consistency. Read more about it here: www.tsmean.com.
 
 ### Cloning the project
 ```
-git clone https://github.com/tsmean/tsmean your-project-name
+git clone --depth=1 https://github.com/tsmean/tsmean your-project-name
 cd your-project-name
 ```
 
