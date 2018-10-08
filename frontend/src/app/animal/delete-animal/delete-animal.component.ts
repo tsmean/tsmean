@@ -22,7 +22,7 @@ export class DeleteAnimalComponent implements OnInit {
 
   ngOnInit() {}
 
-  public deleteAnimal() {
+  deleteAnimal() {
     this.animalService.deleteAnimal(this.animal.id, this.listId).subscribe(() => {
       this.animalStore.remove(this.animal.id);
       this.dashboardList.removeById(this.animal.id);

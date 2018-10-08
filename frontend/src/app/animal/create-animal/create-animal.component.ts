@@ -11,7 +11,7 @@ import {AnimalStoreService} from '../animal.store';
   styleUrls: ['./create-animal.component.scss']
 })
 export class CreateAnimalComponent implements OnInit {
-  public newAnimal: AnimalWithoutId;
+  newAnimal: AnimalWithoutId;
 
   @Input() listId: number;
   isCreatingAnimal = false;
@@ -30,7 +30,7 @@ export class CreateAnimalComponent implements OnInit {
     this.newAnimal = {};
   }
 
-  public createAnimal() {
+  createAnimal() {
     this.isCreatingAnimal = true;
     const animalObs = this.animalService.createAnimal(this.newAnimal, this.listId);
     animalObs.subscribe(

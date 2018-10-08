@@ -21,7 +21,7 @@ export class DeleteAnimalListComponent implements OnInit {
 
   ngOnInit() {}
 
-  public deleteAnimal() {
+  deleteAnimal() {
     this.animalListService.deleteAnimalList(this.list.id).subscribe(() => {
       this.animalListStore.remove(this.list.id);
       this.dashboardLists.removeById(this.list.id);

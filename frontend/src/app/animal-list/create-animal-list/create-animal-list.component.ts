@@ -12,7 +12,7 @@ import {AnimalListStoreService} from '../animal-list.store';
   styleUrls: ['./create-animal-list.component.scss']
 })
 export class CreateAnimalListComponent implements OnInit {
-  public newList: AnimalListWithoutId;
+  newList: AnimalListWithoutId;
 
   constructor(
     private animalListService: AnimalListService,
