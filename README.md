@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/tsmean/tsmean.svg?branch=master)](https://travis-ci.org/tsmean/tsmean)
+<!--[![Build Status](https://travis-ci.org/tsmean/tsmean.svg?branch=master)](https://travis-ci.org/tsmean/tsmean)-->
 
 # Disclaimer
 
